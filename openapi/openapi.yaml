@@ -1,8 +1,8 @@
 openapi: 3.0.2
 info:
   title: Spacebring
-  termsOfService: https://www.spacebring.com/terms
   version: 1.0.0
+  termsOfService: https://www.spacebring.com/terms
 servers:
   - url: https://api.spacebring.com
 tags:
@@ -485,7 +485,7 @@ paths:
       description: 'Retrieve a certain company. <h3>OAuth</h3>Required scopes: <code>community.readonly</code> or <code>community</code>'
       operationId: getCompany
       parameters:
-        - name: companyId
+        - name: id
           in: path
           description: The id of company.
           schema:
@@ -1094,7 +1094,7 @@ paths:
       description: 'Retrieve a certain membership. <h3>OAuth</h3>Required scopes: <code>community.readonly</code> or <code>community</code>'
       operationId: getMembership
       parameters:
-        - name: membershipId
+        - name: id
           in: path
           description: The id of membership.
           schema:
@@ -1136,7 +1136,7 @@ paths:
       description: 'Delete a certain membership. <h3>OAuth</h3>Required scopes: <code>community</code>'
       operationId: deleteMembership
       parameters:
-        - name: membershipId
+        - name: id
           in: path
           description: The id of the membership.
           schema:
@@ -1727,7 +1727,7 @@ paths:
       description: 'Retrieve a certain subscription. <h3>OAuth</h3>Required scopes: <code>subscriptions.readonly</code> or <code>subscriptions</code>'
       operationId: getSubscription
       parameters:
-        - name: subscriptionId
+        - name: id
           in: path
           description: The id of the subscription.
           schema:
