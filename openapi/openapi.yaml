@@ -1,0 +1,3710 @@
+openapi: 3.0.2
+info:
+  title: Spacebring
+  termsOfService: https://www.spacebring.com/terms
+  version: 1.0.0
+servers:
+  - url: https://api.spacebring.com
+tags:
+  - name: Benefits
+    description: \"Benefit\" resource represents a benefit in a certain location.
+  - name: Benefit Applications
+    description: \"Benefit Applications\" resource represents an application for a benefit in a certain location.
+  - name: Companies
+    description: \"Company\" resource represents a company in a certain location.
+  - name: Desk Bookings
+    description: Spacebring allows to book desks. \"Desk Booking\" resource represents a booking of a desk in a certain location.
+  - name: Desks
+    description: Spacebring allows to book desks. \"Desk\" resource represents an actual desk in a certain location.
+  - name: Event Tickets
+    description: Spacebring allows to organize events. When users join events, they get an event ticket. The \"Event Ticket\" resource represents a ticket for an event in a certain location.
+  - name: Feed Posts
+    description: Spacebring has a community feed called Feed. Users can create posts on Feed. The \"Feed Post\" resource represents a post on Feed in a certain location.
+  - name: Invoices
+    description: Spacebring has a built-in invoicing system. The "Invoice" resource represents an invoice issued for a member or a company in a certain location.
+  - name: Invoice Items
+    description: \"Invoice Item\" resource represents an item of an invoice.
+  - name: Locations
+    description: Spacebring supports multiple locations. The \"Location\" resource represents a location on Spacebring.
+  - name: Membership Requests
+    description: When users request to join a certain location, Spacebring creates a request for administrators to approve or reject. The \"Membership Request\" resource represents such a request to join a certain location.
+  - name: Memberships
+    description: When users join a certain location, they obtain membership there (become members). The \"Membership\" resource represents a mutual connection between a member and a certain location.
+  - name: Networks
+    description: Spacebring allows users to join multiple locations. The \"Network\" resource represents a network of locations that a user is a member of.
+  - name: Orders
+    description: Spacebring allows users to buy products in shop. The \"Order\" resource represents an actual order for a certain product in shop.
+  - name: Products
+    description: Spacebring allows users to buy products in shop. The \"Products\" resource represents an actual product in a certain location.
+  - name: Room Bookings
+    description: Spacebring allows users to book meeting rooms. The \"Room Booking\" resource represents a booking of a room in a certain location.
+  - name: Rooms
+    description: Spacebring allows users to book meeting rooms. The \"Room\" resource represents an actual meeting room in a certain location.
+  - name: Tickets
+    description: Spacebring allows users to report issues to administrators. The \"Ticket\" resource represents a support ticket in a certain location.
+  - name: Transactions
+    description: When users pay for something on Spacebring, a corresponding transaction is created. The \"Transaction\" resource represents a payment in a certain location.
+  - name: Users
+    description: The \"User\" resource represents a user of your application. Users can perform a variety of actions on Spacebring, such as making a booking, purchase an event ticket, request to join a location, and more.
+  - name: Visits
+    description: Spacebring allows members to register visitors. The \"Visit\" resource represents a preliminary registration of a visit in a certain location.
+  - name: Subscriptions
+    description: Spacebring allows users and companies to have subscriptions. The \"Subscription\" resource represents a recurring membership plan of a specific user or company in a certain location.
+paths:
+  /benefits/applications/v1:
+    get:
+      tags:
+        - Benefit Applications
+      summary: Retrieve benefit applications
+      description: 'Retrieve all benefit applications in the location or for certain benefit. <h3>OAuth</h3>Required scopes: <code>benefits.readonly</code> or <code>benefits</code>'
+      operationId: getBenefitApplications
+      parameters:
+        - in: query
+          name: locationRef
+          description: The id of the location
+          schema:
+            type: string
+            format: uuid
+          required: false
+        - in: query
+          name: benefitRef
+          description: The id of the benefit
+          schema:
+            type: string
+            format: uuid
+          required: false
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+            maximum: 100
+            default: 25
+          description: The number of items to return
+        - in: query
+          name: nextPageToken
+          schema:
+            type: string
+          description: nextPageToken retrieved from a previous request
+          required: false
+        - name: userRef
+          in: query
+          schema:
+            type: string
+            format: uuid
+          required: false
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - benefits.readonly
+            - benefits
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  applications:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/benefitApplication'
+                  nextPageToken:
+                    type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /benefits/v1:
+    get:
+      tags:
+        - Benefits
+      summary: Retrieve benefits
+      description: 'Retrieve all benefits in the location. <h3>OAuth</h3>Required scopes: <code>benefits.readonly</code> or <code>benefits</code>'
+      operationId: getBenefits
+      parameters:
+        - name: locationRef
+          in: query
+          description: The id of the location
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - benefits.readonly
+            - benefits
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  benefits:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/benefit'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /resources/bookings/v1:
+    get:
+      tags:
+        - Bookings
+      summary: Retrieve bookings
+      description: 'Retrieve all bookings of resources. <h3>OAuth</h3>Required scopes: <code>resources.readonly</code> or <code>resources</code>'
+      operationId: getBookings
+      parameters:
+        - in: query
+          name: resourceRef
+          description: The id of the resource. Required if `locationRef` is not passed.
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: locationRef
+          description: The id of the location. Required if `resourceRef` is not passed.
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: membershipRefOwner
+          description: The id of the membership owner.
+          schema:
+            format: uuid
+            type: string
+        - in: query
+          name: endDate
+          description: The date filter of items.
+          schema:
+            type: object
+            properties:
+              lte:
+                format: date-time
+                type: string
+                description: 'Get bookings with less or equal end date. Example: endDate[lte]=2021-05-21T10:00:00Z'
+              gte:
+                format: date-time
+                type: string
+                description: 'Get bookings with greater or equal end date. Example: endDate[gte]=2021-05-21T10:00:00Z'
+              lt:
+                format: date-time
+                type: string
+                description: 'Get bookings with less end date. Example: endDate[lt]=2021-05-21T10:00:00Z'
+              gt:
+                format: date-time
+                type: string
+                description: 'Get bookings with greater end date. Example: endDate[gt]=2021-05-21T10:00:00Z'
+        - in: query
+          name: startDate
+          description: The date filter of items.
+          schema:
+            type: object
+            properties:
+              lte:
+                format: date-time
+                type: string
+                description: 'Get bookings with less or equal start date. Example: startDate[lte]=2021-05-21T10:00:00Z'
+              gte:
+                format: date-time
+                type: string
+                description: 'Get bookings with greater or equal start date. Example: startDate[gte]=2021-05-21T10:00:00Z'
+              lt:
+                format: date-time
+                type: string
+                description: 'Get bookings with less start date. Example: startDate[lt]=2021-05-21T10:00:00Z'
+              gt:
+                format: date-time
+                type: string
+                description: 'Get bookings with greater start date. Example: startDate[gt]=2021-05-21T10:00:00Z'
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+            maximum: 100
+            default: 25
+          description: The number of items to return
+        - in: query
+          name: order
+          description: The order of filtered items. Format - `field:order`. Possible field values are `createDate`, `endDate`, `startDate`, `id`. Order values - `asc`, `desc`.
+          schema:
+            type: string
+            default: endDate:asc
+        - in: query
+          name: nextPageToken
+          schema:
+            type: string
+          description: nextPageToken retrieved from a previous request
+        - in: query
+          name: types
+          description: The types of resources to retrieve bookings for. Pass them as comma separated values.
+          schema:
+            type: string
+            enum:
+              - hotDesk
+              - dedicatedDesk
+              - office
+              - parkingLot
+              - room
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - resources.readonly
+            - resources
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  booking:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/booking'
+                  nextPageToken:
+                    type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+    post:
+      tags:
+        - Bookings
+      summary: Create booking
+      description: 'Create a booking. <h3>OAuth</h3>Required scopes: <code>resources</code>'
+      operationId: createBooking
+      parameters:
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      requestBody:
+        $ref: '#/components/requestBodies/createBooking'
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - resources
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  booking:
+                    $ref: '#/components/schemas/booking'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /resources/bookings/v1/{id}:
+    delete:
+      tags:
+        - Bookings
+      summary: Delete booking
+      description: 'Delete a booking. <h3>OAuth</h3>Required scopes: <code>resources</code>'
+      operationId: deleteBooking
+      parameters:
+        - name: id
+          in: path
+          description: The id of the booking.
+          schema:
+            format: uuid
+            type: string
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - resources
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /community/companies/v1:
+    get:
+      tags:
+        - Companies
+      summary: Retrieve companies
+      description: 'Retrieve all companies. <h3>OAuth</h3>Required scopes: <code>community.readonly</code> or <code>community</code>'
+      operationId: getCompanies
+      parameters:
+        - name: locationRef
+          in: query
+          description: The id of the location.
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+            maximum: 100
+            default: 25
+          description: The number of items to return
+        - in: query
+          name: nextPageToken
+          schema:
+            type: string
+          description: nextPageToken retrieved from a previous request
+        - name: title
+          in: query
+          schema:
+            type: string
+          description: Filter by company's title
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - community.readonly
+            - community
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  companies:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/company'
+                  nextPageToken:
+                    type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+    post:
+      tags:
+        - Companies
+      summary: Create a company
+      description: 'Create a company. <h3>OAuth</h3>Required scopes: <code>community</code>'
+      operationId: createCompany
+      parameters:
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      requestBody:
+        $ref: '#/components/requestBodies/createCompany'
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - community
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  company:
+                    $ref: '#/components/schemas/company'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /community/companies/v1/{id}:
+    get:
+      tags:
+        - Companies
+      summary: Retrieve a company
+      description: 'Retrieve a certain company. <h3>OAuth</h3>Required scopes: <code>community.readonly</code> or <code>community</code>'
+      operationId: getCompany
+      parameters:
+        - name: companyId
+          in: path
+          description: The id of company.
+          schema:
+            format: uuid
+            type: string
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - community.readonly
+            - community
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  company:
+                    $ref: '#/components/schemas/company'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+    put:
+      tags:
+        - Companies
+      summary: Update a company
+      description: 'Update a certain company. <h3>OAuth</h3>Required scopes: <code>community</code>'
+      operationId: updateCompany
+      parameters:
+        - name: id
+          in: path
+          description: The id of the company.
+          schema:
+            format: uuid
+            type: string
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                company:
+                  type: object
+                  properties:
+                    metadata:
+                      $ref: '#/components/schemas/metadata'
+                    title:
+                      type: string
+                  required:
+                    - metadata
+                    - title
+              required:
+                - company
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - community
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  company:
+                    $ref: '#/components/schemas/company'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /events/tickets/v1:
+    get:
+      tags:
+        - Event Tickets
+      summary: Retrieve event tickets
+      description: 'Retrieve all event tickets. <h3>OAuth</h3>Required scopes: <code>events.readonly</code> or <code>events</code>'
+      operationId: getEventTickets
+      parameters:
+        - name: locationRef
+          in: query
+          description: The id of the location.
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+            maximum: 100
+            default: 25
+          description: The number of items to return
+        - in: query
+          name: nextPageToken
+          schema:
+            type: string
+          description: nextPageToken retrieved from a previous request
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - events.readonly
+            - events
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tickets:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/eventTicket'
+                  nextPageToken:
+                    type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /feed/posts/v1:
+    post:
+      tags:
+        - Feed Posts
+      summary: Create a feed post
+      description: 'Create a feed post. <h3>OAuth</h3>Required scopes: <code>feed</code>'
+      operationId: createFeedPost
+      parameters:
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      requestBody:
+        $ref: '#/components/requestBodies/createFeedPost'
+      security:
+        - OAuth2:
+            - feed
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  post:
+                    $ref: '#/components/schemas/post'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /invoices/v1:
+    get:
+      tags:
+        - Invoices
+      summary: Retrieve invoices
+      description: 'Retrieve all invoices based on certain parameters. <h3>OAuth</h3>Required scopes: <code>invoices.readonly</code> or <code>invoices</code>'
+      operationId: getInvoices
+      parameters:
+        - name: companyRef
+          in: query
+          description: The id of the company
+          schema:
+            type: string
+            format: uuid
+        - name: membershipRef
+          in: query
+          description: The id of the membership
+          schema:
+            type: string
+            format: uuid
+        - name: locationRef
+          in: query
+          description: The id of the location.
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: issueDate
+          description: The date filter of items.
+          schema:
+            type: object
+            properties:
+              lte:
+                format: date-time
+                type: string
+                description: 'Get invoices with less issueDate. Example: issueDate[lte]=2021-05-21T10:00:00Z'
+              gte:
+                format: date-time
+                type: string
+                description: 'Get invoices with greater issueDate. Example: issueDate[gte]=2021-05-21T10:00:00Z'
+        - in: query
+          name: nextPageToken
+          schema:
+            type: string
+            format: uuid
+          description: The token to get the next page of results
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+            maximum: 100
+            default: 25
+          description: The number of items to return
+        - name: status
+          in: query
+          description: The status of an invoice.
+          schema:
+            type: string
+            enum:
+              - draft
+              - issued
+              - voided
+              - paid
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - invoices.readonly
+            - invoices
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  invoices:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/invoice'
+                  nextPageToken:
+                    type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+    post:
+      tags:
+        - Invoices
+      summary: Create an invoice
+      description: Create an invoice for a member or a company.
+      operationId: createInvoice
+      parameters:
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      requestBody:
+        $ref: '#/components/requestBodies/createInvoice'
+      security:
+        - OAuth2:
+            - invoices
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  invoice:
+                    $ref: '#/components/schemas/invoice'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /invoices/v1/{id}:
+    get:
+      tags:
+        - Invoices
+      summary: Retrieve an invoice
+      description: 'Retrieve a certain invoice. <h3>OAuth</h3>Required scopes: <code>invoices.readonly</code> or <code>invoices</code>'
+      operationId: getInvoice
+      parameters:
+        - name: id
+          in: path
+          description: The id of an invoice.
+          schema:
+            format: uuid
+            type: string
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - invoices.readonly
+            - invoices
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  invoice:
+                    $ref: '#/components/schemas/invoice'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /invoices/v1/{id}/pay:
+    post:
+      tags:
+        - Invoices
+      summary: Pay an invoice
+      description: 'Mark an invoice as paid by <code>External Payment</code>. <h3>OAuth</h3>Required scopes: <code>invoices</code>'
+      operationId: payInvoice
+      parameters:
+        - name: id
+          in: path
+          description: The id of an invoice
+          schema:
+            format: uuid
+            type: string
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      requestBody:
+        $ref: '#/components/requestBodies/payInvoice'
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - invoices
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction:
+                    $ref: '#/components/schemas/invoice'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /invoices/items/v1:
+    post:
+      tags:
+        - Invoice Items
+      summary: Create a invoice item
+      description: 'Create an item in an invoice. <h3>OAuth</h3>Required scopes: <code>invoices</code>'
+      operationId: createInvoiceItem
+      parameters:
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      requestBody:
+        $ref: '#/components/requestBodies/createInvoiceItem'
+      security:
+        - OAuth2:
+            - invoices
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  invoiceItem:
+                    $ref: '#/components/schemas/invoiceItem'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /locations/v1:
+    get:
+      tags:
+        - Locations
+      summary: Retrieve all locations
+      description: 'Retrieve all locations. <h3>OAuth</h3>Required scopes: <code>locations.readonly</code> or <code>locations</code>'
+      operationId: getLocations
+      parameters:
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - locations.readonly
+            - locations
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  locations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/location'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /community/memberships/v1:
+    get:
+      tags:
+        - Memberships
+      summary: Retrieve memberships
+      description: 'Retrieve all memberships. <h3>OAuth</h3>Required scopes: <code>memberships.readonly</code> or <code>memberships</code>'
+      operationId: getMemberships
+      parameters:
+        - in: query
+          name: companyRef
+          schema:
+            type: string
+            format: uuid
+          description: Filter by company reference
+        - name: locationRef
+          in: query
+          description: The id of the location.
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+            maximum: 100
+            default: 25
+          description: The number of items to return
+        - in: query
+          name: nextPageToken
+          schema:
+            type: string
+          description: nextPageToken retrieved from a previous request
+        - name: userEmail
+          in: query
+          schema:
+            type: string
+            format: email
+          description: Filter by user's email
+        - in: query
+          name: status
+          schema:
+            type: string
+            enum:
+              - requested
+          description: use requested to get all membership requests
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - community.readonly
+            - community
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  memberships:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/membership'
+                  nextPageToken:
+                    type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+    post:
+      tags:
+        - Memberships
+      summary: Create a membership
+      description: 'Create a membership and send an email invitation to join if type is member. <h3>OAuth</h3>Required scopes: <code>community</code>'
+      operationId: createMembership
+      parameters:
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      requestBody:
+        $ref: '#/components/requestBodies/createMembership'
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - community
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  membership:
+                    $ref: '#/components/schemas/membership'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /community/memberships/v1/{id}:
+    get:
+      tags:
+        - Memberships
+      summary: Retrieve a membership
+      description: 'Retrieve a certain membership. <h3>OAuth</h3>Required scopes: <code>community.readonly</code> or <code>community</code>'
+      operationId: getMembership
+      parameters:
+        - name: membershipId
+          in: path
+          description: The id of membership.
+          schema:
+            format: uuid
+            type: string
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - community.readonly
+            - community
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  membership:
+                    $ref: '#/components/schemas/membership'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+    delete:
+      tags:
+        - Memberships
+      summary: Delete a membership
+      description: 'Delete a certain membership. <h3>OAuth</h3>Required scopes: <code>community</code>'
+      operationId: deleteMembership
+      parameters:
+        - name: membershipId
+          in: path
+          description: The id of the membership.
+          schema:
+            format: uuid
+            type: string
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - community
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+    put:
+      tags:
+        - Memberships
+      summary: Update a membership
+      description: 'Update a certain membership. <h3>OAuth</h3>Required scopes: <code>community</code>'
+      operationId: updateMembership
+      parameters:
+        - name: id
+          in: path
+          description: The id of the membership.
+          schema:
+            format: int64
+            type: integer
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                membership:
+                  type: object
+                  properties:
+                    metadata:
+                      $ref: '#/components/schemas/metadata'
+                    role:
+                      type: string
+                      enum:
+                        - admin
+                        - member
+                  required:
+                    - metadata
+                    - role
+              required:
+                - membership
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - community
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  membership:
+                    $ref: '#/components/schemas/membership'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /community/memberships/v1/deleted:
+    get:
+      tags:
+        - Memberships
+      summary: Retrieve deleted memberships
+      description: 'Retrieve all deleted memberships. <h3>OAuth</h3>Required scopes: <code>community.readonly</code> or <code>community</code>'
+      operationId: getMembershipsDeleted
+      parameters:
+        - name: locationRef
+          in: query
+          description: The id of the location.
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+            maximum: 100
+            default: 25
+          description: The number of items to return
+        - name: userEmail
+          in: query
+          schema:
+            type: string
+            format: email
+          description: Filter by user's email
+        - in: query
+          name: nextPageToken
+          schema:
+            type: string
+          description: nextPageToken retrieved from a previous request
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - community.readonly
+            - community
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  memberships:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/membership'
+                  nextPageToken:
+                    type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /networks/v1:
+    get:
+      tags:
+        - Networks
+      summary: Retrieve networks
+      description: Retrieve all networks you are in.
+      operationId: getNetworks
+      security:
+        - BasicAuth: []
+        - OAuth2: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  networks:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/network'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /shop/orders/v1:
+    get:
+      tags:
+        - Orders
+      summary: Retrieve orders
+      description: 'Retrieve all orders of products from shop. <h3>OAuth</h3>Required scopes: <code>shop.readonly</code> or <code>shop</code>'
+      operationId: getOrders
+      parameters:
+        - in: query
+          name: locationRef
+          description: The id of the location.
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - in: query
+          name: createDate
+          description: The date filter of items.
+          schema:
+            type: object
+            properties:
+              lte:
+                format: date-time
+                type: string
+                description: 'Get orders with less createDate. Example: createDate[lte]=2021-05-21T10:00:00Z'
+              gte:
+                format: date-time
+                type: string
+                description: 'Get orders with greater createDate. Example: createDate[gte]=2021-05-21T10:00:00Z'
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+            maximum: 100
+            default: 25
+          description: The number of items to return
+        - in: query
+          name: nextPageToken
+          schema:
+            type: string
+          description: nextPageToken retrieved from a previous request
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - shop.readonly
+            - shop
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  orders:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/order'
+                  nextPageToken:
+                    type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /plans/v1:
+    get:
+      tags:
+        - Plans
+      summary: Retrieve plans
+      description: 'Retrieve all plans. <h3>OAuth</h3>Required scopes: <code>plans.readonly</code> or <code>plans</code>'
+      operationId: getPlans
+      parameters:
+        - name: locationRef
+          in: query
+          description: The id of the location.
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - plans.readonly
+            - plans
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  plans:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/plan'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /plans/v1/{id}:
+    get:
+      tags:
+        - Plans
+      summary: Retrieve a plan
+      description: 'Retrieve a certain plan. <h3>OAuth</h3>Required scopes: <code>plans.readonly</code> or <code>plans</code>'
+      operationId: getPlan
+      parameters:
+        - name: id
+          in: path
+          description: The id of the plan.
+          schema:
+            format: uuid
+            type: string
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - plans.readonly
+            - plans
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  plan:
+                    $ref: '#/components/schemas/plan'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /shop/products/v1:
+    get:
+      tags:
+        - Products
+      summary: Retrieve products
+      description: 'Retrieve products from shop. <h3>OAuth</h3>Required scopes: <code>shop.readonly</code> or <code>shop</code>'
+      operationId: getProducts
+      parameters:
+        - name: locationRef
+          in: query
+          description: The id of the location.
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - shop.readonly
+            - shop
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  products:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/product'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /shop/products/v1/{productId}:
+    put:
+      tags:
+        - Products
+      summary: Update a product
+      description: 'Update a certain product. <h3>OAuth</h3>Required scopes: <code>shop</code>'
+      operationId: updateProduct
+      parameters:
+        - name: productId
+          in: path
+          description: The id of the product.
+          schema:
+            format: uuid
+            type: string
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      requestBody:
+        $ref: '#/components/requestBodies/updateProduct'
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - shop
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  product:
+                    $ref: '#/components/schemas/product'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /registrations/v1:
+    get:
+      tags:
+        - Networks
+      summary: Retrieve registrations
+      description: Retrieve all registrations in network.
+      operationId: getNetworkRegistrations
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+            maximum: 100
+            default: 25
+          description: The number of items to return
+        - in: query
+          name: nextPageToken
+          schema:
+            type: string
+          description: nextPageToken retrieved from a previous request
+          required: false
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  registrations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/registration'
+                  nextPageToken:
+                    type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /resources/v1:
+    get:
+      tags:
+        - Resources
+      summary: Retrieve resources
+      description: 'Retrieve resources in the location. Resources represent all kind of bookable items like rooms, hot desks, dedicated desks, parking lots. <h3>OAuth</h3>Required scopes: <code>resources.readonly</code> or <code>resources</code>'
+      operationId: getResources
+      parameters:
+        - name: locationRef
+          in: query
+          description: The id of the location.
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - name: types
+          in: query
+          description: The types of resources to retrieve. Pass them as comma separated values.
+          schema:
+            type: string
+            enum:
+              - hotDesk
+              - dedicatedDesk
+              - office
+              - parkingLot
+              - room
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - resources.readonly
+            - resources
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  resources:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/resource'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /subscriptions/v1:
+    post:
+      tags:
+        - Subscriptions
+      summary: Create a subscription
+      description: 'Create a subscription for a membership or company. <h3>OAuth</h3>Required scopes: <code>subscriptions</code>'
+      operationId: createSubscription
+      parameters:
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      requestBody:
+        $ref: '#/components/requestBodies/assignSubscription'
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - subscriptions
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscription:
+                    $ref: '#/components/schemas/subscription'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /subscriptions/v1/{id}:
+    get:
+      tags:
+        - Subscriptions
+      summary: Retrieve a subscription
+      description: 'Retrieve a certain subscription. <h3>OAuth</h3>Required scopes: <code>subscriptions.readonly</code> or <code>subscriptions</code>'
+      operationId: getSubscription
+      parameters:
+        - name: subscriptionId
+          in: path
+          description: The id of the subscription.
+          schema:
+            format: uuid
+            type: string
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - subscriptions.readonly
+            - subscriptions
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  subscription:
+                    $ref: '#/components/schemas/subscription'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /support/tickets/v1:
+    get:
+      tags:
+        - Support Tickets
+      summary: Retrieve support tickets
+      description: 'Retrieve all support tickets. <h3>OAuth</h3>Required scopes: <code>support.readonly</code> or <code>support</code>'
+      operationId: getSupportTickets
+      parameters:
+        - in: query
+          name: locationRef
+          description: The id of the location.
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+            maximum: 100
+            default: 25
+          description: The number of items to return
+        - in: query
+          name: nextPageToken
+          description: nextPageToken retrieved from a previous request
+          schema:
+            type: string
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - support.readonly
+            - support
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  nextPageToken:
+                    type: string
+                  tickets:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ticket'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /transactions/money/v1:
+    get:
+      tags:
+        - Transactions
+      summary: Retrieve money transactions
+      description: 'Retrieve money transactions. <h3>OAuth</h3>Required scopes: <code>transactions.readonly</code> or <code>transactions</code>'
+      operationId: getMoneyTransactions
+      parameters:
+        - name: locationRef
+          in: query
+          description: The id of the location
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+            maximum: 100
+            default: 25
+          description: The number of items to return
+        - name: status
+          in: query
+          description: The payment status of transactions
+          schema:
+            type: string
+            enum:
+              - canceled
+              - failed
+              - pending
+              - processing
+              - succeeded
+        - in: query
+          name: createDate
+          description: The date filter of items.
+          schema:
+            type: object
+            properties:
+              lte:
+                format: date-time
+                type: string
+                description: 'Get transactions with less createDate. Example: createDate[lte]=2021-05-21T10:00:00Z'
+              gte:
+                format: date-time
+                type: string
+                description: 'Get transactions with greater createDate. Example: createDate[gte]=2021-05-21T10:00:00Z'
+        - in: query
+          name: nextPageToken
+          schema:
+            type: string
+          description: nextPageToken retrieved from a previous request
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - transactions.readonly
+            - transactions
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transactions:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/transaction'
+                  nextPageToken:
+                    type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /transactions/credits/v1:
+    post:
+      tags:
+        - Transactions
+      summary: Create a credits transaction
+      description: 'Create a credits transaction. <h3>OAuth</h3>Required scopes: <code>transactions</code>'
+      operationId: createCreditsTransaction
+      parameters:
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - transactions
+      requestBody:
+        $ref: '#/components/requestBodies/createCreditsTransaction'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction:
+                    $ref: '#/components/schemas/transactionCredits'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /visitors/visits/v1:
+    post:
+      tags:
+        - Visitors
+      summary: Create a visit
+      description: 'Create a visit. <h3>OAuth</h3>Required scopes: <code>visitors</code>'
+      operationId: createVisit
+      parameters:
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      requestBody:
+        $ref: '#/components/requestBodies/createVisit'
+      security:
+        - OAuth2:
+            - visitors
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  visit:
+                    $ref: '#/components/schemas/visit'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      description: See our [authentication documentation](/api-reference/authentication#basic-authentication) for how to authorize your requests
+      scheme: basic
+    OAuth2:
+      type: oauth2
+      description: See our [authentication documentation](/api-reference/authentication#oauth2) for how to authorize your requests
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.spacebring.com/oauth2/authorize
+          tokenUrl: https://api.spacebring.com/oauth2/token
+          refreshUrl: https://api.spacebring.com/oauth2/token
+          scopes:
+            benefits.readonly: Read benefits and applications
+            benefits: Read and write benefits and applications
+            community.readonly: Read community companies and memberships
+            community: Read and write community companies and memberships
+            events.readonly: Read events and tickets
+            events: Read and write events and tickets
+            feed.readonly: Read feed posts
+            feed: Read and write feed posts
+            invoices.readonly: Read invoices
+            invoices: Read and write invoices
+            locations.readonly: Read locations
+            locations: Read and write locations
+            plans.readonly: Read plans
+            plans: Read and write plans
+            resources.readonly: Read resources and bookings
+            resources: Read and write resources and bookings
+            subscriptions.readonly: Read subscriptions
+            subscriptions: Read and write subscriptions
+            shop.readonly: Read products and orders
+            shop: Read and write products and orders
+            support.readonly: Read support tickets
+            support: Read and write support tickets
+            transactions.readonly: Read transactions
+            transactions: Read and write transactions
+            visitors.readonly: Read visitors
+            visitors: Read and write visitors
+  schemas:
+    benefitApplication:
+      type: object
+      properties:
+        benefit:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            title:
+              type: string
+        comment:
+          type: string
+        createDate:
+          type: string
+          format: date-time
+        id:
+          type: string
+          format: uuid
+        locationRef:
+          type: string
+          format: uuid
+        membershipRef:
+          type: string
+          format: uuid
+        number:
+          type: string
+        user:
+          type: object
+          properties:
+            about:
+              type: string
+            email:
+              type: string
+              format: email
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+            phoneNumber:
+              type: string
+            photoUrl:
+              type: string
+              format: uri
+            surname:
+              type: string
+    responseError:
+      type: object
+      properties:
+        message:
+          type: string
+        type:
+          type: string
+    benefit:
+      type: object
+      properties:
+        categoryRef:
+          type: string
+          format: uuid
+        createDate:
+          format: date-time
+          type: string
+        description:
+          type: string
+        id:
+          type: string
+          format: uuid
+        locationRef:
+          type: string
+          format: uuid
+        subtitle:
+          type: string
+        title:
+          type: string
+    user:
+      type: object
+      properties:
+        about:
+          type: string
+        email:
+          type: string
+        id:
+          format: uuid
+          type: string
+        name:
+          type: string
+        phoneNumber:
+          type: string
+        photoUrl:
+          type: string
+        surname:
+          type: string
+    payment:
+      type: object
+      properties:
+        amount:
+          type: number
+          description: The amount of the payment
+        currencyCode:
+          type: string
+          description: The currency code of the payment
+        invoiceItemRef:
+          type: string
+          description: The reference ID of the invoice item
+        status:
+          type: string
+          enum:
+            - succeeded
+            - pending
+            - processing
+            - canceled
+            - failed
+        tax:
+          type: object
+          properties:
+            inclusive:
+              type: boolean
+            rate:
+              type: number
+        transactionRef:
+          type: string
+          description: The reference ID of the transaction
+        type:
+          type: string
+          enum:
+            - credits
+            - external
+            - flow
+            - fondy
+            - freedompay
+            - invoice
+            - kakaopay
+            - mercadopago
+            - paypal
+            - paystack
+            - plata
+            - stripe
+            - tap
+            - wayforpay
+    booking:
+      type: object
+      properties:
+        attendees:
+          type: array
+          items:
+            type: object
+            properties:
+              membershipRef:
+                type: string
+                format: uuid
+              user:
+                $ref: '#/components/schemas/user'
+        createDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+        id:
+          format: uuid
+          type: string
+        memo:
+          type: string
+        membershipRefOwner:
+          format: uuid
+          type: string
+        payment:
+          $ref: '#/components/schemas/payment'
+        resourceRef:
+          format: uuid
+          type: string
+        seats:
+          type: integer
+        startDate:
+          format: date-time
+          type: string
+        title:
+          type: string
+        userOwner:
+          $ref: '#/components/schemas/user'
+    metadata:
+      type: object
+      description: Use to attach key-value data to the object. Available only for admins.
+    company:
+      type: object
+      properties:
+        createDate:
+          type: string
+        id:
+          type: string
+        locationRef:
+          format: uuid
+          type: string
+        metadata:
+          $ref: '#/components/schemas/metadata'
+        notes:
+          type: string
+        subscriptionRef:
+          format: uuid
+          type: string
+        title:
+          type: string
+    eventTicket:
+      type: object
+      properties:
+        createDate:
+          format: date-time
+          type: string
+        event:
+          type: object
+          properties:
+            endDate:
+              format: date-time
+              type: string
+            id:
+              format: uuid
+              type: string
+            startDate:
+              format: date-time
+              type: string
+            title:
+              type: string
+        id:
+          format: uuid
+          type: string
+        locationRef:
+          format: uuid
+          type: string
+        membershipRef:
+          format: uuid
+          type: string
+        payment:
+          $ref: '#/components/schemas/payment'
+        role:
+          type: string
+          enum:
+            - attendee
+            - host
+        user:
+          $ref: '#/components/schemas/user'
+    post:
+      type: object
+      properties:
+        createDate:
+          format: date-time
+          type: string
+        id:
+          format: uuid
+          type: string
+        locationRef:
+          format: uuid
+          type: string
+        media:
+          type: array
+          items:
+            type: object
+            properties:
+              height:
+                type: integer
+              id:
+                format: uuid
+                type: string
+              url:
+                format: uri
+                type: string
+              width:
+                type: integer
+        membershipRef:
+          format: uuid
+          type: string
+        og:
+          type: object
+        text:
+          type: string
+        user:
+          $ref: '#/components/schemas/user'
+    invoiceItem:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: float
+        booking:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            resource:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                title:
+                  type: string
+                type:
+                  type: string
+                  enum:
+                    - dedicatedDesk
+                    - hotDesk
+                    - office
+                    - parkingLot
+                    - room
+        createDate:
+          type: string
+          format: date-time
+        creditPackage:
+          type: object
+          properties:
+            amount:
+              type: number
+        currencyCode:
+          type: string
+        description:
+          type: string
+        id:
+          type: string
+          format: uuid
+        invoiceRef:
+          type: string
+          format: uuid
+        order:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            option:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                name:
+                  type: string
+            product:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                title:
+                  type: string
+        plan:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            title:
+              type: string
+        quantity:
+          type: number
+          format: integer
+        tax:
+          type: object
+          properties:
+            inclusive:
+              type: boolean
+            rate:
+              type: number
+              format: float
+        ticket:
+          type: object
+          properties:
+            createDate:
+              type: string
+              format: date-time
+            id:
+              type: string
+              format: uuid
+            event:
+              type: object
+              properties:
+                endDate:
+                  type: string
+                  format: date-time
+                id:
+                  type: string
+                  format: uuid
+                startDate:
+                  type: string
+                  format: date-time
+                title:
+                  type: string
+        type:
+          type: string
+          enum:
+            - booking
+            - creditPackage
+            - custom
+            - eventTicket
+            - order
+            - subscriptionItem
+        unitAmount:
+          type: number
+          format: float
+    invoice:
+      type: object
+      properties:
+        amount:
+          type: number
+          format: float
+        company:
+          $ref: '#/components/schemas/company'
+        companyRef:
+          type: string
+          format: uuid
+        createDate:
+          type: string
+          format: date-time
+        currencyCode:
+          type: string
+        dueDate:
+          type: string
+          format: date-time
+        id:
+          type: string
+          format: uuid
+        issueDate:
+          type: string
+          format: date-time
+          description: Datetime when invoice was made ready for payment.
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/invoiceItem'
+        locationRef:
+          type: string
+          format: uuid
+        membershipRef:
+          type: string
+          format: uuid
+        number:
+          type: string
+        status:
+          type: string
+          enum:
+            - canceled
+            - draft
+            - failed
+            - issued
+            - paid
+            - pending
+            - processing
+            - succeeded
+            - voided
+        timezoneId:
+          type: string
+        transaction:
+          type: object
+          properties:
+            amount:
+              type: number
+              format: float
+            createDate:
+              type: string
+              format: date-time
+            id:
+              type: string
+              format: uuid
+            paymentMethod:
+              type: object
+              properties:
+                id:
+                  type: string
+                label:
+                  type: string
+                  enum:
+                    - American Express
+                    - China UnionPay
+                    - Diners Club
+                    - Discover
+                    - Japan Credit Bureau
+                    - Mastercard
+                    - Unknown
+                    - Visa
+                type:
+                  type: string
+                  enum:
+                    - external
+                    - flow
+                    - fondy
+                    - freedompay
+                    - kakaopay
+                    - mercadopago
+                    - paypal
+                    - paystack
+                    - plata
+                    - stripe
+                    - tap
+                    - wayforpay
+            status:
+              type: string
+              enum:
+                - canceled
+                - failed
+                - pending
+                - processing
+                - succeeded
+        user:
+          $ref: '#/components/schemas/user'
+        voidDate:
+          type: string
+          format: date-time
+    location:
+      type: object
+      properties:
+        address:
+          type: string
+        createDate:
+          format: date-time
+          type: string
+        currencyCode:
+          type: string
+        description:
+          type: string
+        email:
+          format: email
+          type: string
+        id:
+          format: uuid
+          type: string
+        locale:
+          type: string
+          enum:
+            - en
+            - es
+            - ko
+            - uk
+            - ru
+        networkRef:
+          format: uuid
+          type: string
+        timezoneId:
+          type: string
+        title:
+          type: string
+    membership:
+      type: object
+      properties:
+        companyRef:
+          format: uuid
+          type: string
+        createDate:
+          format: date-time
+          type: string
+        deleteDate:
+          format: date-time
+          type: string
+        id:
+          format: uuid
+          type: string
+        invitationDate:
+          format: date-time
+          type: string
+        locationRef:
+          type: string
+        metadata:
+          $ref: '#/components/schemas/metadata'
+        notes:
+          type: string
+        role:
+          type: string
+          enum:
+            - member
+            - admin
+        status:
+          type: string
+          enum:
+            - requested
+            - approved
+        subscriptionRef:
+          format: uuid
+          type: string
+        type:
+          type: string
+          enum:
+            - member
+            - nonmember
+        user:
+          $ref: '#/components/schemas/user'
+        userRef:
+          format: uuid
+          type: string
+    network:
+      type: object
+      properties:
+        id:
+          format: uuid
+          type: string
+        title:
+          type: string
+    order:
+      type: object
+      properties:
+        createDate:
+          type: string
+          format: date-time
+        id:
+          type: string
+          format: uuid
+        locationRef:
+          type: string
+          format: uuid
+        membershipRef:
+          type: string
+          format: uuid
+        number:
+          type: number
+        option:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            title:
+              type: string
+        payment:
+          $ref: '#/components/schemas/payment'
+        product:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            title:
+              type: string
+        user:
+          $ref: '#/components/schemas/user'
+    plan:
+      type: object
+      properties:
+        createDate:
+          type: string
+          format: date-time
+        credits:
+          type: number
+        customTax:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+            rate:
+              type: number
+        dayPasses:
+          type: number
+        description:
+          type: string
+        id:
+          type: string
+          format: uuid
+        locationRef:
+          type: string
+          format: uuid
+        period:
+          type: string
+          enum:
+            - day
+            - week
+            - month
+            - threeMonths
+            - sixMonths
+            - year
+        price:
+          type: number
+        selfSignup:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+            type:
+              type: string
+              enum:
+                - immediate
+        title:
+          type: string
+    product:
+      type: object
+      properties:
+        categoryRef:
+          format: uuid
+          type: string
+        createDate:
+          format: date-time
+          type: string
+        description:
+          type: string
+        featured:
+          type: boolean
+        id:
+          type: string
+          format: uuid
+        imageUrl:
+          format: uri
+          type: string
+        locationRef:
+          format: uuid
+          type: string
+        options:
+          type: array
+          items:
+            type: object
+            properties:
+              available:
+                type: boolean
+              createDate:
+                format: date-time
+                type: string
+              customTax:
+                type: object
+                properties:
+                  enabled:
+                    type: boolean
+                  rate:
+                    type: number
+              description:
+                type: string
+              id:
+                format: uuid
+                type: string
+              price:
+                type: object
+                properties:
+                  credits:
+                    type: object
+                    properties:
+                      amount:
+                        type: number
+                      enabled:
+                        type: boolean
+                  money:
+                    type: object
+                    properties:
+                      amount:
+                        type: number
+                      currencyCode:
+                        type: string
+                      enabled:
+                        type: boolean
+              title:
+                type: string
+        title:
+          type: string
+    registration:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        privacyConsentDate:
+          type: string
+          format: date-time
+        termsConsentDate:
+          type: string
+          format: date-time
+        user:
+          $ref: '#/components/schemas/user'
+    resource:
+      type: object
+      properties:
+        autoRelease:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+            interval:
+              type: string
+        bookingPermission:
+          type: string
+        bookingStepMinutes:
+          type: integer
+        capacity:
+          type: integer
+        capacityUnassigned:
+          type: integer
+        checkIn:
+          type: object
+          properties:
+            interval:
+              type: string
+        createDate:
+          type: string
+          format: date-time
+        credits:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+            tiers:
+              type: array
+              items:
+                type: object
+                properties:
+                  flatAmount:
+                    type: number
+                  from:
+                    type: integer
+                  unitAmount:
+                    type: number
+                  upTo:
+                    type: integer
+        dayPassesEnabled:
+          type: boolean
+        description:
+          type: string
+        id:
+          format: uuid
+          type: string
+        imageUrl:
+          type: string
+        locale:
+          type: string
+        locationRef:
+          format: uuid
+          type: string
+        money:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+            tiers:
+              type: array
+              items:
+                type: object
+                properties:
+                  flatAmount:
+                    type: number
+                  from:
+                    type: integer
+                  unitAmount:
+                    type: number
+                  upTo:
+                    type: integer
+        networkRef:
+          format: uuid
+          type: string
+        refundThreshold:
+          type: string
+        title:
+          type: string
+        type:
+          type: string
+        visibilityType:
+          type: string
+    subscription:
+      type: object
+      properties:
+        company:
+          $ref: '#/components/schemas/company'
+        companyRef:
+          type: string
+          format: uuid
+        createDate:
+          type: string
+          format: date-time
+        credits:
+          type: number
+        currentInterval:
+          type: object
+          properties:
+            endDate:
+              type: string
+              format: date-time
+            startDate:
+              type: string
+              format: date-time
+        dayPasses:
+          type: integer
+        endDate:
+          type: string
+          format: date-time
+        id:
+          type: string
+          format: uuid
+        items:
+          type: array
+          items:
+            type: object
+            properties:
+              credits:
+                type: number
+              customTax:
+                type: object
+                properties:
+                  enabled:
+                    type: boolean
+                  rate:
+                    type: number
+              dayPasses:
+                type: integer
+              id:
+                type: string
+                format: uuid
+              plan:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+              price:
+                type: number
+              quantity:
+                type: integer
+              title:
+                type: string
+        locationRef:
+          type: string
+          format: uuid
+        membershipRef:
+          type: string
+          format: uuid
+        nextInterval:
+          type: object
+          properties:
+            startDate:
+              type: string
+              format: date-time
+        payWithInvoice:
+          type: object
+          properties:
+            creditPackages:
+              type: boolean
+            desks:
+              type: boolean
+            events:
+              type: boolean
+            rooms:
+              type: boolean
+            shop:
+              type: boolean
+        period:
+          type: string
+          enum:
+            - day
+            - week
+            - month
+            - threeMonths
+            - sixMonths
+            - year
+        price:
+          type: number
+        startDate:
+          type: string
+          format: date-time
+        timezoneId:
+          type: string
+        user:
+          $ref: '#/components/schemas/user'
+    ticket:
+      type: object
+      properties:
+        createDate:
+          format: date-time
+          type: string
+        description:
+          type: string
+        id:
+          format: uuid
+          type: string
+        locationRef:
+          format: uuid
+          type: string
+        membershipRefAssignee:
+          type: string
+          format: uuid
+        membershipRefRequester:
+          type: string
+          format: uuid
+        number:
+          type: integer
+          format: int64
+          description: Unique identifier of ticket in location.
+        status:
+          type: string
+          enum:
+            - new
+            - inProgress
+            - solved
+            - closed
+        type:
+          type: string
+          enum:
+            - access
+            - accountAndBilling
+            - bookings
+            - cleaning
+            - discriminationAndHarassment
+            - internet
+            - mailAndPackages
+            - noiseAndAcoustics
+            - other
+            - printing
+            - repairAndMaintenance
+            - temperatureAndVentilation
+            - websiteAndApp
+        updateDate:
+          format: date-time
+          type: string
+        userAssignee:
+          $ref: '#/components/schemas/user'
+        userRequester:
+          $ref: '#/components/schemas/user'
+    transaction:
+      type: object
+      properties:
+        amount:
+          type: number
+        booking:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            resource:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                title:
+                  type: string
+        company:
+          $ref: '#/components/schemas/company'
+        createDate:
+          type: string
+          format: date-time
+        creditPackage:
+          type: object
+          properties:
+            amount:
+              type: number
+        currencyCode:
+          type: string
+        id:
+          type: string
+          format: uuid
+        invoice:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            title:
+              type: string
+        locationRef:
+          type: string
+          format: uuid
+        membershipRef:
+          type: string
+          format: uuid
+        order:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            option:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                name:
+                  type: string
+            product:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                title:
+                  type: string
+        paymentMethod:
+          type: object
+          properties:
+            label:
+              type: string
+            type:
+              type: string
+              enum:
+                - external
+                - flow
+                - fondy
+                - freedompay
+                - kakaopay
+                - mercadopago
+                - paypal
+                - paystack
+                - plata
+                - stripe
+                - tap
+                - wayforpay
+        plan:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            title:
+              type: string
+        refund:
+          type: object
+          properties:
+            amount:
+              type: number
+            createDate:
+              type: string
+              format: date-time
+        status:
+          type: string
+          enum:
+            - canceled
+            - failed
+            - pending
+            - processing
+            - succeeded
+        ticket:
+          type: object
+          properties:
+            createDate:
+              type: string
+              format: date-time
+            id:
+              type: string
+              format: uuid
+            event:
+              type: object
+              properties:
+                endDate:
+                  type: string
+                  format: date-time
+                id:
+                  type: string
+                  format: uuid
+                startDate:
+                  type: string
+                  format: date-time
+                title:
+                  type: string
+        type:
+          type: string
+        user:
+          $ref: '#/components/schemas/user'
+    transactionCredits:
+      type: object
+      properties:
+        amount:
+          type: number
+        company:
+          $ref: '#/components/schemas/company'
+        companyRef:
+          type: string
+          format: uuid
+        createDate:
+          type: string
+          format: date-time
+        description:
+          type: string
+        id:
+          type: string
+          format: uuid
+        locationRef:
+          type: string
+          format: uuid
+        membershipRef:
+          type: string
+          format: uuid
+        membershipRefCreator:
+          type: string
+          format: uuid
+        type:
+          type: string
+          enum:
+            - chargeExpiringCredits
+            - chargePermanentCredits
+            - transferExpiringCredits
+            - transferPermanentCredits
+        user:
+          $ref: '#/components/schemas/user'
+        userRef:
+          type: string
+          format: uuid
+        userRefCreator:
+          type: string
+          format: uuid
+    visit:
+      type: object
+      properties:
+        code:
+          type: string
+          example: '102288'
+        comment:
+          type: string
+        checkInDate:
+          format: date-time
+          type: string
+        checkOutDate:
+          format: date-time
+          type: string
+        createDate:
+          format: date-time
+          type: string
+        date:
+          format: date-time
+          type: string
+        id:
+          format: uuid
+          type: string
+        membershipRefHost:
+          format: uuid
+          type: string
+        locationRef:
+          format: uuid
+          type: string
+        userHost:
+          $ref: '#/components/schemas/user'
+        userRefHost:
+          format: uuid
+          type: string
+        visitor:
+          type: object
+          properties:
+            email:
+              type: string
+            name:
+              type: string
+            phoneNumber:
+              type: string
+            surname:
+              type: string
+  requestBodies:
+    createBooking:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              booking:
+                type: object
+                properties:
+                  endDate:
+                    format: date-time
+                    type: string
+                  memo:
+                    type: string
+                  resourceRef:
+                    type: string
+                    format: uuid
+                    description: The Resource id where to create a booking.
+                  startDate:
+                    format: date-time
+                    type: string
+                  title:
+                    type: string
+                  membershipRefOwner:
+                    type: string
+                    format: uuid
+                    description: The id of membership owner.
+                required:
+                  - endDate
+                  - startDate
+                  - resourceRef
+            required:
+              - booking
+    createCompany:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              company:
+                type: object
+                properties:
+                  metadata:
+                    $ref: '#/components/schemas/metadata'
+                  locationRef:
+                    type: string
+                    format: uuid
+                    description: The location id where to create a company.
+                  title:
+                    type: string
+                    description: The title of company to create.
+                required:
+                  - locationRef
+                  - title
+            required:
+              - company
+    createFeedPost:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              post:
+                type: object
+                properties:
+                  locationRef:
+                    type: string
+                    format: uuid
+                    description: The location id where to create a feed post.
+                  text:
+                    type: string
+                    description: The text of feed post to create.
+                required:
+                  - locationRef
+                  - text
+            required:
+              - activity
+    createInvoice:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              invoice:
+                type: object
+                properties:
+                  companyRef:
+                    type: string
+                    format: uuid
+                  membershipRef:
+                    type: string
+                    format: uuid
+            required:
+              - invoice
+    payInvoice:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              paymentMethod:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    enum:
+                      - external
+                required:
+                  - type
+            required:
+              - paymentMethod
+    createInvoiceItem:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              invoiceItem:
+                type: object
+                properties:
+                  unitAmount:
+                    type: number
+                    description: Amount of invoice item without taxes.
+                  invoiceRef:
+                    type: string
+                    format: uuid
+                    description: The Invoice id where item is created.
+                  description:
+                    type: string
+                  quantity:
+                    type: number
+                    format: integer
+                  tax:
+                    type: object
+                    properties:
+                      rate:
+                        type: number
+                        description: Tax rate. If not defined, tax rate will be applied based on locations's configuration.
+                    description: Tax information for the item.
+                required:
+                  - unitAmount
+                  - invoiceRef
+                  - description
+                  - type
+            required:
+              - invoiceItem
+    createMembership:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              membership:
+                type: object
+                properties:
+                  companyRef:
+                    type: string
+                    format: uuid
+                  role:
+                    type: string
+                    enum:
+                      - admin
+                      - member
+                  metadata:
+                    $ref: '#/components/schemas/metadata'
+                  notes:
+                    type: string
+                  locationRef:
+                    type: string
+                    format: uuid
+                    description: The location id where to create a membership.
+                  type:
+                    type: string
+                    enum:
+                      - member
+                      - nonmember
+                    description: The type of membership. Default value is member.
+                  user:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                        format: email
+                        description: An invitation letter will be sent to the given email.
+                      about:
+                        type: string
+                      name:
+                        type: string
+                      phoneNumber:
+                        type: string
+                      surname:
+                        type: string
+                    required:
+                      - email
+                      - name
+                required:
+                  - role
+                  - locationRef
+                  - user
+              locale:
+                type: string
+            required:
+              - membership
+    updateProduct:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              product:
+                type: object
+                properties:
+                  description:
+                    type: string
+                  featured:
+                    type: boolean
+                  title:
+                    type: string
+                  options:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                        customTax:
+                          type: object
+                          properties:
+                            enabled:
+                              type: boolean
+                            rate:
+                              type: number
+                        description:
+                          type: string
+                        available:
+                          type: boolean
+                        price:
+                          type: object
+                          properties:
+                            credits:
+                              type: object
+                              properties:
+                                amount:
+                                  type: number
+                                enabled:
+                                  type: boolean
+                            money:
+                              type: object
+                              properties:
+                                amount:
+                                  type: number
+                                enabled:
+                                  type: boolean
+                        title:
+                          type: string
+                      required:
+                        - title
+                        - available
+                        - price
+                        - description
+                        - customTax
+                required:
+                  - options
+                  - title
+                  - description
+                  - featured
+            required:
+              - product
+    assignSubscription:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              subscription:
+                type: object
+                properties:
+                  companyRef:
+                    type: string
+                    format: uuid
+                  membershipRef:
+                    type: string
+                    format: uuid
+                  period:
+                    type: string
+                    enum:
+                      - day
+                      - week
+                      - month
+                      - threeMonths
+                      - sixMonths
+                      - year
+                  startDate:
+                    type: string
+                    format: date
+                  endDate:
+                    type: string
+                    format: date
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        credits:
+                          type: number
+                        day_passes:
+                          type: number
+                        price:
+                          type: number
+                        quantity:
+                          type: number
+                        customTax:
+                          type: object
+                          properties:
+                            enabled:
+                              type: boolean
+                            rate:
+                              type: number
+                        title:
+                          type: string
+                        plan:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                  payWithInvoice:
+                    type: object
+                    properties:
+                      desks:
+                        type: boolean
+                      events:
+                        type: boolean
+                      rooms:
+                        type: boolean
+                      shop:
+                        type: boolean
+                      creditPackages:
+                        type: boolean
+                required:
+                  - period
+                oneOf:
+                  - required:
+                      - companyRef
+                  - required:
+                      - membershipRef
+              issueFirstInvoice:
+                type: boolean
+                description: If true, the first invoice will be issued.
+            required:
+              - subscription
+    createCreditsTransaction:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              transaction:
+                type: object
+                properties:
+                  amount:
+                    type: number
+                  companyRef:
+                    type: string
+                    format: uuid
+                    description: The company id to charge or transfer credits to.
+                  description:
+                    type: string
+                    description: The description of the transaction.
+                  locationRef:
+                    type: string
+                    format: uuid
+                    description: The location id where to create a company.
+                  membershipRef:
+                    type: string
+                    format: uuid
+                    description: The membership id to charge or transfer credits from.
+                  type:
+                    type: string
+                    enum:
+                      - chargeExpiringCredits
+                      - chargePermanentCredits
+                      - transferExpiringCredits
+                      - transferPermanentCredits
+                required:
+                  - locationRef
+                  - amount
+                  - type
+                oneOf:
+                  - required:
+                      - membershipRef
+                  - required:
+                      - companyRef
+            required:
+              - company
+    createVisit:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              visit:
+                type: object
+                properties:
+                  comment:
+                    type: string
+                  date:
+                    format: date-time
+                    type: string
+                    description: The date of visit.
+                  locationRef:
+                    type: string
+                    format: uuid
+                    description: The location id where to create a visit.
+                  visitor:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                        description: Visitor name.
+                      name:
+                        type: string
+                        description: Visitor email.
+                      phoneNumber:
+                        type: string
+                        description: Visitor phone number.
+                      surname:
+                        type: string
+                        description: Visitor surname.
+                    required:
+                      - email
+                      - name
+                required:
+                  - date
+                  - locationRef
+                  - visitor
+            required:
+              - visit
