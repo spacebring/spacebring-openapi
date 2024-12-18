@@ -2519,6 +2519,9 @@ components:
           format: uuid
         number:
           type: string
+        pdfUrl:
+          type: string
+          format: uri
         status:
           type: string
           enum:
