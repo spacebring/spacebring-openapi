@@ -2956,6 +2956,9 @@ components:
               format: date-time
         dayPasses:
           type: integer
+        deleteDate:
+          type: string
+          format: date-time
         endDate:
           type: string
           format: date-time
