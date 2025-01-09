@@ -3018,6 +3018,130 @@
         }
       }
     },
+    "/transactions/credits/v1": {
+      "post": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Create a credits transaction",
+        "description": "Create a credits transaction. <h3>OAuth</h3>Required scopes: <code>transactions</code>",
+        "operationId": "createCreditsTransaction",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "transactions"
+            ]
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/createCreditsTransaction"
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "transaction": {
+                      "$ref": "#/components/schemas/transactionCredits"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transactions/day_passes/v1": {
+      "post": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Create a day passes transaction",
+        "description": "Create a day passes transaction. <h3>OAuth</h3>Required scopes: <code>transactions</code>",
+        "operationId": "createDayPassesTransaction",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "transactions"
+            ]
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/createDayPassesTransaction"
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "transaction": {
+                      "$ref": "#/components/schemas/transactionDayPasses"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/transactions/money/v1": {
       "get": {
         "tags": [
@@ -3130,68 +3254,6 @@
                     },
                     "nextPageToken": {
                       "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/responseError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/transactions/credits/v1": {
-      "post": {
-        "tags": [
-          "Transactions"
-        ],
-        "summary": "Create a credits transaction",
-        "description": "Create a credits transaction. <h3>OAuth</h3>Required scopes: <code>transactions</code>",
-        "operationId": "createCreditsTransaction",
-        "parameters": [
-          {
-            "in": "header",
-            "name": "spacebring-network-id",
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            },
-            "required": false,
-            "description": "The id of the network. Required when using bearer token authentication"
-          }
-        ],
-        "security": [
-          {
-            "BasicAuth": []
-          },
-          {
-            "OAuth2": [
-              "transactions"
-            ]
-          }
-        ],
-        "requestBody": {
-          "$ref": "#/components/requestBodies/createCreditsTransaction"
-        },
-        "responses": {
-          "201": {
-            "description": "Created",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "transaction": {
-                      "$ref": "#/components/schemas/transactionCredits"
                     }
                   }
                 }
@@ -4757,6 +4819,120 @@
           }
         }
       },
+      "transactionCredits": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number"
+          },
+          "company": {
+            "$ref": "#/components/schemas/company"
+          },
+          "companyRef": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "description": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "locationRef": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "membershipRef": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "membershipRefCreator": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "chargeExpiringCredits",
+              "chargePermanentCredits",
+              "transferExpiringCredits",
+              "transferPermanentCredits"
+            ]
+          },
+          "user": {
+            "$ref": "#/components/schemas/user"
+          },
+          "userRef": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userRefCreator": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "transactionDayPasses": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number"
+          },
+          "company": {
+            "$ref": "#/components/schemas/company"
+          },
+          "companyRef": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "description": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "locationRef": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "membershipRef": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "membershipRefCreator": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "chargeExpiringDayPasses",
+              "transferExpiringDayPasses"
+            ]
+          },
+          "user": {
+            "$ref": "#/components/schemas/user"
+          },
+          "userRef": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userRefCreator": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
       "transaction": {
         "type": "object",
         "properties": {
@@ -4956,64 +5132,6 @@
           },
           "user": {
             "$ref": "#/components/schemas/user"
-          }
-        }
-      },
-      "transactionCredits": {
-        "type": "object",
-        "properties": {
-          "amount": {
-            "type": "number"
-          },
-          "company": {
-            "$ref": "#/components/schemas/company"
-          },
-          "companyRef": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "createDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "description": {
-            "type": "string"
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "locationRef": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "membershipRef": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "membershipRefCreator": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "type": {
-            "type": "string",
-            "enum": [
-              "chargeExpiringCredits",
-              "chargePermanentCredits",
-              "transferExpiringCredits",
-              "transferPermanentCredits"
-            ]
-          },
-          "user": {
-            "$ref": "#/components/schemas/user"
-          },
-          "userRef": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "userRefCreator": {
-            "type": "string",
-            "format": "uuid"
           }
         }
       },
@@ -5687,6 +5805,72 @@
               },
               "required": [
                 "company"
+              ]
+            }
+          }
+        }
+      },
+      "createDayPassesTransaction": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "transaction": {
+                  "type": "object",
+                  "properties": {
+                    "amount": {
+                      "type": "number"
+                    },
+                    "companyRef": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The company id to charge or transfer day passes to."
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "The description of the transaction."
+                    },
+                    "locationRef": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The location id where to create a company."
+                    },
+                    "membershipRef": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The membership id to charge or transfer day passes from."
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "chargeExpiringDayPasses",
+                        "transferExpiringDayPasses"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "locationRef",
+                    "amount",
+                    "type"
+                  ],
+                  "oneOf": [
+                    {
+                      "required": [
+                        "membershipRef"
+                      ]
+                    },
+                    {
+                      "required": [
+                        "companyRef"
+                      ]
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "transaction"
               ]
             }
           }
