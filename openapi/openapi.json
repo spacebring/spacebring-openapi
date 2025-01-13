@@ -3019,6 +3019,129 @@
       }
     },
     "/transactions/credits/v1": {
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Retrieve credits transactions",
+        "description": "Retrieve credits transactions. <h3>OAuth</h3>Required scopes: <code>transactions.readonly</code> or <code>transactions</code>",
+        "operationId": "getCreditsTransactions",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25
+            },
+            "description": "The number of items to return"
+          },
+          {
+            "in": "query",
+            "name": "nextPageToken",
+            "schema": {
+              "type": "string"
+            },
+            "description": "nextPageToken retrieved from a previous request"
+          },
+          {
+            "in": "query",
+            "name": "createDate",
+            "description": "The date filter of items.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "lte": {
+                  "format": "date-time",
+                  "type": "string",
+                  "description": "Get transactions with less createDate. Example: createDate[lte]=2021-05-21T10:00:00Z"
+                },
+                "gte": {
+                  "format": "date-time",
+                  "type": "string",
+                  "description": "Get transactions with greater createDate. Example: createDate[gte]=2021-05-21T10:00:00Z"
+                }
+              }
+            }
+          },
+          {
+            "in": "query",
+            "name": "membershipRef",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The id of the membership to get transactions for",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "companyRef",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The id of the company to get transactions for",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "transactions"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "transactions": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/transactionCreditsExpanded"
+                      }
+                    },
+                    "nextPageToken": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      },
       "post": {
         "tags": [
           "Transactions"
@@ -3081,6 +3204,129 @@
       }
     },
     "/transactions/day_passes/v1": {
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Retrieve day passes transactions",
+        "description": "Retrieve day passes transactions. <h3>OAuth</h3>Required scopes: <code>transactions.readonly</code> or <code>transactions</code>",
+        "operationId": "getDayPassesTransactions",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25
+            },
+            "description": "The number of items to return"
+          },
+          {
+            "in": "query",
+            "name": "nextPageToken",
+            "schema": {
+              "type": "string"
+            },
+            "description": "nextPageToken retrieved from a previous request"
+          },
+          {
+            "in": "query",
+            "name": "createDate",
+            "description": "The date filter of items.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "lte": {
+                  "format": "date-time",
+                  "type": "string",
+                  "description": "Get transactions with less createDate. Example: createDate[lte]=2021-05-21T10:00:00Z"
+                },
+                "gte": {
+                  "format": "date-time",
+                  "type": "string",
+                  "description": "Get transactions with greater createDate. Example: createDate[gte]=2021-05-21T10:00:00Z"
+                }
+              }
+            }
+          },
+          {
+            "in": "query",
+            "name": "membershipRef",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The id of the membership to get transactions for",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "companyRef",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The id of the company to get transactions for",
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "transactions"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "transactions": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/transactionDayPassesExpanded"
+                      }
+                    },
+                    "nextPageToken": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      },
       "post": {
         "tags": [
           "Transactions"
@@ -4819,6 +5065,170 @@
           }
         }
       },
+      "transactionCreditsExpanded": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number"
+          },
+          "booking": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "resource": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "title": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "company": {
+            "$ref": "#/components/schemas/company"
+          },
+          "companyRef": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "locationRef": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "membershipRefCreator": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "membershipRefOwner": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "order": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "option": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              },
+              "product": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "title": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "refund": {
+            "type": "object",
+            "properties": {
+              "amount": {
+                "type": "number"
+              },
+              "createDate": {
+                "type": "string",
+                "format": "date-time"
+              }
+            }
+          },
+          "ticket": {
+            "type": "object",
+            "properties": {
+              "createDate": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "event": {
+                "type": "object",
+                "properties": {
+                  "endDate": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "startDate": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "title": {
+                    "type": "string"
+                  }
+                }
+              },
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "booking",
+              "chargeExpiringCredits",
+              "chargePermanentCredits",
+              "creditPackage",
+              "eventTicket",
+              "order",
+              "refund",
+              "subscriptionExpiration",
+              "subscriptionRenewal",
+              "transferExpiringCredits",
+              "transferPermanentCredits"
+            ]
+          },
+          "userCreator": {
+            "$ref": "#/components/schemas/user"
+          },
+          "userOwner": {
+            "$ref": "#/components/schemas/user"
+          },
+          "userRefCreator": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "userRefOwner": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
       "transactionCredits": {
         "type": "object",
         "properties": {
@@ -4874,6 +5284,99 @@
           "userRefCreator": {
             "type": "string",
             "format": "uuid"
+          }
+        }
+      },
+      "transactionDayPassesExpanded": {
+        "type": "object",
+        "properties": {
+          "amount": {
+            "type": "number"
+          },
+          "booking": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "format": "uuid",
+                "type": "string"
+              },
+              "resource": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "format": "uuid",
+                    "type": "string"
+                  },
+                  "title": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "company": {
+            "$ref": "#/components/schemas/company"
+          },
+          "companyRef": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "createDate": {
+            "format": "date-time",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "locationRef": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "membershipRefCreator": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "membershipRefOwner": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "refund": {
+            "type": "object",
+            "properties": {
+              "amount": {
+                "type": "number"
+              },
+              "createDate": {
+                "format": "date-time",
+                "type": "string"
+              }
+            }
+          },
+          "type": {
+            "enum": [
+              "booking",
+              "chargeExpiringDayPasses",
+              "refund",
+              "subscriptionExpiration",
+              "subscriptionRenewal",
+              "transferExpiringDayPasses"
+            ],
+            "type": "string"
+          },
+          "userCreator": {
+            "$ref": "#/components/schemas/user"
+          },
+          "userOwner": {
+            "$ref": "#/components/schemas/user"
+          },
+          "userRefCreator": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "userRefOwner": {
+            "format": "uuid",
+            "type": "string"
           }
         }
       },
