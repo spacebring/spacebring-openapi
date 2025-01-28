@@ -4992,6 +4992,9 @@
           },
           "user": {
             "$ref": "#/components/schemas/user"
+          },
+          "userCreator": {
+            "$ref": "#/components/schemas/user"
           }
         }
       },

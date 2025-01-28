@@ -3236,6 +3236,8 @@ components:
           type: string
         user:
           $ref: '#/components/schemas/user'
+        userCreator:
+          $ref: '#/components/schemas/user'
     ticket:
       type: object
       properties:
