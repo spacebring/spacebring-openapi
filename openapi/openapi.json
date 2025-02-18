@@ -3520,6 +3520,117 @@
       }
     },
     "/visitors/visits/v1": {
+      "get": {
+        "tags": [
+          "Visitors"
+        ],
+        "summary": "Retrieve visits",
+        "description": "Retrieve visits. <h3>OAuth</h3>Required scopes: <code>visitors.readonly</code> or <code>visitors</code>",
+        "operationId": "getVisits",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "locationRef",
+            "description": "The id of the location.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "createDate",
+            "description": "The date filter of items.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "lte": {
+                  "format": "date-time",
+                  "type": "string",
+                  "description": "Get visits with less or equal create date. Example: createDate[lte]=2021-05-21T10:00:00Z"
+                },
+                "gte": {
+                  "format": "date-time",
+                  "type": "string",
+                  "description": "Get visits with greater or equal create date. Example: createDate[gte]=2021-05-21T10:00:00Z"
+                }
+              }
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25
+            },
+            "description": "The number of items to return"
+          },
+          {
+            "in": "query",
+            "name": "nextPageToken",
+            "schema": {
+              "type": "string"
+            },
+            "description": "nextPageToken retrieved from a previous request"
+          },
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "visitors.readonly",
+              "visitors"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "subscriptions": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/visit"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      },
       "post": {
         "tags": [
           "Visitors"
