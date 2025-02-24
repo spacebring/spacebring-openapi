@@ -5221,6 +5221,9 @@
             "type": "string",
             "format": "uuid"
           },
+          "expiringAmount": {
+            "type": "number"
+          },
           "locationRef": {
             "type": "string",
             "format": "uuid"
@@ -5265,6 +5268,9 @@
                 }
               }
             }
+          },
+          "permanentAmount": {
+            "type": "number"
           },
           "refund": {
             "type": "object",
