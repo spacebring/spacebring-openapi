@@ -2150,6 +2150,18 @@ paths:
               - pending
               - processing
               - succeeded
+        - name: type
+          in: query
+          description: The type of transactions
+          schema:
+            type: string
+            enum:
+              - booking
+              - creditPackage
+              - eventTicket
+              - invoice
+              - order
+              - subscription
         - in: query
           name: createDate
           description: The date filter of items.
