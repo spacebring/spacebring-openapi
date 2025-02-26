@@ -935,6 +935,68 @@
         }
       }
     },
+    "/events/v1": {
+      "post": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "Create event",
+        "description": "Create a event. <h3>OAuth</h3>Required scopes: <code>events</code>",
+        "operationId": "createEvent",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/createEvent"
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "events"
+            ]
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "event": {
+                      "$ref": "#/components/schemas/event"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/events/tickets/v1": {
       "get": {
         "tags": [
@@ -4042,6 +4104,143 @@
           }
         }
       },
+      "event": {
+        "type": "object",
+        "properties": {
+          "applicationType": {
+            "type": "string",
+            "enum": [
+              "purchase",
+              "none"
+            ]
+          },
+          "attendeesCount": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "cancelDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "confirmationEmailEnabled": {
+            "type": "boolean"
+          },
+          "confirmationEmailTemplate": {
+            "type": "string"
+          },
+          "createDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "creditsPrice": {
+            "type": "number"
+          },
+          "creditsPriceDiscounted": {
+            "type": "number"
+          },
+          "customTaxEnabled": {
+            "type": "boolean"
+          },
+          "customTaxRate": {
+            "type": "number"
+          },
+          "description": {
+            "type": "string"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "hasLimitedAttendees": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "imageKey": {
+            "type": "string"
+          },
+          "imageUrl": {
+            "type": "string"
+          },
+          "isCreditsEnabled": {
+            "type": "boolean"
+          },
+          "isJoined": {
+            "type": "boolean"
+          },
+          "isMoneyEnabled": {
+            "type": "boolean"
+          },
+          "locale": {
+            "type": "string"
+          },
+          "location": {
+            "type": "string"
+          },
+          "maxAttendees": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "moneyPrice": {
+            "type": "number"
+          },
+          "moneyPriceDiscounted": {
+            "type": "number"
+          },
+          "networkRef": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "organization": {
+            "type": "object",
+            "properties": {
+              "timezoneId": {
+                "type": "string"
+              }
+            }
+          },
+          "organizationRef": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "refundThreshold": {
+            "type": "string",
+            "enum": [
+              "noRefund",
+              "fifteenMinutes",
+              "thirtyMinutes",
+              "oneHour",
+              "twoHours",
+              "fourHours",
+              "sixHours",
+              "twelveHours",
+              "oneDay",
+              "twoDays",
+              "oneWeek",
+              "twoWeeks",
+              "fourWeeks"
+            ]
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "title": {
+            "type": "string"
+          },
+          "visibilityType": {
+            "type": "string",
+            "enum": [
+              "public",
+              "admins",
+              "networkMembers",
+              "members"
+            ]
+          }
+        }
+      },
       "eventTicket": {
         "type": "object",
         "properties": {
@@ -5920,6 +6119,123 @@
               },
               "required": [
                 "company"
+              ]
+            }
+          }
+        }
+      },
+      "createEvent": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "event": {
+                  "type": "object",
+                  "properties": {
+                    "applicationType": {
+                      "type": "string",
+                      "enum": [
+                        "purchase",
+                        "none"
+                      ]
+                    },
+                    "endDate": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "limitedAttendees": {
+                      "type": "object",
+                      "properties": {
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "limit": {
+                          "type": "number",
+                          "minimum": 0
+                        }
+                      }
+                    },
+                    "locationRef": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "price": {
+                      "type": "object",
+                      "properties": {
+                        "credits": {
+                          "type": "object",
+                          "properties": {
+                            "enabled": {
+                              "type": "boolean"
+                            },
+                            "amount": {
+                              "type": "number",
+                              "minimum": 0
+                            }
+                          }
+                        },
+                        "money": {
+                          "type": "object",
+                          "properties": {
+                            "enabled": {
+                              "type": "boolean"
+                            },
+                            "amount": {
+                              "type": "number",
+                              "minimum": 0
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "refundThreshold": {
+                      "type": "string",
+                      "enum": [
+                        "noRefund",
+                        "fifteenMinutes",
+                        "thirtyMinutes",
+                        "oneHour",
+                        "twoHours",
+                        "fourHours",
+                        "sixHours",
+                        "twelveHours",
+                        "oneDay",
+                        "twoDays",
+                        "oneWeek",
+                        "twoWeeks",
+                        "fourWeeks"
+                      ]
+                    },
+                    "startDate": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "title": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "visibilityType": {
+                      "type": "string",
+                      "enum": [
+                        "public",
+                        "admins",
+                        "networkMembers",
+                        "members"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "endDate",
+                    "startDate",
+                    "locationRef",
+                    "title"
+                  ]
+                }
+              },
+              "required": [
+                "event"
               ]
             }
           }
