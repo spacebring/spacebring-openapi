@@ -2606,74 +2606,56 @@ components:
     event:
       type: object
       properties:
+        address:
+          type: string
         applicationType:
           type: string
           enum:
             - purchase
             - none
-        attendeesCount:
-          type: integer
-          minimum: 0
-        cancelDate:
-          type: string
-          format: date-time
-        confirmationEmailEnabled:
-          type: boolean
-        confirmationEmailTemplate:
-          type: string
         createDate:
           type: string
           format: date-time
-        creditsPrice:
-          type: number
-        creditsPriceDiscounted:
-          type: number
-        customTaxEnabled:
-          type: boolean
-        customTaxRate:
-          type: number
         description:
           type: string
         endDate:
           type: string
           format: date-time
-        hasLimitedAttendees:
-          type: boolean
         id:
           type: string
           format: uuid
-        imageKey:
-          type: string
         imageUrl:
           type: string
-        isCreditsEnabled:
-          type: boolean
-        isJoined:
-          type: boolean
-        isMoneyEnabled:
-          type: boolean
-        locale:
+        limitedAttendees:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+            limit:
+              type: integer
+        locationRef:
           type: string
-        location:
-          type: string
-        maxAttendees:
-          type: integer
-          minimum: 0
-        moneyPrice:
-          type: number
-        moneyPriceDiscounted:
-          type: number
+          format: uuid
         networkRef:
           type: string
           format: uuid
-        organization:
+        price:
           type: object
           properties:
-            timezoneId:
-              type: string
-        organizationRef:
-          type: string
-          format: uuid
+            credits:
+              type: object
+              properties:
+                amount:
+                  type: number
+                enabled:
+                  type: boolean
+            money:
+              type: object
+              properties:
+                amount:
+                  type: number
+                enabled:
+                  type: boolean
         refundThreshold:
           type: string
           enum:
@@ -4035,6 +4017,8 @@ components:
               event:
                 type: object
                 properties:
+                  address:
+                    type: string
                   applicationType:
                     type: string
                     enum:

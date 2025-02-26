@@ -4107,6 +4107,9 @@
       "event": {
         "type": "object",
         "properties": {
+          "address": {
+            "type": "string"
+          },
           "applicationType": {
             "type": "string",
             "enum": [
@@ -4114,35 +4117,9 @@
               "none"
             ]
           },
-          "attendeesCount": {
-            "type": "integer",
-            "minimum": 0
-          },
-          "cancelDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "confirmationEmailEnabled": {
-            "type": "boolean"
-          },
-          "confirmationEmailTemplate": {
-            "type": "string"
-          },
           "createDate": {
             "type": "string",
             "format": "date-time"
-          },
-          "creditsPrice": {
-            "type": "number"
-          },
-          "creditsPriceDiscounted": {
-            "type": "number"
-          },
-          "customTaxEnabled": {
-            "type": "boolean"
-          },
-          "customTaxRate": {
-            "type": "number"
           },
           "description": {
             "type": "string"
@@ -4151,59 +4128,58 @@
             "type": "string",
             "format": "date-time"
           },
-          "hasLimitedAttendees": {
-            "type": "boolean"
-          },
           "id": {
             "type": "string",
             "format": "uuid"
           },
-          "imageKey": {
-            "type": "string"
-          },
           "imageUrl": {
             "type": "string"
           },
-          "isCreditsEnabled": {
-            "type": "boolean"
+          "limitedAttendees": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean"
+              },
+              "limit": {
+                "type": "integer"
+              }
+            }
           },
-          "isJoined": {
-            "type": "boolean"
-          },
-          "isMoneyEnabled": {
-            "type": "boolean"
-          },
-          "locale": {
-            "type": "string"
-          },
-          "location": {
-            "type": "string"
-          },
-          "maxAttendees": {
-            "type": "integer",
-            "minimum": 0
-          },
-          "moneyPrice": {
-            "type": "number"
-          },
-          "moneyPriceDiscounted": {
-            "type": "number"
+          "locationRef": {
+            "type": "string",
+            "format": "uuid"
           },
           "networkRef": {
             "type": "string",
             "format": "uuid"
           },
-          "organization": {
+          "price": {
             "type": "object",
             "properties": {
-              "timezoneId": {
-                "type": "string"
+              "credits": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "number"
+                  },
+                  "enabled": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "money": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "number"
+                  },
+                  "enabled": {
+                    "type": "boolean"
+                  }
+                }
               }
             }
-          },
-          "organizationRef": {
-            "type": "string",
-            "format": "uuid"
           },
           "refundThreshold": {
             "type": "string",
@@ -6134,6 +6110,9 @@
                 "event": {
                   "type": "object",
                   "properties": {
+                    "address": {
+                      "type": "string"
+                    },
                     "applicationType": {
                       "type": "string",
                       "enum": [
