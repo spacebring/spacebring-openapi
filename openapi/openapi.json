@@ -4107,9 +4107,6 @@
       "event": {
         "type": "object",
         "properties": {
-          "address": {
-            "type": "string"
-          },
           "applicationType": {
             "type": "string",
             "enum": [
@@ -4204,6 +4201,9 @@
             "format": "date-time"
           },
           "title": {
+            "type": "string"
+          },
+          "venue": {
             "type": "string"
           },
           "visibilityType": {
@@ -6110,9 +6110,6 @@
                 "event": {
                   "type": "object",
                   "properties": {
-                    "address": {
-                      "type": "string"
-                    },
                     "applicationType": {
                       "type": "string",
                       "enum": [
@@ -6194,6 +6191,9 @@
                     "title": {
                       "type": "string",
                       "minLength": 1
+                    },
+                    "venue": {
+                      "type": "string"
                     },
                     "visibilityType": {
                       "type": "string",

@@ -2606,8 +2606,6 @@ components:
     event:
       type: object
       properties:
-        address:
-          type: string
         applicationType:
           type: string
           enum:
@@ -2676,6 +2674,8 @@ components:
           type: string
           format: date-time
         title:
+          type: string
+        venue:
           type: string
         visibilityType:
           type: string
@@ -4017,8 +4017,6 @@ components:
               event:
                 type: object
                 properties:
-                  address:
-                    type: string
                   applicationType:
                     type: string
                     enum:
@@ -4079,6 +4077,8 @@ components:
                   title:
                     type: string
                     minLength: 1
+                  venue:
+                    type: string
                   visibilityType:
                     type: string
                     enum:
