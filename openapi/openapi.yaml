@@ -1918,6 +1918,64 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
+  /support/tickets/v1/{id}/status:
+    put:
+      tags:
+        - Support Tickets
+      summary: Update support ticket status
+      description: 'Update support ticket status. <h3>OAuth</h3>Required scopes: <code>support</code>'
+      operationId: updateSupportTicketStatus
+      parameters:
+        - name: id
+          in: path
+          description: The id of the ticket.
+          schema:
+            format: uuid
+            type: string
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum:
+                    - new
+                    - inProgress
+                    - solved
+                    - closed
+              required:
+                - status
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - support
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ticket:
+                    $ref: '#/components/schemas/ticket'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
   /transactions/credits/v1:
     get:
       tags:
