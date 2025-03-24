@@ -5,51 +5,6 @@ info:
   termsOfService: https://www.spacebring.com/terms
 servers:
   - url: https://api.spacebring.com
-tags:
-  - name: Benefits
-    description: \"Benefit\" resource represents a benefit in a certain location.
-  - name: Benefit Applications
-    description: \"Benefit Applications\" resource represents an application for a benefit in a certain location.
-  - name: Companies
-    description: \"Company\" resource represents a company in a certain location.
-  - name: Desk Bookings
-    description: Spacebring allows to book desks. \"Desk Booking\" resource represents a booking of a desk in a certain location.
-  - name: Desks
-    description: Spacebring allows to book desks. \"Desk\" resource represents an actual desk in a certain location.
-  - name: Event Tickets
-    description: Spacebring allows to organize events. When users join events, they get an event ticket. The \"Event Ticket\" resource represents a ticket for an event in a certain location.
-  - name: Feed Posts
-    description: Spacebring has a community feed called Feed. Users can create posts on Feed. The \"Feed Post\" resource represents a post on Feed in a certain location.
-  - name: Invoices
-    description: Spacebring has a built-in invoicing system. The "Invoice" resource represents an invoice issued for a member or a company in a certain location.
-  - name: Invoice Items
-    description: \"Invoice Item\" resource represents an item of an invoice.
-  - name: Locations
-    description: Spacebring supports multiple locations. The \"Location\" resource represents a location on Spacebring.
-  - name: Membership Requests
-    description: When users request to join a certain location, Spacebring creates a request for administrators to approve or reject. The \"Membership Request\" resource represents such a request to join a certain location.
-  - name: Memberships
-    description: When users join a certain location, they obtain membership there (become members). The \"Membership\" resource represents a mutual connection between a member and a certain location.
-  - name: Networks
-    description: Spacebring allows users to join multiple locations. The \"Network\" resource represents a network of locations that a user is a member of.
-  - name: Orders
-    description: Spacebring allows users to buy products in shop. The \"Order\" resource represents an actual order for a certain product in shop.
-  - name: Products
-    description: Spacebring allows users to buy products in shop. The \"Products\" resource represents an actual product in a certain location.
-  - name: Room Bookings
-    description: Spacebring allows users to book meeting rooms. The \"Room Booking\" resource represents a booking of a room in a certain location.
-  - name: Rooms
-    description: Spacebring allows users to book meeting rooms. The \"Room\" resource represents an actual meeting room in a certain location.
-  - name: Tickets
-    description: Spacebring allows users to report issues to administrators. The \"Ticket\" resource represents a support ticket in a certain location.
-  - name: Transactions
-    description: When users pay for something on Spacebring, a corresponding transaction is created. The \"Transaction\" resource represents a payment in a certain location.
-  - name: Users
-    description: The \"User\" resource represents a user of your application. Users can perform a variety of actions on Spacebring, such as making a booking, purchase an event ticket, request to join a location, and more.
-  - name: Visits
-    description: Spacebring allows members to register visitors. The \"Visit\" resource represents a preliminary registration of a visit in a certain location.
-  - name: Subscriptions
-    description: Spacebring allows users and companies to have subscriptions. The \"Subscription\" resource represents a recurring membership plan of a specific user or company in a certain location.
 paths:
   /benefits/applications/v1:
     get:
