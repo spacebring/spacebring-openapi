@@ -9,7 +9,7 @@ paths:
   /benefits/applications/v1:
     get:
       tags:
-        - Benefit Applications
+        - Benefit applications
       summary: Retrieve benefit applications
       description: 'Retrieve all benefit applications in the location or for certain benefit. <h3>OAuth</h3>Required scopes: <code>benefits.readonly</code> or <code>benefits</code>'
       operationId: getBenefitApplications
@@ -575,7 +575,7 @@ paths:
   /events/tickets/v1:
     get:
       tags:
-        - Event Tickets
+        - Event tickets
       summary: Retrieve event tickets
       description: 'Retrieve all event tickets. <h3>OAuth</h3>Required scopes: <code>events.readonly</code> or <code>events</code>'
       operationId: getEventTickets
@@ -636,7 +636,7 @@ paths:
   /feed/posts/v1:
     post:
       tags:
-        - Feed Posts
+        - Feed posts
       summary: Create a feed post
       description: 'Create a feed post. <h3>OAuth</h3>Required scopes: <code>feed</code>'
       operationId: createFeedPost
@@ -891,7 +891,7 @@ paths:
   /invoices/items/v1:
     post:
       tags:
-        - Invoice Items
+        - Invoice items
       summary: Create a invoice item
       description: 'Create an item in an invoice. <h3>OAuth</h3>Required scopes: <code>invoices</code>'
       operationId: createInvoiceItem
@@ -1815,7 +1815,7 @@ paths:
   /support/tickets/v1:
     get:
       tags:
-        - Support Tickets
+        - Support tickets
       summary: Retrieve support tickets
       description: 'Retrieve all support tickets. <h3>OAuth</h3>Required scopes: <code>support.readonly</code> or <code>support</code>'
       operationId: getSupportTickets
@@ -1876,7 +1876,7 @@ paths:
   /support/tickets/v1/{id}/status:
     put:
       tags:
-        - Support Tickets
+        - Support tickets
       summary: Update support ticket status
       description: 'Update support ticket status. <h3>OAuth</h3>Required scopes: <code>support</code>'
       operationId: updateSupportTicketStatus
