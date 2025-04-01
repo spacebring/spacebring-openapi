@@ -4820,6 +4820,15 @@
               }
             }
           },
+          "status": {
+            "type": "string",
+            "enum": [
+              "new",
+              "inProgress",
+              "completed",
+              "canceled"
+            ]
+          },
           "user": {
             "$ref": "#/components/schemas/user"
           }
