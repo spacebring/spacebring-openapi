@@ -4382,6 +4382,34 @@
           "description": {
             "type": "string"
           },
+          "discountedAmount": {
+            "type": "number"
+          },
+          "discounts": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "coupon": {
+                  "type": "object",
+                  "properties": {
+                    "amountOff": {
+                      "type": "number",
+                      "description": "One of amountOff or percentOff must be present."
+                    },
+                    "currencyCode": {
+                      "type": "string",
+                      "description": "Currency code exists if amountOff is present."
+                    },
+                    "percentOff": {
+                      "type": "number",
+                      "description": "One of amountOff or percentOff must be present."
+                    }
+                  }
+                }
+              }
+            }
+          },
           "id": {
             "type": "string",
             "format": "uuid"
@@ -4389,6 +4417,13 @@
           "invoiceRef": {
             "type": "string",
             "format": "uuid"
+          },
+          "netDiscountedAmount": {
+            "type": "number"
+          },
+          "netUnitAmount": {
+            "type": "number",
+            "format": "float"
           },
           "order": {
             "type": "object",
