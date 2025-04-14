@@ -3999,6 +3999,7 @@
             "type": "string",
             "enum": [
               "credits",
+              "dayPasses",
               "external",
               "flow",
               "fondy",
