@@ -4039,6 +4039,10 @@
             "format": "date-time",
             "type": "string"
           },
+          "deleteDate": {
+            "format": "date-time",
+            "type": "string"
+          },
           "endDate": {
             "format": "date-time",
             "type": "string"
