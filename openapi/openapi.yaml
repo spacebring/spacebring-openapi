@@ -247,7 +247,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  booking:
+                  bookings:
                     type: array
                     items:
                       $ref: '#/components/schemas/booking'
