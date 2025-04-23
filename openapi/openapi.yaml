@@ -43,6 +43,15 @@ paths:
             type: string
           description: nextPageToken retrieved from a previous request
           required: false
+        - in: query
+          name: categoryRef
+          schema:
+            type: array
+            items:
+              type: string
+              format: uuid
+          description: The ids of the categories to filter by
+          required: false
         - name: userRef
           in: query
           schema:
@@ -75,6 +84,50 @@ paths:
                       $ref: '#/components/schemas/benefitApplication'
                   nextPageToken:
                     type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /benefits/applications/v1/{id}:
+    get:
+      tags:
+        - Benefit applications
+      summary: Retrieve a benefit application
+      description: 'Retrieve a benefit application by id. <h3>OAuth</h3>Required scopes: <code>benefits.readonly</code> or <code>benefits</code>'
+      operationId: getBenefitApplication
+      parameters:
+        - in: path
+          name: id
+          description: The id of the benefit application
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - benefits.readonly
+            - benefits
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  application:
+                    type: object
+                    $ref: '#/components/schemas/benefitApplication'
         '400':
           description: Bad Request
           content:
@@ -2455,9 +2508,16 @@ components:
         benefit:
           type: object
           properties:
+            description:
+              type: string
             id:
               type: string
               format: uuid
+            mediaUrl:
+              type: string
+              format: uri
+            subtitle:
+              type: string
             title:
               type: string
         comment:
@@ -2481,6 +2541,14 @@ components:
           properties:
             about:
               type: string
+            blocked:
+              type: boolean
+            createDate:
+              type: string
+              format: date-time
+            deleteDate:
+              type: string
+              format: date-time
             email:
               type: string
               format: email
@@ -2494,6 +2562,8 @@ components:
             photoUrl:
               type: string
               format: uri
+            restricted:
+              type: boolean
             surname:
               type: string
     responseError:
