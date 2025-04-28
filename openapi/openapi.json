@@ -5989,6 +5989,17 @@
                     "type": "string"
                   }
                 }
+              },
+              "price": {
+                "type": "object",
+                "properties": {
+                  "netAmount": {
+                    "type": "number"
+                  },
+                  "taxAmount": {
+                    "type": "number"
+                  }
+                }
               }
             }
           },
@@ -6004,6 +6015,17 @@
             "properties": {
               "amount": {
                 "type": "number"
+              },
+              "price": {
+                "type": "object",
+                "properties": {
+                  "netAmount": {
+                    "type": "number"
+                  },
+                  "taxAmount": {
+                    "type": "number"
+                  }
+                }
               }
             }
           },
@@ -6050,6 +6072,17 @@
                   },
                   "name": {
                     "type": "string"
+                  }
+                }
+              },
+              "price": {
+                "type": "object",
+                "properties": {
+                  "netAmount": {
+                    "type": "number"
+                  },
+                  "taxAmount": {
+                    "type": "number"
                   }
                 }
               },
@@ -6154,6 +6187,17 @@
                   },
                   "title": {
                     "type": "string"
+                  }
+                }
+              },
+              "price": {
+                "type": "object",
+                "properties": {
+                  "netAmount": {
+                    "type": "number"
+                  },
+                  "taxAmount": {
+                    "type": "number"
                   }
                 }
               }

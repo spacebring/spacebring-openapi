@@ -3935,6 +3935,13 @@ components:
                   format: uuid
                 title:
                   type: string
+            price:
+              type: object
+              properties:
+                netAmount:
+                  type: number
+                taxAmount:
+                  type: number
         company:
           $ref: '#/components/schemas/company'
         createDate:
@@ -3945,6 +3952,13 @@ components:
           properties:
             amount:
               type: number
+            price:
+              type: object
+              properties:
+                netAmount:
+                  type: number
+                taxAmount:
+                  type: number
         currencyCode:
           type: string
         id:
@@ -3978,6 +3992,13 @@ components:
                   format: uuid
                 name:
                   type: string
+            price:
+              type: object
+              properties:
+                netAmount:
+                  type: number
+                taxAmount:
+                  type: number
             product:
               type: object
               properties:
@@ -4053,6 +4074,13 @@ components:
                   format: date-time
                 title:
                   type: string
+            price:
+              type: object
+              properties:
+                netAmount:
+                  type: number
+                taxAmount:
+                  type: number
         type:
           type: string
         user:
