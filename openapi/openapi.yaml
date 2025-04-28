@@ -2502,6 +2502,10 @@ components:
             visitors.readonly: Read visitors
             visitors: Read and write visitors
   schemas:
+    dateSchema:
+      format: date-time
+      type: string
+      description: The date and time in ISO 8601 format, e.g. 2021-05-21T10:00:00Z
     benefitApplication:
       type: object
       properties:
@@ -2523,8 +2527,7 @@ components:
         comment:
           type: string
         createDate:
-          type: string
-          format: date-time
+          $ref: '#/components/schemas/dateSchema'
         id:
           type: string
           format: uuid
@@ -2544,11 +2547,9 @@ components:
             blocked:
               type: boolean
             createDate:
-              type: string
-              format: date-time
+              $ref: '#/components/schemas/dateSchema'
             deleteDate:
-              type: string
-              format: date-time
+              $ref: '#/components/schemas/dateSchema'
             email:
               type: string
               format: email
@@ -2580,8 +2581,7 @@ components:
           type: string
           format: uuid
         createDate:
-          format: date-time
-          type: string
+          $ref: '#/components/schemas/dateSchema'
         description:
           type: string
         id:
@@ -2674,14 +2674,11 @@ components:
               user:
                 $ref: '#/components/schemas/user'
         createDate:
-          format: date-time
-          type: string
+          $ref: '#/components/schemas/dateSchema'
         deleteDate:
-          format: date-time
-          type: string
+          $ref: '#/components/schemas/dateSchema'
         endDate:
-          format: date-time
-          type: string
+          $ref: '#/components/schemas/dateSchema'
         id:
           format: uuid
           type: string
@@ -2698,8 +2695,7 @@ components:
         seats:
           type: integer
         startDate:
-          format: date-time
-          type: string
+          $ref: '#/components/schemas/dateSchema'
         title:
           type: string
         userOwner:
@@ -2735,13 +2731,11 @@ components:
             - purchase
             - none
         createDate:
-          type: string
-          format: date-time
+          $ref: '#/components/schemas/dateSchema'
         description:
           type: string
         endDate:
-          type: string
-          format: date-time
+          $ref: '#/components/schemas/dateSchema'
         id:
           type: string
           format: uuid
@@ -2794,8 +2788,7 @@ components:
             - twoWeeks
             - fourWeeks
         startDate:
-          type: string
-          format: date-time
+          $ref: '#/components/schemas/dateSchema'
         title:
           type: string
         venue:
@@ -2811,20 +2804,17 @@ components:
       type: object
       properties:
         createDate:
-          format: date-time
-          type: string
+          $ref: '#/components/schemas/dateSchema'
         event:
           type: object
           properties:
             endDate:
-              format: date-time
-              type: string
+              $ref: '#/components/schemas/dateSchema'
             id:
               format: uuid
               type: string
             startDate:
-              format: date-time
-              type: string
+              $ref: '#/components/schemas/dateSchema'
             title:
               type: string
         id:
@@ -2849,8 +2839,7 @@ components:
       type: object
       properties:
         createDate:
-          format: date-time
-          type: string
+          $ref: '#/components/schemas/dateSchema'
         id:
           format: uuid
           type: string
@@ -2910,8 +2899,7 @@ components:
                     - parkingLot
                     - room
         createDate:
-          type: string
-          format: date-time
+          $ref: '#/components/schemas/dateSchema'
         creditPackage:
           type: object
           properties:
@@ -2996,8 +2984,7 @@ components:
           type: object
           properties:
             createDate:
-              type: string
-              format: date-time
+              $ref: '#/components/schemas/dateSchema'
             id:
               type: string
               format: uuid
@@ -3005,14 +2992,12 @@ components:
               type: object
               properties:
                 endDate:
-                  type: string
-                  format: date-time
+                  $ref: '#/components/schemas/dateSchema'
                 id:
                   type: string
                   format: uuid
                 startDate:
-                  type: string
-                  format: date-time
+                  $ref: '#/components/schemas/dateSchema'
                 title:
                   type: string
         type:
@@ -3039,19 +3024,16 @@ components:
           type: string
           format: uuid
         createDate:
-          type: string
-          format: date-time
+          $ref: '#/components/schemas/dateSchema'
         currencyCode:
           type: string
         dueDate:
-          type: string
-          format: date-time
+          $ref: '#/components/schemas/dateSchema'
         id:
           type: string
           format: uuid
         issueDate:
-          type: string
-          format: date-time
+          $ref: '#/components/schemas/dateSchema'
           description: Datetime when invoice was made ready for payment.
         items:
           type: array
@@ -3089,8 +3071,7 @@ components:
               type: number
               format: float
             createDate:
-              type: string
-              format: date-time
+              $ref: '#/components/schemas/dateSchema'
             id:
               type: string
               format: uuid
@@ -3136,16 +3117,14 @@ components:
         user:
           $ref: '#/components/schemas/user'
         voidDate:
-          type: string
-          format: date-time
+          $ref: '#/components/schemas/dateSchema'
     location:
       type: object
       properties:
         address:
           type: string
         createDate:
-          format: date-time
-          type: string
+          $ref: '#/components/schemas/dateSchema'
         currencyCode:
           type: string
         description:
@@ -3178,17 +3157,14 @@ components:
           format: uuid
           type: string
         createDate:
-          format: date-time
-          type: string
+          $ref: '#/components/schemas/dateSchema'
         deleteDate:
-          format: date-time
-          type: string
+          $ref: '#/components/schemas/dateSchema'
         id:
           format: uuid
           type: string
         invitationDate:
-          format: date-time
-          type: string
+          $ref: '#/components/schemas/dateSchema'
         locationRef:
           type: string
         metadata:
@@ -3274,8 +3250,7 @@ components:
       type: object
       properties:
         createDate:
-          type: string
-          format: date-time
+          $ref: '#/components/schemas/dateSchema'
         credits:
           type: number
         customTax:
@@ -3324,8 +3299,7 @@ components:
           format: uuid
           type: string
         createDate:
-          format: date-time
-          type: string
+          $ref: '#/components/schemas/dateSchema'
         description:
           type: string
         featured:
@@ -3347,8 +3321,7 @@ components:
               available:
                 type: boolean
               createDate:
-                format: date-time
-                type: string
+                $ref: '#/components/schemas/dateSchema'
               customTax:
                 type: object
                 properties:
@@ -3391,11 +3364,9 @@ components:
           type: string
           format: uuid
         privacyConsentDate:
-          type: string
-          format: date-time
+          $ref: '#/components/schemas/dateSchema'
         termsConsentDate:
-          type: string
-          format: date-time
+          $ref: '#/components/schemas/dateSchema'
         user:
           $ref: '#/components/schemas/user'
     resource:
@@ -3422,8 +3393,7 @@ components:
             interval:
               type: string
         createDate:
-          type: string
-          format: date-time
+          $ref: '#/components/schemas/dateSchema'
         credits:
           type: object
           properties:
@@ -3494,27 +3464,22 @@ components:
           type: string
           format: uuid
         createDate:
-          type: string
-          format: date-time
+          $ref: '#/components/schemas/dateSchema'
         credits:
           type: number
         currentInterval:
           type: object
           properties:
             endDate:
-              type: string
-              format: date-time
+              $ref: '#/components/schemas/dateSchema'
             startDate:
-              type: string
-              format: date-time
+              $ref: '#/components/schemas/dateSchema'
         dayPasses:
           type: integer
         deleteDate:
-          type: string
-          format: date-time
+          $ref: '#/components/schemas/dateSchema'
         endDate:
-          type: string
-          format: date-time
+          $ref: '#/components/schemas/dateSchema'
         id:
           type: string
           format: uuid
@@ -3559,8 +3524,7 @@ components:
           type: object
           properties:
             startDate:
-              type: string
-              format: date-time
+              $ref: '#/components/schemas/dateSchema'
         payWithInvoice:
           type: object
           properties:
@@ -3586,8 +3550,7 @@ components:
         price:
           type: number
         startDate:
-          type: string
-          format: date-time
+          $ref: '#/components/schemas/dateSchema'
         timezoneId:
           type: string
         user:
@@ -3598,8 +3561,7 @@ components:
       type: object
       properties:
         createDate:
-          format: date-time
-          type: string
+          $ref: '#/components/schemas/dateSchema'
         description:
           type: string
         id:
@@ -3642,8 +3604,7 @@ components:
             - temperatureAndVentilation
             - websiteAndApp
         updateDate:
-          format: date-time
-          type: string
+          $ref: '#/components/schemas/dateSchema'
         userAssignee:
           $ref: '#/components/schemas/user'
         userRequester:
@@ -3673,8 +3634,7 @@ components:
           type: string
           format: uuid
         createDate:
-          type: string
-          format: date-time
+          $ref: '#/components/schemas/dateSchema'
         id:
           type: string
           format: uuid
@@ -3719,26 +3679,22 @@ components:
             amount:
               type: number
             createDate:
-              type: string
-              format: date-time
+              $ref: '#/components/schemas/dateSchema'
         ticket:
           type: object
           properties:
             createDate:
-              type: string
-              format: date-time
+              $ref: '#/components/schemas/dateSchema'
             event:
               type: object
               properties:
                 endDate:
-                  type: string
-                  format: date-time
+                  $ref: '#/components/schemas/dateSchema'
                 id:
                   type: string
                   format: uuid
                 startDate:
-                  type: string
-                  format: date-time
+                  $ref: '#/components/schemas/dateSchema'
                 title:
                   type: string
             id:
@@ -3779,8 +3735,7 @@ components:
           type: string
           format: uuid
         createDate:
-          type: string
-          format: date-time
+          $ref: '#/components/schemas/dateSchema'
         description:
           type: string
         id:
@@ -3835,8 +3790,7 @@ components:
           format: uuid
           type: string
         createDate:
-          format: date-time
-          type: string
+          $ref: '#/components/schemas/dateSchema'
         id:
           format: uuid
           type: string
@@ -3855,8 +3809,7 @@ components:
             amount:
               type: number
             createDate:
-              format: date-time
-              type: string
+              $ref: '#/components/schemas/dateSchema'
         type:
           enum:
             - booking
@@ -3887,8 +3840,7 @@ components:
           type: string
           format: uuid
         createDate:
-          type: string
-          format: date-time
+          $ref: '#/components/schemas/dateSchema'
         description:
           type: string
         id:
@@ -3945,8 +3897,7 @@ components:
         company:
           $ref: '#/components/schemas/company'
         createDate:
-          type: string
-          format: date-time
+          $ref: '#/components/schemas/dateSchema'
         creditPackage:
           type: object
           properties:
@@ -4041,8 +3992,7 @@ components:
             amount:
               type: number
             createDate:
-              type: string
-              format: date-time
+              $ref: '#/components/schemas/dateSchema'
         status:
           type: string
           enum:
@@ -4055,8 +4005,7 @@ components:
           type: object
           properties:
             createDate:
-              type: string
-              format: date-time
+              $ref: '#/components/schemas/dateSchema'
             id:
               type: string
               format: uuid
@@ -4064,14 +4013,12 @@ components:
               type: object
               properties:
                 endDate:
-                  type: string
-                  format: date-time
+                  $ref: '#/components/schemas/dateSchema'
                 id:
                   type: string
                   format: uuid
                 startDate:
-                  type: string
-                  format: date-time
+                  $ref: '#/components/schemas/dateSchema'
                 title:
                   type: string
             price:
@@ -4094,17 +4041,13 @@ components:
         comment:
           type: string
         checkInDate:
-          format: date-time
-          type: string
+          $ref: '#/components/schemas/dateSchema'
         checkOutDate:
-          format: date-time
-          type: string
+          $ref: '#/components/schemas/dateSchema'
         createDate:
-          format: date-time
-          type: string
+          $ref: '#/components/schemas/dateSchema'
         date:
-          format: date-time
-          type: string
+          $ref: '#/components/schemas/dateSchema'
         id:
           format: uuid
           type: string
@@ -4142,8 +4085,7 @@ components:
                 type: object
                 properties:
                   endDate:
-                    format: date-time
-                    type: string
+                    $ref: '#/components/schemas/dateSchema'
                   memo:
                     type: string
                   resourceRef:
@@ -4151,8 +4093,7 @@ components:
                     format: uuid
                     description: The Resource id where to create a booking.
                   startDate:
-                    format: date-time
-                    type: string
+                    $ref: '#/components/schemas/dateSchema'
                   title:
                     type: string
                   membershipRefOwner:
@@ -4205,8 +4146,7 @@ components:
                       - purchase
                       - none
                   endDate:
-                    type: string
-                    format: date-time
+                    $ref: '#/components/schemas/dateSchema'
                   limitedAttendees:
                     type: object
                     properties:
@@ -4254,8 +4194,7 @@ components:
                       - twoWeeks
                       - fourWeeks
                   startDate:
-                    type: string
-                    format: date-time
+                    $ref: '#/components/schemas/dateSchema'
                   title:
                     type: string
                     minLength: 1
@@ -4520,11 +4459,9 @@ components:
                       - sixMonths
                       - year
                   startDate:
-                    type: string
-                    format: date
+                    $ref: '#/components/schemas/dateSchema'
                   endDate:
-                    type: string
-                    format: date
+                    $ref: '#/components/schemas/dateSchema'
                   items:
                     type: array
                     items:
@@ -4589,10 +4526,8 @@ components:
                 type: object
                 properties:
                   endDate:
-                    type: string
+                    $ref: '#/components/schemas/dateSchema'
                     nullable: true
-                    format: date-time
-                    description: The end date of the subscription. Can be null to keep the subscription active indefinitely.
             required:
               - subscription
     createCreditsTransaction:
@@ -4696,9 +4631,7 @@ components:
                   comment:
                     type: string
                   date:
-                    format: date-time
-                    type: string
-                    description: The date of visit.
+                    $ref: '#/components/schemas/dateSchema'
                   locationRef:
                     type: string
                     format: uuid

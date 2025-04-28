@@ -3961,6 +3961,11 @@
       }
     },
     "schemas": {
+      "dateSchema": {
+        "format": "date-time",
+        "type": "string",
+        "description": "The date and time in ISO 8601 format, e.g. 2021-05-21T10:00:00Z"
+      },
       "benefitApplication": {
         "type": "object",
         "properties": {
@@ -3990,8 +3995,7 @@
             "type": "string"
           },
           "createDate": {
-            "type": "string",
-            "format": "date-time"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "id": {
             "type": "string",
@@ -4018,12 +4022,10 @@
                 "type": "boolean"
               },
               "createDate": {
-                "type": "string",
-                "format": "date-time"
+                "$ref": "#/components/schemas/dateSchema"
               },
               "deleteDate": {
-                "type": "string",
-                "format": "date-time"
+                "$ref": "#/components/schemas/dateSchema"
               },
               "email": {
                 "type": "string",
@@ -4072,8 +4074,7 @@
             "format": "uuid"
           },
           "createDate": {
-            "format": "date-time",
-            "type": "string"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "description": {
             "type": "string"
@@ -4202,16 +4203,13 @@
             }
           },
           "createDate": {
-            "format": "date-time",
-            "type": "string"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "deleteDate": {
-            "format": "date-time",
-            "type": "string"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "endDate": {
-            "format": "date-time",
-            "type": "string"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "id": {
             "format": "uuid",
@@ -4235,8 +4233,7 @@
             "type": "integer"
           },
           "startDate": {
-            "format": "date-time",
-            "type": "string"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "title": {
             "type": "string"
@@ -4289,15 +4286,13 @@
             ]
           },
           "createDate": {
-            "type": "string",
-            "format": "date-time"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "description": {
             "type": "string"
           },
           "endDate": {
-            "type": "string",
-            "format": "date-time"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "id": {
             "type": "string",
@@ -4371,8 +4366,7 @@
             ]
           },
           "startDate": {
-            "type": "string",
-            "format": "date-time"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "title": {
             "type": "string"
@@ -4395,23 +4389,20 @@
         "type": "object",
         "properties": {
           "createDate": {
-            "format": "date-time",
-            "type": "string"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "event": {
             "type": "object",
             "properties": {
               "endDate": {
-                "format": "date-time",
-                "type": "string"
+                "$ref": "#/components/schemas/dateSchema"
               },
               "id": {
                 "format": "uuid",
                 "type": "string"
               },
               "startDate": {
-                "format": "date-time",
-                "type": "string"
+                "$ref": "#/components/schemas/dateSchema"
               },
               "title": {
                 "type": "string"
@@ -4449,8 +4440,7 @@
         "type": "object",
         "properties": {
           "createDate": {
-            "format": "date-time",
-            "type": "string"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "id": {
             "format": "uuid",
@@ -4536,8 +4526,7 @@
             }
           },
           "createDate": {
-            "type": "string",
-            "format": "date-time"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "creditPackage": {
             "type": "object",
@@ -4661,8 +4650,7 @@
             "type": "object",
             "properties": {
               "createDate": {
-                "type": "string",
-                "format": "date-time"
+                "$ref": "#/components/schemas/dateSchema"
               },
               "id": {
                 "type": "string",
@@ -4672,16 +4660,14 @@
                 "type": "object",
                 "properties": {
                   "endDate": {
-                    "type": "string",
-                    "format": "date-time"
+                    "$ref": "#/components/schemas/dateSchema"
                   },
                   "id": {
                     "type": "string",
                     "format": "uuid"
                   },
                   "startDate": {
-                    "type": "string",
-                    "format": "date-time"
+                    "$ref": "#/components/schemas/dateSchema"
                   },
                   "title": {
                     "type": "string"
@@ -4722,23 +4708,20 @@
             "format": "uuid"
           },
           "createDate": {
-            "type": "string",
-            "format": "date-time"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "currencyCode": {
             "type": "string"
           },
           "dueDate": {
-            "type": "string",
-            "format": "date-time"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "id": {
             "type": "string",
             "format": "uuid"
           },
           "issueDate": {
-            "type": "string",
-            "format": "date-time",
+            "$ref": "#/components/schemas/dateSchema",
             "description": "Datetime when invoice was made ready for payment."
           },
           "items": {
@@ -4787,8 +4770,7 @@
                 "format": "float"
               },
               "createDate": {
-                "type": "string",
-                "format": "date-time"
+                "$ref": "#/components/schemas/dateSchema"
               },
               "id": {
                 "type": "string",
@@ -4848,8 +4830,7 @@
             "$ref": "#/components/schemas/user"
           },
           "voidDate": {
-            "type": "string",
-            "format": "date-time"
+            "$ref": "#/components/schemas/dateSchema"
           }
         }
       },
@@ -4860,8 +4841,7 @@
             "type": "string"
           },
           "createDate": {
-            "format": "date-time",
-            "type": "string"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "currencyCode": {
             "type": "string"
@@ -4907,20 +4887,17 @@
             "type": "string"
           },
           "createDate": {
-            "format": "date-time",
-            "type": "string"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "deleteDate": {
-            "format": "date-time",
-            "type": "string"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "id": {
             "format": "uuid",
             "type": "string"
           },
           "invitationDate": {
-            "format": "date-time",
-            "type": "string"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "locationRef": {
             "type": "string"
@@ -5044,8 +5021,7 @@
         "type": "object",
         "properties": {
           "createDate": {
-            "type": "string",
-            "format": "date-time"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "credits": {
             "type": "number"
@@ -5116,8 +5092,7 @@
             "type": "string"
           },
           "createDate": {
-            "format": "date-time",
-            "type": "string"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "description": {
             "type": "string"
@@ -5146,8 +5121,7 @@
                   "type": "boolean"
                 },
                 "createDate": {
-                  "format": "date-time",
-                  "type": "string"
+                  "$ref": "#/components/schemas/dateSchema"
                 },
                 "customTax": {
                   "type": "object",
@@ -5216,12 +5190,10 @@
             "format": "uuid"
           },
           "privacyConsentDate": {
-            "type": "string",
-            "format": "date-time"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "termsConsentDate": {
-            "type": "string",
-            "format": "date-time"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "user": {
             "$ref": "#/components/schemas/user"
@@ -5263,8 +5235,7 @@
             }
           },
           "createDate": {
-            "type": "string",
-            "format": "date-time"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "credits": {
             "type": "object",
@@ -5371,8 +5342,7 @@
             "format": "uuid"
           },
           "createDate": {
-            "type": "string",
-            "format": "date-time"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "credits": {
             "type": "number"
@@ -5381,12 +5351,10 @@
             "type": "object",
             "properties": {
               "endDate": {
-                "type": "string",
-                "format": "date-time"
+                "$ref": "#/components/schemas/dateSchema"
               },
               "startDate": {
-                "type": "string",
-                "format": "date-time"
+                "$ref": "#/components/schemas/dateSchema"
               }
             }
           },
@@ -5394,12 +5362,10 @@
             "type": "integer"
           },
           "deleteDate": {
-            "type": "string",
-            "format": "date-time"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "endDate": {
-            "type": "string",
-            "format": "date-time"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "id": {
             "type": "string",
@@ -5464,8 +5430,7 @@
             "type": "object",
             "properties": {
               "startDate": {
-                "type": "string",
-                "format": "date-time"
+                "$ref": "#/components/schemas/dateSchema"
               }
             }
           },
@@ -5504,8 +5469,7 @@
             "type": "number"
           },
           "startDate": {
-            "type": "string",
-            "format": "date-time"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "timezoneId": {
             "type": "string"
@@ -5522,8 +5486,7 @@
         "type": "object",
         "properties": {
           "createDate": {
-            "format": "date-time",
-            "type": "string"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "description": {
             "type": "string"
@@ -5577,8 +5540,7 @@
             ]
           },
           "updateDate": {
-            "format": "date-time",
-            "type": "string"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "userAssignee": {
             "$ref": "#/components/schemas/user"
@@ -5623,8 +5585,7 @@
             "format": "uuid"
           },
           "createDate": {
-            "type": "string",
-            "format": "date-time"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "id": {
             "type": "string",
@@ -5688,8 +5649,7 @@
                 "type": "number"
               },
               "createDate": {
-                "type": "string",
-                "format": "date-time"
+                "$ref": "#/components/schemas/dateSchema"
               }
             }
           },
@@ -5697,23 +5657,20 @@
             "type": "object",
             "properties": {
               "createDate": {
-                "type": "string",
-                "format": "date-time"
+                "$ref": "#/components/schemas/dateSchema"
               },
               "event": {
                 "type": "object",
                 "properties": {
                   "endDate": {
-                    "type": "string",
-                    "format": "date-time"
+                    "$ref": "#/components/schemas/dateSchema"
                   },
                   "id": {
                     "type": "string",
                     "format": "uuid"
                   },
                   "startDate": {
-                    "type": "string",
-                    "format": "date-time"
+                    "$ref": "#/components/schemas/dateSchema"
                   },
                   "title": {
                     "type": "string"
@@ -5772,8 +5729,7 @@
             "format": "uuid"
           },
           "createDate": {
-            "type": "string",
-            "format": "date-time"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "description": {
             "type": "string"
@@ -5851,8 +5807,7 @@
             "type": "string"
           },
           "createDate": {
-            "format": "date-time",
-            "type": "string"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "id": {
             "format": "uuid",
@@ -5877,8 +5832,7 @@
                 "type": "number"
               },
               "createDate": {
-                "format": "date-time",
-                "type": "string"
+                "$ref": "#/components/schemas/dateSchema"
               }
             }
           },
@@ -5923,8 +5877,7 @@
             "format": "uuid"
           },
           "createDate": {
-            "type": "string",
-            "format": "date-time"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "description": {
             "type": "string"
@@ -6007,8 +5960,7 @@
             "$ref": "#/components/schemas/company"
           },
           "createDate": {
-            "type": "string",
-            "format": "date-time"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "creditPackage": {
             "type": "object",
@@ -6144,8 +6096,7 @@
                 "type": "number"
               },
               "createDate": {
-                "type": "string",
-                "format": "date-time"
+                "$ref": "#/components/schemas/dateSchema"
               }
             }
           },
@@ -6163,8 +6114,7 @@
             "type": "object",
             "properties": {
               "createDate": {
-                "type": "string",
-                "format": "date-time"
+                "$ref": "#/components/schemas/dateSchema"
               },
               "id": {
                 "type": "string",
@@ -6174,16 +6124,14 @@
                 "type": "object",
                 "properties": {
                   "endDate": {
-                    "type": "string",
-                    "format": "date-time"
+                    "$ref": "#/components/schemas/dateSchema"
                   },
                   "id": {
                     "type": "string",
                     "format": "uuid"
                   },
                   "startDate": {
-                    "type": "string",
-                    "format": "date-time"
+                    "$ref": "#/components/schemas/dateSchema"
                   },
                   "title": {
                     "type": "string"
@@ -6222,20 +6170,16 @@
             "type": "string"
           },
           "checkInDate": {
-            "format": "date-time",
-            "type": "string"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "checkOutDate": {
-            "format": "date-time",
-            "type": "string"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "createDate": {
-            "format": "date-time",
-            "type": "string"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "date": {
-            "format": "date-time",
-            "type": "string"
+            "$ref": "#/components/schemas/dateSchema"
           },
           "id": {
             "format": "uuid",
@@ -6288,8 +6232,7 @@
                   "type": "object",
                   "properties": {
                     "endDate": {
-                      "format": "date-time",
-                      "type": "string"
+                      "$ref": "#/components/schemas/dateSchema"
                     },
                     "memo": {
                       "type": "string"
@@ -6300,8 +6243,7 @@
                       "description": "The Resource id where to create a booking."
                     },
                     "startDate": {
-                      "format": "date-time",
-                      "type": "string"
+                      "$ref": "#/components/schemas/dateSchema"
                     },
                     "title": {
                       "type": "string"
@@ -6380,8 +6322,7 @@
                       ]
                     },
                     "endDate": {
-                      "type": "string",
-                      "format": "date-time"
+                      "$ref": "#/components/schemas/dateSchema"
                     },
                     "limitedAttendees": {
                       "type": "object",
@@ -6447,8 +6388,7 @@
                       ]
                     },
                     "startDate": {
-                      "type": "string",
-                      "format": "date-time"
+                      "$ref": "#/components/schemas/dateSchema"
                     },
                     "title": {
                       "type": "string",
@@ -6839,12 +6779,10 @@
                       ]
                     },
                     "startDate": {
-                      "type": "string",
-                      "format": "date"
+                      "$ref": "#/components/schemas/dateSchema"
                     },
                     "endDate": {
-                      "type": "string",
-                      "format": "date"
+                      "$ref": "#/components/schemas/dateSchema"
                     },
                     "items": {
                       "type": "array",
@@ -6949,10 +6887,8 @@
                   "type": "object",
                   "properties": {
                     "endDate": {
-                      "type": "string",
-                      "nullable": true,
-                      "format": "date-time",
-                      "description": "The end date of the subscription. Can be null to keep the subscription active indefinitely."
+                      "$ref": "#/components/schemas/dateSchema",
+                      "nullable": true
                     }
                   }
                 }
@@ -7112,9 +7048,7 @@
                       "type": "string"
                     },
                     "date": {
-                      "format": "date-time",
-                      "type": "string",
-                      "description": "The date of visit."
+                      "$ref": "#/components/schemas/dateSchema"
                     },
                     "locationRef": {
                       "type": "string",
