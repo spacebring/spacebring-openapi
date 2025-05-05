@@ -2460,6 +2460,50 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
+  /visitors/visits/v1/{id}:
+    get:
+      tags:
+        - Visits
+      summary: Retrieve a visit
+      description: 'Retrieve a visit by id. <h3>OAuth</h3>Required scopes: <code>visitors.readonly</code> or <code>visitors</code>'
+      operationId: getVisit
+      parameters:
+        - in: path
+          name: id
+          description: The id of the visit
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - visitors.readonly
+            - visitors
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  visit:
+                    type: object
+                    $ref: '#/components/schemas/visit'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
 components:
   securitySchemes:
     BasicAuth:
@@ -4051,15 +4095,23 @@ components:
         id:
           format: uuid
           type: string
-        membershipRefHost:
-          format: uuid
-          type: string
+        location:
+          type: object
+          properties:
+            id:
+              format: uuid
+              type: string
+            timezoneId:
+              type: string
         locationRef:
           format: uuid
           type: string
         userHost:
           $ref: '#/components/schemas/user'
         userRefHost:
+          format: uuid
+          type: string
+        userRefVisitor:
           format: uuid
           type: string
         visitor:
