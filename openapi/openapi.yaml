@@ -2368,6 +2368,13 @@ paths:
             format: uuid
           required: true
         - in: query
+          name: userRefHost
+          description: The id of the user, host of the visit.
+          schema:
+            type: string
+            format: uuid
+          required: false
+        - in: query
           name: createDate
           description: The date filter of items.
           schema:
@@ -2463,7 +2470,7 @@ paths:
   /visitors/visits/v1/{id}:
     get:
       tags:
-        - Visits
+        - Visitors
       summary: Retrieve a visit
       description: 'Retrieve a visit by id. <h3>OAuth</h3>Required scopes: <code>visitors.readonly</code> or <code>visitors</code>'
       operationId: getVisit
@@ -2498,6 +2505,66 @@ paths:
                   visit:
                     type: object
                     $ref: '#/components/schemas/visit'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+    delete:
+      tags:
+        - Visitors
+      summary: Delete a visit
+      description: 'Delete a visit by id. <h3>OAuth</h3>Required scopes: <code>visitors</code>'
+      operationId: deleteVisit
+      parameters:
+        - in: path
+          name: id
+          description: The id of the visit
+          schema:
+            type: string
+            format: uuid
+          required: true
+      security:
+        - OAuth2:
+            - visitors
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+    put:
+      tags:
+        - Visitors
+      summary: Update a visit
+      description: 'Update a visit by id. <h3>OAuth</h3>Required scopes: <code>visitors</code>'
+      operationId: updateVisit
+      parameters:
+        - in: path
+          name: id
+          description: The id of the visit
+          schema:
+            type: string
+            format: uuid
+          required: true
+      requestBody:
+        $ref: '#/components/requestBodies/updateVisit'
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - visitors.readonly
+            - visitors
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/visit'
         '400':
           description: Bad Request
           content:
@@ -3056,6 +3123,9 @@ components:
         unitAmount:
           type: number
           format: float
+    timezoneId:
+      type: string
+      description: Timezone identifier for the location (e.g. 'Europe/Kyiv')
     invoice:
       type: object
       properties:
@@ -3107,7 +3177,7 @@ components:
             - succeeded
             - voided
         timezoneId:
-          type: string
+          $ref: '#/components/schemas/timezoneId'
         transaction:
           type: object
           properties:
@@ -3191,7 +3261,7 @@ components:
           format: uuid
           type: string
         timezoneId:
-          type: string
+          $ref: '#/components/schemas/timezoneId'
         title:
           type: string
     membership:
@@ -3596,7 +3666,7 @@ components:
         startDate:
           $ref: '#/components/schemas/dateSchema'
         timezoneId:
-          type: string
+          $ref: '#/components/schemas/timezoneId'
         user:
           $ref: '#/components/schemas/user'
         userCreator:
@@ -4102,7 +4172,7 @@ components:
               format: uuid
               type: string
             timezoneId:
-              type: string
+              $ref: '#/components/schemas/timezoneId'
         locationRef:
           format: uuid
           type: string
@@ -4710,5 +4780,21 @@ components:
                   - date
                   - locationRef
                   - visitor
+            required:
+              - visit
+    updateVisit:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              visit:
+                type: object
+                properties:
+                  date:
+                    $ref: '#/components/schemas/dateSchema'
+                  comment:
+                    type: string
             required:
               - visit
