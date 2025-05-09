@@ -4168,11 +4168,15 @@ components:
         location:
           type: object
           properties:
+            address:
+              type: string
             id:
               format: uuid
               type: string
             timezoneId:
               $ref: '#/components/schemas/timezoneId'
+            title:
+              type: string
         locationRef:
           format: uuid
           type: string
