@@ -3841,7 +3841,7 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "subscriptions": {
+                    "visits": {
                       "type": "array",
                       "items": {
                         "$ref": "#/components/schemas/visit"
@@ -4073,7 +4073,13 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/visit"
+                  "type": "object",
+                  "properties": {
+                    "visit": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/visit"
+                    }
+                  }
                 }
               }
             }
