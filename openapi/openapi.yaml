@@ -3274,6 +3274,11 @@ components:
         companyRef:
           format: uuid
           type: string
+        companyRole:
+          type: string
+          enum:
+            - manager
+            - member
         createDate:
           $ref: '#/components/schemas/dateSchema'
         deleteDate:
@@ -4451,6 +4456,11 @@ components:
                   companyRef:
                     type: string
                     format: uuid
+                  companyRole:
+                    type: string
+                    enum:
+                      - manager
+                      - member
                   role:
                     type: string
                     enum:
