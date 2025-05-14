@@ -5190,9 +5190,30 @@
           "product": {
             "type": "object",
             "properties": {
+              "createDate": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "description": {
+                "type": "string"
+              },
               "id": {
                 "type": "string",
                 "format": "uuid"
+              },
+              "media": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "key": {
+                      "type": "string"
+                    },
+                    "url": {
+                      "type": "string"
+                    }
+                  }
+                }
               },
               "title": {
                 "type": "string"
