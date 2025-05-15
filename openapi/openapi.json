@@ -1095,6 +1095,64 @@
         }
       }
     },
+    "/events/v1/{id}": {
+      "get": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "Get event",
+        "description": "Get a event. <h3>OAuth</h3>Required scopes: <code>events</code>",
+        "operationId": "getEvent",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "events",
+              "events.readonly"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "event": {
+                      "$ref": "#/components/schemas/event"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/events/tickets/v1": {
       "get": {
         "tags": [
