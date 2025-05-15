@@ -625,6 +625,71 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
+    get:
+      tags:
+        - Events
+      summary: Get events by organization
+      description: 'Get events by organization. <h3>OAuth</h3>Required scopes: <code>events</code>'
+      operationId: getEventsByOrganization
+      parameters:
+        - in: query
+          name: organizationId
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: limit
+          required: false
+          schema:
+            type: integer
+            default: 25
+        - in: query
+          name: nextPageToken
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: order
+          description: The order of the events. <code>asc</code> or <code>desc</code>
+          required: false
+          schema:
+            type: string
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - events
+            - events.readonly
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  events:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/event'
+                  searchQueryNext:
+                    type: object
+                    properties:
+                      limit:
+                        type: integer
+                      locationRef:
+                        type: string
+                        format: uuid
+                      nextPageToken:
+                        type: string
+                      order:
+                        type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
   /events/tickets/v1:
     get:
       tags:
