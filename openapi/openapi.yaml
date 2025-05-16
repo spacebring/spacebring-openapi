@@ -593,7 +593,7 @@ paths:
       tags:
         - Events
       summary: Create event
-      description: 'Create a event. <h3>OAuth</h3>Required scopes: <code>events</code>'
+      description: 'Create an event. <h3>OAuth</h3>Required scopes: <code>events</code>'
       operationId: createEvent
       parameters:
         - in: header
@@ -628,8 +628,8 @@ paths:
     get:
       tags:
         - Events
-      summary: Get events by organization
-      description: 'Get events by organization. <h3>OAuth</h3>Required scopes: <code>events</code>'
+      summary: Retrieve events
+      description: 'Retrieve events by organization. <h3>OAuth</h3>Required scopes: <code>events</code>'
       operationId: getEventsByOrganization
       parameters:
         - in: query
@@ -694,8 +694,8 @@ paths:
     get:
       tags:
         - Events
-      summary: Get event
-      description: 'Get a event. <h3>OAuth</h3>Required scopes: <code>events</code>'
+      summary: Retrieve event
+      description: 'Retrieve an event. <h3>OAuth</h3>Required scopes: <code>events</code>'
       operationId: getEvent
       parameters:
         - in: path
@@ -703,6 +703,14 @@ paths:
           schema:
             type: string
             format: uuid
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
       security:
         - BasicAuth: []
         - OAuth2:
