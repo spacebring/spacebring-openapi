@@ -5992,7 +5992,7 @@
             "type": "string",
             "format": "uuid"
           },
-          "membershipRefOwner": {
+          "membershipRef": {
             "type": "string",
             "format": "uuid"
           },
@@ -6149,7 +6149,10 @@
               "transferPermanentCredits"
             ]
           },
-          "user": {
+          "userCreator": {
+            "$ref": "#/components/schemas/user"
+          },
+          "userOwner": {
             "$ref": "#/components/schemas/user"
           },
           "userRef": {

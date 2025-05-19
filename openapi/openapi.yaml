@@ -3890,7 +3890,7 @@ components:
         membershipRefCreator:
           type: string
           format: uuid
-        membershipRefOwner:
+        membershipRef:
           type: string
           format: uuid
         order:
@@ -4001,7 +4001,9 @@ components:
             - chargePermanentCredits
             - transferExpiringCredits
             - transferPermanentCredits
-        user:
+        userCreator:
+          $ref: '#/components/schemas/user'
+        userOwner:
           $ref: '#/components/schemas/user'
         userRef:
           type: string
