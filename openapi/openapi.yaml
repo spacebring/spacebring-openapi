@@ -592,7 +592,7 @@ paths:
     post:
       tags:
         - Events
-      summary: Create event
+      summary: Create an event
       description: 'Create an event. <h3>OAuth</h3>Required scopes: <code>events</code>'
       operationId: createEvent
       parameters:
@@ -629,7 +629,7 @@ paths:
       tags:
         - Events
       summary: Retrieve events
-      description: 'Retrieve events by organization. <h3>OAuth</h3>Required scopes: <code>events</code>'
+      description: 'Retrieve events. <h3>OAuth</h3>Required scopes: <code>events</code>'
       operationId: getEventsByOrganization
       parameters:
         - in: query
@@ -694,7 +694,7 @@ paths:
     get:
       tags:
         - Events
-      summary: Retrieve event
+      summary: Retrieve an event
       description: 'Retrieve an event. <h3>OAuth</h3>Required scopes: <code>events</code>'
       operationId: getEvent
       parameters:
@@ -709,7 +709,7 @@ paths:
           schema:
             type: string
             format: uuid
-          required: false
+          required: true
           description: The id of the network. Required when using bearer token authentication
       security:
         - BasicAuth: []
