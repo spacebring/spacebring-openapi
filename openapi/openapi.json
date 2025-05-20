@@ -5185,6 +5185,22 @@
                   "processing",
                   "succeeded"
                 ]
+              },
+              "refund": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": "number",
+                    "format": "float"
+                  },
+                  "createDate": {
+                    "$ref": "#/components/schemas/dateSchema"
+                  },
+                  "id": {
+                    "type": "string",
+                    "format": "uuid"
+                  }
+                }
               }
             }
           },
