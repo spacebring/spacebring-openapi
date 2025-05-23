@@ -1728,10 +1728,10 @@ paths:
   /registrations/v1:
     get:
       tags:
-        - Networks
+        - Registrations
       summary: Retrieve registrations
       description: Retrieve all registrations in network.
-      operationId: getNetworkRegistrations
+      operationId: getRegistrations
       parameters:
         - in: query
           name: limit
