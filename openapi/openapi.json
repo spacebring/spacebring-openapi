@@ -1000,8 +1000,9 @@
         "parameters": [
           {
             "in": "query",
-            "name": "organizationId",
+            "name": "locationRef",
             "required": true,
+            "description": "The id of the location.",
             "schema": {
               "type": "string",
               "format": "uuid"
@@ -1011,6 +1012,7 @@
             "in": "query",
             "name": "limit",
             "required": false,
+            "description": "The number of events to retrieve. Default: 25",
             "schema": {
               "type": "integer",
               "default": 25
@@ -1027,7 +1029,7 @@
           {
             "in": "query",
             "name": "order",
-            "description": "The order of the events. <code>asc</code> or <code>desc</code>",
+            "description": "The order of the events. <code>createDate:asc</code>, <code>createDate:desc</code>, <code>startDate:asc</code>, <code>startDate:desc</code>, <code>endDate:asc</code>, <code>endDate:desc</code> or <code>relevance</code>",
             "required": false,
             "schema": {
               "type": "string"
