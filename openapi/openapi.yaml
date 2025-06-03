@@ -2461,6 +2461,49 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
+  /transactions/money/v1/{id}:
+    get:
+      tags:
+        - Transactions
+      summary: Retrieve a money transaction
+      description: 'Retrieve a money transaction. <h3>OAuth</h3>Required scopes: <code>transactions.readonly</code> or <code>transactions</code>'
+      operationId: getMoneyTransaction
+      parameters:
+        - name: id
+          in: path
+          description: The id of the transaction
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - transactions.readonly
+            - transactions
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  transaction:
+                    $ref: '#/components/schemas/transaction'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
   /visitors/visits/v1:
     get:
       tags:
