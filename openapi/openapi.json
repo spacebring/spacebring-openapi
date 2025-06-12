@@ -1166,6 +1166,122 @@
         }
       }
     },
+    "/events/v1/{id}/cancel": {
+      "put": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "Cancel an event",
+        "description": "Cancel an event. <h3>OAuth</h3>Required scopes: <code>events</code>",
+        "operationId": "cancelEvent",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "events"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "event": {
+                      "$ref": "#/components/schemas/event"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/events/v1/{id}/copy": {
+      "post": {
+        "tags": [
+          "Events"
+        ],
+        "summary": "Copy an event",
+        "description": "Copy an event. <h3>OAuth</h3>Required scopes: <code>events</code>",
+        "operationId": "copyEvent",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "events"
+            ]
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "event": {
+                      "$ref": "#/components/schemas/event"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/events/tickets/v1": {
       "get": {
         "tags": [
