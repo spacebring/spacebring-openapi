@@ -863,6 +863,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
+  /events/tickets/v1/{id}:
+    get:
+      tags:
+        - Event tickets
+      summary: Retrieve an event ticket
+      description: 'Retrieve an event ticket. <h3>OAuth</h3>Required scopes: <code>events.readonly</code> or <code>events</code>'
+      operationId: getEventTicket
+      parameters:
+        - name: id
+          in: path
+          description: The id of the event ticket.
+          schema:
+            type: string
+            format: uuid
+          required: true
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - events.readonly
+            - events
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ticket:
+                    $ref: '#/components/schemas/eventTicket'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
   /feed/posts/v1:
     post:
       tags:
@@ -3138,7 +3174,11 @@ components:
     eventTicket:
       type: object
       properties:
+        checkInDate:
+          $ref: '#/components/schemas/dateSchema'
         createDate:
+          $ref: '#/components/schemas/dateSchema'
+        deleteDate:
           $ref: '#/components/schemas/dateSchema'
         event:
           type: object
@@ -3148,9 +3188,31 @@ components:
             id:
               format: uuid
               type: string
+            media:
+              type: array
+              items:
+                type: object
+                properties:
+                  key:
+                    type: string
+                  url:
+                    type: string
+            location:
+              type: object
+              properties:
+                id:
+                  format: uuid
+                timezoneId:
+                  type: string
+                title:
+                  type: string
             startDate:
               $ref: '#/components/schemas/dateSchema'
             title:
+              type: string
+            venue:
+              type: string
+            visibilityType:
               type: string
         id:
           format: uuid
@@ -3559,7 +3621,12 @@ components:
     order:
       type: object
       properties:
+        comment:
+          type: string
         createDate:
+          type: string
+          format: date-time
+        deleteDate:
           type: string
           format: date-time
         id:
@@ -3605,6 +3672,8 @@ components:
                     type: string
             title:
               type: string
+        quantity:
+          type: number
         status:
           type: string
           enum:
