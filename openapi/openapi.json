@@ -284,6 +284,66 @@
         }
       }
     },
+    "/benefits/v1/{id}": {
+      "get": {
+        "tags": [
+          "Benefits"
+        ],
+        "summary": "Retrieve a benefit",
+        "description": "Retrieve a benefit. <h3>OAuth</h3>Required scopes: <code>benefits.readonly</code> or <code>benefits</code>",
+        "operationId": "getBenefit",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the benefit",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "benefits.readonly",
+              "benefits"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "benefit": {
+                      "$ref": "#/components/schemas/benefit"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/resources/bookings/v1": {
       "get": {
         "tags": [
@@ -4675,6 +4735,42 @@
       "benefit": {
         "type": "object",
         "properties": {
+          "application": {
+            "type": "object",
+            "properties": {
+              "confirmationEmail": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "template": {
+                    "type": "string"
+                  }
+                }
+              },
+              "allowance": {
+                "type": "string",
+                "enum": [
+                  "once",
+                  "unlimited"
+                ]
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "buttonLabel": {
+                "type": "string",
+                "enum": [
+                  "apply",
+                  "buy",
+                  "contact",
+                  "get",
+                  "learnMore"
+                ]
+              }
+            }
+          },
           "categoryRef": {
             "type": "string",
             "format": "uuid"
@@ -4697,6 +4793,12 @@
             "type": "string"
           },
           "title": {
+            "type": "string"
+          },
+          "updateDate": {
+            "$ref": "#/components/schemas/dateSchema"
+          },
+          "visibilityType": {
             "type": "string"
           }
         }
