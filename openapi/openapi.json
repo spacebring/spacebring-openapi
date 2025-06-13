@@ -342,6 +342,51 @@
             }
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "Benefits"
+        ],
+        "summary": "Delete a benefit",
+        "description": "Delete a benefit. <h3>OAuth</h3>Required scopes: <code>benefits</code>",
+        "operationId": "deleteBenefit",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the benefit",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "benefits"
+            ]
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/resources/bookings/v1": {
