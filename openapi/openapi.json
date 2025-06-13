@@ -211,6 +211,334 @@
         }
       }
     },
+    "/benefits/categories/v1": {
+      "get": {
+        "tags": [
+          "Benefit categories"
+        ],
+        "summary": "Retrieve benefit categories",
+        "description": "Retrieve all benefit categories in the location. <h3>OAuth</h3>Required scopes: <code>benefits.readonly</code> or <code>benefits</code>",
+        "operationId": "getBenefitCategories",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "locationRef",
+            "description": "The id of the location",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "benefits.readonly",
+              "benefits"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "categories": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/benefitCategory"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Benefit categories"
+        ],
+        "summary": "Create a benefit category",
+        "description": "Create a benefit category. <h3>OAuth</h3>Required scopes: <code>benefits</code>",
+        "operationId": "createBenefitCategory",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/createBenefitCategory"
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "benefits"
+            ]
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "$ref": "#/components/schemas/benefitCategory"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/benefits/categories/v1/{id}": {
+      "get": {
+        "tags": [
+          "Benefit Categories"
+        ],
+        "summary": "Get a benefit category",
+        "description": "Get a benefit category. <h3>OAuth</h3>Required scopes: <code>benefits</code>",
+        "operationId": "getBenefitCategory",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "The id of the benefit category",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "benefits",
+              "benefits.readonly"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "$ref": "#/components/schemas/benefitCategory"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Benefit Categories"
+        ],
+        "summary": "Delete a benefit category",
+        "description": "Delete a benefit category. <h3>OAuth</h3>Required scopes: <code>benefits</code>",
+        "operationId": "deleteBenefitCategory",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "The id of the benefit category",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "benefits"
+            ]
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Benefit Categories"
+        ],
+        "summary": "Update a benefit category",
+        "description": "Update a benefit category. <h3>OAuth</h3>Required scopes: <code>benefits</code>",
+        "operationId": "updateBenefitCategory",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "The id of the benefit category",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/updateBenefitCategory"
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "benefits"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "$ref": "#/components/schemas/benefitCategory"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/benefits/v1": {
       "get": {
         "tags": [
@@ -4777,6 +5105,29 @@
           }
         }
       },
+      "benefitCategory": {
+        "type": "object",
+        "properties": {
+          "createDate": {
+            "$ref": "#/components/schemas/dateSchema"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "locationRef": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "networkRef": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "title": {
+            "type": "string"
+          }
+        }
+      },
       "benefit": {
         "type": "object",
         "properties": {
@@ -7093,6 +7444,53 @@
       }
     },
     "requestBodies": {
+      "createBenefitCategory": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "The title of the benefit category"
+                    },
+                    "locationRef": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The id of the location where to create a benefit category."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "updateBenefitCategory": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "category": {
+                  "type": "object",
+                  "properties": {
+                    "title": {
+                      "type": "string",
+                      "description": "The title of the benefit category"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "createBooking": {
         "required": true,
         "content": {
