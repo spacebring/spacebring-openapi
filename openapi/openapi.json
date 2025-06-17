@@ -670,6 +670,61 @@
             }
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Benefits"
+        ],
+        "summary": "Create a benefit",
+        "description": "Create a benefit. <h3>OAuth</h3>Required scopes: <code>benefits</code>",
+        "operationId": "createBenefit",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "benefits.create"
+            ]
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/createBenefit"
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/benefit"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/benefits/v1/{id}": {
@@ -763,6 +818,66 @@
         "responses": {
           "204": {
             "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Benefits"
+        ],
+        "summary": "Update a benefit",
+        "description": "Update a benefit. <h3>OAuth</h3>Required scopes: <code>benefits</code>",
+        "operationId": "updateBenefit",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "The id of the benefit",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "benefits"
+            ]
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/updateBenefit"
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "benefit": {
+                      "$ref": "#/components/schemas/benefit"
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "Bad Request",
@@ -1522,7 +1637,7 @@
           {
             "in": "query",
             "name": "order",
-            "description": "The order of the events. <code>createDate:asc</code>, <code>createDate:desc</code>, <code>startDate:asc</code>, <code>startDate:desc</code>, <code>endDate:asc</code>, <code>endDate:desc</code> or <code>relevance</code>",
+            "description": "The order of the events. createDate:asc, createDate:desc, startDate:asc, startDate:desc, endDate:asc, endDate:desc or relevance",
             "required": false,
             "schema": {
               "type": "string"
@@ -7575,6 +7690,203 @@
                   }
                 }
               }
+            }
+          }
+        }
+      },
+      "createBenefit": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "benefit": {
+                  "type": "object",
+                  "properties": {
+                    "application": {
+                      "type": "object",
+                      "properties": {
+                        "confirmationEmail": {
+                          "type": "object",
+                          "properties": {
+                            "enabled": {
+                              "type": "boolean"
+                            },
+                            "template": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "allowance": {
+                          "type": "string",
+                          "enum": [
+                            "once",
+                            "unlimited"
+                          ]
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "buttonLabel": {
+                          "type": "string",
+                          "enum": [
+                            "apply",
+                            "buy",
+                            "contact",
+                            "get",
+                            "learnMore"
+                          ]
+                        }
+                      }
+                    },
+                    "categoryRef": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The id of the category."
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "featured": {
+                      "type": "boolean"
+                    },
+                    "locationRef": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The id of the location."
+                    },
+                    "media": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "key": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "subtitle": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "visibility": {
+                      "type": "string",
+                      "enum": [
+                        "public",
+                        "admins",
+                        "members",
+                        "networkMembers"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "categoryRef",
+                    "locationRef",
+                    "title",
+                    "visibility"
+                  ]
+                }
+              },
+              "required": [
+                "benefit"
+              ]
+            }
+          }
+        }
+      },
+      "updateBenefit": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "benefit": {
+                  "type": "object",
+                  "properties": {
+                    "application": {
+                      "type": "object",
+                      "properties": {
+                        "confirmationEmail": {
+                          "type": "object",
+                          "properties": {
+                            "enabled": {
+                              "type": "boolean"
+                            },
+                            "template": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "allowance": {
+                          "type": "string",
+                          "enum": [
+                            "once",
+                            "unlimited"
+                          ]
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "buttonLabel": {
+                          "type": "string",
+                          "enum": [
+                            "apply",
+                            "buy",
+                            "contact",
+                            "get",
+                            "learnMore"
+                          ]
+                        }
+                      }
+                    },
+                    "categoryRef": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The id of the category."
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "featured": {
+                      "type": "boolean"
+                    },
+                    "media": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "key": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    },
+                    "subtitle": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "visibility": {
+                      "type": "string",
+                      "enum": [
+                        "public",
+                        "admins",
+                        "members",
+                        "networkMembers"
+                      ]
+                    }
+                  }
+                }
+              },
+              "required": [
+                "benefit"
+              ]
             }
           }
         }
