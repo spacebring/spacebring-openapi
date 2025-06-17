@@ -138,6 +138,66 @@
             }
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Benefit applications"
+        ],
+        "summary": "Apply for a benefit",
+        "description": "Apply for a benefit. <h3>OAuth</h3>Required scopes: <code>benefits</code>",
+        "operationId": "applyBenefit",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "benefits"
+            ]
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/applyBenefit"
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "application": {
+                      "$ref": "#/components/schemas/benefitApplication"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/benefits/applications/v1/{id}": {
@@ -7444,6 +7504,34 @@
       }
     },
     "requestBodies": {
+      "applyBenefit": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "application": {
+                  "type": "object",
+                  "properties": {
+                    "benefitId": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "comment": {
+                      "type": "string",
+                      "description": "The comment of the application"
+                    }
+                  },
+                  "required": [
+                    "benefitId"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
       "createBenefitCategory": {
         "required": true,
         "content": {
