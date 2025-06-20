@@ -2156,6 +2156,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
+    post:
+      tags:
+        - Shop categories
+      summary: Create a shop category
+      description: 'Create a shop category. <h3>OAuth</h3>Required scopes: <code>shop</code>'
+      operationId: createShopCategory
+      parameters:
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      requestBody:
+        $ref: '#/components/requestBodies/createShopCategory'
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - shop
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  category:
+                    $ref: '#/components/schemas/shopCategory'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
   /shop/categories/v1/{id}:
     get:
       tags:
@@ -2183,6 +2219,83 @@ paths:
         - OAuth2:
             - shop
             - shop.readonly
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  category:
+                    $ref: '#/components/schemas/shopCategory'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+    delete:
+      tags:
+        - Shop Categories
+      summary: Delete a shop category
+      description: 'Delete a shop category. <h3>OAuth</h3>Required scopes: <code>shop</code>'
+      operationId: deleteShopCategory
+      parameters:
+        - in: path
+          name: id
+          description: The id of the shop category
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - shop
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+    put:
+      tags:
+        - Shop Categories
+      summary: Update a shop category
+      description: 'Update a shop category. <h3>OAuth</h3>Required scopes: <code>shop</code>'
+      operationId: updateShopCategory
+      parameters:
+        - in: path
+          name: id
+          description: The id of the shop category
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - shop
+      requestBody:
+        $ref: '#/components/requestBodies/updateShopCategory'
       responses:
         '200':
           description: OK
@@ -5619,6 +5732,36 @@ components:
                 type: string
             required:
               - membership
+    createShopCategory:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              category:
+                type: object
+                properties:
+                  title:
+                    type: string
+                    description: The title of the shop category
+                  locationRef:
+                    type: string
+                    format: uuid
+                    description: The id of the location where to create a shop category.
+    updateShopCategory:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              category:
+                type: object
+                properties:
+                  title:
+                    type: string
+                    description: The title of the shop category
     updateProduct:
       required: true
       content:
