@@ -2357,6 +2357,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
+    post:
+      tags:
+        - Products
+      summary: Create a product
+      description: 'Create a product in shop. <h3>OAuth</h3>Required scopes: <code>shop</code>'
+      operationId: createProduct
+      requestBody:
+        $ref: '#/components/requestBodies/createProduct'
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - shop
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  product:
+                    $ref: '#/components/schemas/product'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
   /shop/products/v1/{productId}:
     put:
       tags:
@@ -5762,6 +5790,103 @@ components:
                   title:
                     type: string
                     description: The title of the shop category
+    createProduct:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              product:
+                type: object
+                properties:
+                  categoryRef:
+                    type: string
+                    format: uuid
+                  description:
+                    type: string
+                  featured:
+                    type: boolean
+                  locationRef:
+                    type: string
+                    format: uuid
+                  title:
+                    type: string
+                  media:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        key:
+                          type: string
+                          format: uuid
+                        url:
+                          type: string
+                  visibility:
+                    type: string
+                  order:
+                    type: object
+                    properties:
+                      enabled:
+                        type: boolean
+                      confirmationEmail:
+                        type: object
+                        properties:
+                          enabled:
+                            type: boolean
+                          template:
+                            type: string
+                  refundPolicy:
+                    type: string
+                    enum:
+                      - noRefund
+                      - statusNew
+                  options:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        customTax:
+                          type: object
+                          properties:
+                            enabled:
+                              type: boolean
+                            rate:
+                              type: number
+                        description:
+                          type: string
+                        available:
+                          type: boolean
+                        price:
+                          type: object
+                          properties:
+                            credits:
+                              type: object
+                              properties:
+                                amount:
+                                  type: number
+                                enabled:
+                                  type: boolean
+                            money:
+                              type: object
+                              properties:
+                                amount:
+                                  type: number
+                                enabled:
+                                  type: boolean
+                        title:
+                          type: string
+                      required:
+                        - title
+                        - available
+                        - price
+                required:
+                  - options
+                  - title
+                  - categoryRef
+                  - locationRef
+            required:
+              - product
     updateProduct:
       required: true
       content:
@@ -5772,12 +5897,44 @@ components:
               product:
                 type: object
                 properties:
+                  categoryRef:
+                    type: string
+                    format: uuid
                   description:
                     type: string
                   featured:
                     type: boolean
                   title:
                     type: string
+                  media:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        key:
+                          type: string
+                          format: uuid
+                        url:
+                          type: string
+                  visibility:
+                    type: string
+                  order:
+                    type: object
+                    properties:
+                      enabled:
+                        type: boolean
+                      confirmationEmail:
+                        type: object
+                        properties:
+                          enabled:
+                            type: boolean
+                          template:
+                            type: string
+                  refundPolicy:
+                    type: string
+                    enum:
+                      - noRefund
+                      - statusNew
                   options:
                     type: array
                     items:
@@ -5820,13 +5977,10 @@ components:
                         - title
                         - available
                         - price
-                        - description
-                        - customTax
                 required:
                   - options
                   - title
-                  - description
-                  - featured
+                  - categoryRef
             required:
               - product
     assignSubscription:
