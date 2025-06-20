@@ -2200,6 +2200,74 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
+    get:
+      tags:
+        - Products
+      summary: Get a product
+      description: 'Get a certain product. <h3>OAuth</h3>Required scopes: <code>shop</code>'
+      operationId: getProduct
+      parameters:
+        - name: productId
+          in: path
+          description: The id of the product.
+          schema:
+            format: uuid
+            type: string
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - shop
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  product:
+                    $ref: '#/components/schemas/product'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+    delete:
+      tags:
+        - Products
+      summary: Delete a product
+      description: 'Delete a certain product. <h3>OAuth</h3>Required scopes: <code>shop</code>'
+      operationId: deleteProduct
+      parameters:
+        - name: productId
+          in: path
+          description: The id of the product.
+          schema:
+            format: uuid
+            type: string
+          required: true
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - shop
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
   /registrations/v1:
     get:
       tags:
@@ -4164,6 +4232,16 @@ components:
         locationRef:
           format: uuid
           type: string
+        media:
+          type: array
+          items:
+            type: object
+            properties:
+              key:
+                type: string
+              url:
+                format: uri
+                type: string
         options:
           type: array
           items:
@@ -4206,7 +4284,25 @@ components:
                         type: boolean
               title:
                 type: string
+        order:
+          type: object
+          properties:
+            confirmationEmail:
+              type: object
+              properties:
+                enabled:
+                  type: boolean
+                template:
+                  type: string
+            enabled:
+              type: boolean
+        refundPolicy:
+          type: string
         title:
+          type: string
+        updateDate:
+          $ref: '#/components/schemas/dateSchema'
+        visibility:
           type: string
     registration:
       type: object
