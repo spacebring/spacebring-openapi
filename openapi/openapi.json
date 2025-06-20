@@ -3397,6 +3397,149 @@
         }
       }
     },
+    "/shop/categories/v1": {
+      "get": {
+        "tags": [
+          "Shop categories"
+        ],
+        "summary": "Retrieve shop categories",
+        "description": "Retrieve all shop categories in the location. <h3>OAuth</h3>Required scopes: <code>shop.readonly</code> or <code>shop</code>",
+        "operationId": "getShopCategories",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "locationRef",
+            "description": "The id of the location",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "shop.readonly",
+              "shop"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "categories": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/shopCategory"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/shop/categories/v1/{id}": {
+      "get": {
+        "tags": [
+          "Shop Categories"
+        ],
+        "summary": "Get a shop category",
+        "description": "Get a shop category. <h3>OAuth</h3>Required scopes: <code>shop</code>",
+        "operationId": "getShopCategory",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "The id of the shop category",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "shop",
+              "shop.readonly"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "category": {
+                      "$ref": "#/components/schemas/shopCategory"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/shop/products/v1": {
       "get": {
         "tags": [
@@ -6567,6 +6710,29 @@
                 ]
               }
             }
+          },
+          "title": {
+            "type": "string"
+          }
+        }
+      },
+      "shopCategory": {
+        "type": "object",
+        "properties": {
+          "createDate": {
+            "$ref": "#/components/schemas/dateSchema"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "locationRef": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "networkRef": {
+            "type": "string",
+            "format": "uuid"
           },
           "title": {
             "type": "string"
