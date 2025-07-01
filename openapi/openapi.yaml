@@ -3790,6 +3790,18 @@ components:
       properties:
         createDate:
           type: string
+        credits:
+          type: object
+          properties:
+            expiring:
+              type: number
+            permanent:
+              type: number
+        dayPasses:
+          type: object
+          properties:
+            expiring:
+              type: number
         id:
           type: string
         locationRef:
@@ -4285,6 +4297,18 @@ components:
             - member
         createDate:
           $ref: '#/components/schemas/dateSchema'
+        credits:
+          type: object
+          properties:
+            expiring:
+              type: number
+            permanent:
+              type: number
+        dayPasses:
+          type: object
+          properties:
+            expiring:
+              type: number
         deleteDate:
           $ref: '#/components/schemas/dateSchema'
         id:
