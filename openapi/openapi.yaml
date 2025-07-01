@@ -928,8 +928,12 @@ paths:
                 company:
                   type: object
                   properties:
+                    billingAddress:
+                      type: string
                     metadata:
                       $ref: '#/components/schemas/metadata'
+                    notes:
+                      type: string
                     title:
                       type: string
                   required:
@@ -3788,6 +3792,8 @@ components:
     company:
       type: object
       properties:
+        billingAddress:
+          type: string
         createDate:
           type: string
         credits:
@@ -5529,12 +5535,18 @@ components:
               company:
                 type: object
                 properties:
-                  metadata:
-                    $ref: '#/components/schemas/metadata'
+                  billingAddress:
+                    type: string
+                    description: The billing address of company to create.
                   locationRef:
                     type: string
                     format: uuid
                     description: The location id where to create a company.
+                  metadata:
+                    $ref: '#/components/schemas/metadata'
+                  notes:
+                    type: string
+                    description: The notes of company to create.
                   title:
                     type: string
                     description: The title of company to create.
