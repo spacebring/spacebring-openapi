@@ -4678,6 +4678,82 @@
         }
       }
     },
+    "/support/tickets/v1/{id}": {
+      "get": {
+        "tags": [
+          "Support tickets"
+        ],
+        "summary": "Retrieve a support ticket",
+        "description": "Retrieve a support ticket. <h3>OAuth</h3>Required scopes: <code>support.readonly</code> or <code>support</code>",
+        "operationId": "getSupportTicket",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the ticket.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "support",
+              "support.readonly"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "activities": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ticketActivity"
+                      }
+                    },
+                    "ticket": {
+                      "$ref": "#/components/schemas/ticket"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/transactions/credits/v1": {
       "get": {
         "tags": [
@@ -7477,6 +7553,88 @@
             "format": "uuid",
             "type": "string"
           },
+          "membershipAssignee": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "format": "uuid",
+                "type": "string"
+              },
+              "roleType": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "user": {
+                "type": "object",
+                "properties": {
+                  "blocked": {
+                    "type": "boolean"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "format": "uuid"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "surname": {
+                    "type": "string"
+                  },
+                  "phoneNumber": {
+                    "type": "string"
+                  },
+                  "photoUrl": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "membershipRequester": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "format": "uuid",
+                "type": "string"
+              },
+              "roleType": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "user": {
+                "type": "object",
+                "properties": {
+                  "blocked": {
+                    "type": "boolean"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "format": "uuid"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "surname": {
+                    "type": "string"
+                  },
+                  "phoneNumber": {
+                    "type": "string"
+                  },
+                  "photoUrl": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
           "membershipRefAssignee": {
             "type": "string",
             "format": "uuid"
@@ -7525,6 +7683,182 @@
           },
           "userRequester": {
             "$ref": "#/components/schemas/user"
+          }
+        }
+      },
+      "ticketActivity": {
+        "type": "object",
+        "properties": {
+          "createDate": {
+            "$ref": "#/components/schemas/dateSchema"
+          },
+          "id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "membership": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "format": "uuid",
+                "type": "string"
+              },
+              "roleType": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "user": {
+                "type": "object",
+                "properties": {
+                  "blocked": {
+                    "type": "boolean"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "format": "uuid"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "phoneNumber": {
+                    "type": "string"
+                  },
+                  "photoUrl": {
+                    "type": "string"
+                  },
+                  "surname": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "ticketRef": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "comment",
+              "statusUpdated",
+              "typeUpdated",
+              "assigneeUpdated"
+            ]
+          },
+          "data": {
+            "type": "object",
+            "properties": {
+              "attachments": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "key": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "text": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "membershipAssignee": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "format": "uuid"
+                  },
+                  "roleType": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "user": {
+                    "type": "object",
+                    "properties": {
+                      "blocked": {
+                        "type": "boolean"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "id": {
+                        "format": "uuid"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "phoneNumber": {
+                        "type": "string"
+                      },
+                      "photoUrl": {
+                        "type": "string"
+                      },
+                      "surname": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              },
+              "previousAttributes": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string"
+                  },
+                  "membershipAssignee": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "format": "uuid"
+                      },
+                      "roleType": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "user": {
+                        "type": "object",
+                        "properties": {
+                          "blocked": {
+                            "type": "boolean"
+                          },
+                          "email": {
+                            "type": "string"
+                          },
+                          "id": {
+                            "format": "uuid"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "phoneNumber": {
+                            "type": "string"
+                          },
+                          "photoUrl": {
+                            "type": "string"
+                          },
+                          "surname": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
