@@ -1649,6 +1649,14 @@ paths:
             enum:
               - requested
           description: use requested to get all membership requests
+        - in: query
+          name: types
+          schema:
+            type: string
+            enum:
+              - member
+              - nonmember
+          description: Filter by types. Pass them as comma separated values.
         - in: header
           name: spacebring-network-id
           schema:
