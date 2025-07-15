@@ -4754,6 +4754,99 @@
         }
       }
     },
+    "/support/tickets/v1/{id}/type": {
+      "patch": {
+        "tags": [
+          "Support tickets"
+        ],
+        "summary": "Update a support ticket type",
+        "description": "Update a support ticket type. <h3>OAuth</h3>Required scopes: <code>support</code>",
+        "operationId": "updateSupportTicketType",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the ticket.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "support"
+            ]
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ticket": {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "type": "string",
+                        "enum": [
+                          "access",
+                          "accountAndBilling",
+                          "bookings",
+                          "cleaning",
+                          "discriminationAndHarassment",
+                          "internet",
+                          "mailAndPackages",
+                          "noiseAndAcoustics",
+                          "offensiveOrObjectionableContent",
+                          "other",
+                          "printing",
+                          "repairAndMaintenance",
+                          "temperatureAndVentilation",
+                          "websiteAndApp"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/transactions/credits/v1": {
       "get": {
         "tags": [
