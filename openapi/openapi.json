@@ -5040,13 +5040,21 @@
           },
           {
             "in": "query",
+            "name": "locationRef",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The id of the location to get transactions for"
+          },
+          {
+            "in": "query",
             "name": "membershipRef",
             "schema": {
               "type": "string",
               "format": "uuid"
             },
-            "description": "The id of the membership to get transactions for",
-            "required": true
+            "description": "The id of the membership to get transactions for"
           },
           {
             "in": "query",
@@ -5055,8 +5063,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "description": "The id of the company to get transactions for",
-            "required": true
+            "description": "The id of the company to get transactions for"
           }
         ],
         "security": [
@@ -5225,13 +5232,21 @@
           },
           {
             "in": "query",
+            "name": "locationRef",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The id of the location to get transactions for"
+          },
+          {
+            "in": "query",
             "name": "membershipRef",
             "schema": {
               "type": "string",
               "format": "uuid"
             },
-            "description": "The id of the membership to get transactions for",
-            "required": true
+            "description": "The id of the membership to get transactions for"
           },
           {
             "in": "query",
@@ -5240,8 +5255,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "description": "The id of the company to get transactions for",
-            "required": true
+            "description": "The id of the company to get transactions for"
           }
         ],
         "security": [

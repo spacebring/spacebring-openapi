@@ -3138,19 +3138,23 @@ paths:
                 type: string
                 description: 'Get transactions with greater createDate. Example: createDate[gte]=2021-05-21T10:00:00Z'
         - in: query
+          name: locationRef
+          schema:
+            type: string
+            format: uuid
+          description: The id of the location to get transactions for
+        - in: query
           name: membershipRef
           schema:
             type: string
             format: uuid
           description: The id of the membership to get transactions for
-          required: true
         - in: query
           name: companyRef
           schema:
             type: string
             format: uuid
           description: The id of the company to get transactions for
-          required: true
       security:
         - BasicAuth: []
         - OAuth2:
@@ -3255,19 +3259,23 @@ paths:
                 type: string
                 description: 'Get transactions with greater createDate. Example: createDate[gte]=2021-05-21T10:00:00Z'
         - in: query
+          name: locationRef
+          schema:
+            type: string
+            format: uuid
+          description: The id of the location to get transactions for
+        - in: query
           name: membershipRef
           schema:
             type: string
             format: uuid
           description: The id of the membership to get transactions for
-          required: true
         - in: query
           name: companyRef
           schema:
             type: string
             format: uuid
           description: The id of the company to get transactions for
-          required: true
       security:
         - BasicAuth: []
         - OAuth2:
