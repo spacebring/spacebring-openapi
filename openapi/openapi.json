@@ -4595,6 +4595,69 @@
             }
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Support tickets"
+        ],
+        "summary": "Create a support ticket",
+        "description": "Create a support ticket. <h3>OAuth</h3>Required scopes: <code>support</code>",
+        "operationId": "createSupportTicket",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/createSupportTicket"
+        },
+        "security": [
+          {
+            "OAuth2": [
+              "support"
+            ]
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "activities": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/ticketActivity"
+                      }
+                    },
+                    "ticket": {
+                      "$ref": "#/components/schemas/ticket"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/support/tickets/v1/{id}/status": {
@@ -9860,6 +9923,61 @@
               "required": [
                 "subscription"
               ]
+            }
+          }
+        }
+      },
+      "createSupportTicket": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "ticket": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "access",
+                        "accountAndBilling",
+                        "bookings",
+                        "cleaning",
+                        "discriminationAndHarassment",
+                        "internet",
+                        "mailAndPackages",
+                        "noiseAndAcoustics",
+                        "offensiveOrObjectionableContent",
+                        "other",
+                        "printing",
+                        "repairAndMaintenance",
+                        "temperatureAndVentilation",
+                        "websiteAndApp"
+                      ]
+                    },
+                    "userRefRequester": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The id of the user who is requesting the ticket."
+                    },
+                    "text": {
+                      "type": "string",
+                      "description": "The text of the ticket."
+                    },
+                    "locationRef": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The id of the location."
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "text",
+                    "locationRef"
+                  ]
+                }
+              }
             }
           }
         }
