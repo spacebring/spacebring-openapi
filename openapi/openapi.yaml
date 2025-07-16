@@ -2921,15 +2921,19 @@ paths:
             schema:
               type: object
               properties:
-                status:
-                  type: string
-                  enum:
-                    - new
-                    - inProgress
-                    - solved
-                    - closed
+                ticket:
+                  properties:
+                    status:
+                      type: string
+                      enum:
+                        - new
+                        - inProgress
+                        - solved
+                        - closed
+                  required:
+                    - status
               required:
-                - status
+                - ticket
       security:
         - BasicAuth: []
         - OAuth2:
@@ -2942,6 +2946,8 @@ paths:
               schema:
                 type: object
                 properties:
+                  activity:
+                    $ref: '#/components/schemas/ticketActivity'
                   ticket:
                     $ref: '#/components/schemas/ticket'
         '400':

@@ -4697,18 +4697,25 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "status": {
-                    "type": "string",
-                    "enum": [
-                      "new",
-                      "inProgress",
-                      "solved",
-                      "closed"
+                  "ticket": {
+                    "properties": {
+                      "status": {
+                        "type": "string",
+                        "enum": [
+                          "new",
+                          "inProgress",
+                          "solved",
+                          "closed"
+                        ]
+                      }
+                    },
+                    "required": [
+                      "status"
                     ]
                   }
                 },
                 "required": [
-                  "status"
+                  "ticket"
                 ]
               }
             }
@@ -4732,6 +4739,9 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "activity": {
+                      "$ref": "#/components/schemas/ticketActivity"
+                    },
                     "ticket": {
                       "$ref": "#/components/schemas/ticket"
                     }
