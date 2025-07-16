@@ -2997,6 +2997,41 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
+  /support/tickets/v1/comment/{id}:
+    delete:
+      tags:
+        - Support tickets
+      summary: Delete a support ticket comment
+      description: 'Delete a support ticket comment. <h3>OAuth</h3>Required scopes: <code>support</code>'
+      operationId: deleteSupportTicketComment
+      parameters:
+        - name: id
+          in: path
+          description: The id of the ticket activity.
+          schema:
+            format: uuid
+            type: string
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - support
+      responses:
+        '204':
+          description: OK
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
   /support/tickets/v1/{id}/type:
     patch:
       tags:
