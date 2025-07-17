@@ -3061,6 +3061,64 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
+  /support/tickets/v1/comment:
+    post:
+      tags:
+        - Support tickets
+      summary: Create a support ticket comment
+      description: 'Create a support ticket comment. <h3>OAuth</h3>Required scopes: <code>support</code>'
+      operationId: createSupportTicketComment
+      parameters:
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                activity:
+                  type: object
+                  properties:
+                    attachments:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          key:
+                            type: string
+                    text:
+                      type: string
+                    ticketRef:
+                      type: string
+                      format: uuid
+              required:
+                - activity
+      security:
+        - OAuth2:
+            - support
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  activity:
+                    $ref: '#/components/schemas/ticketActivity'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
   /support/tickets/v1/comment/{id}:
     delete:
       tags:
