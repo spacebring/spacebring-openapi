@@ -4763,6 +4763,100 @@
         }
       }
     },
+    "/support/tickets/v1/{id}/assignee": {
+      "put": {
+        "tags": [
+          "Support tickets"
+        ],
+        "summary": "Update support ticket assignee",
+        "description": "Update support ticket assignee. <h3>OAuth</h3>Required scopes: <code>support</code>",
+        "operationId": "updateSupportTicketAssignee",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the ticket.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "ticket": {
+                    "type": "object",
+                    "properties": {
+                      "membershipRefAssignee": {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "The id of the membership to assign the ticket to."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "support"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "activity": {
+                      "$ref": "#/components/schemas/ticketActivity"
+                    },
+                    "ticket": {
+                      "$ref": "#/components/schemas/ticket"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/support/tickets/v1/{id}": {
       "get": {
         "tags": [
