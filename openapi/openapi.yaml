@@ -2123,6 +2123,40 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
+    delete:
+      tags:
+        - Plans
+      summary: Delete a plan
+      description: 'Delete a certain plan. <h3>OAuth</h3>Required scopes: <code>plans</code>'
+      operationId: deletePlan
+      parameters:
+        - name: id
+          in: path
+          description: The id of the plan.
+          schema:
+            format: uuid
+            type: string
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - plans
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
   /shop/categories/v1:
     get:
       tags:
@@ -4748,6 +4782,21 @@ components:
     plan:
       type: object
       properties:
+        access:
+          type: object
+          properties:
+            brivoGroupRef:
+              type: string
+              format: uuid
+            kisiGroupRef:
+              type: string
+              format: uuid
+            saltoksAccessGroupRef:
+              type: string
+              format: uuid
+            tapkeyGroupRef:
+              type: string
+              format: uuid
         createDate:
           $ref: '#/components/schemas/dateSchema'
         credits:
@@ -4763,6 +4812,19 @@ components:
           type: number
         description:
           type: string
+        discounts:
+          type: object
+          properties:
+            creditPackages:
+              type: number
+            desks:
+              type: number
+            events:
+              type: number
+            rooms:
+              type: number
+            shop:
+              type: number
         id:
           type: string
           format: uuid
@@ -4780,6 +4842,12 @@ components:
             - year
         price:
           type: number
+        printing:
+          type: object
+          properties:
+            ezeepBlueGroupRef:
+              type: string
+              format: uuid
         selfSignup:
           type: object
           properties:
