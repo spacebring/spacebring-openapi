@@ -2080,6 +2080,34 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
+    post:
+      tags:
+        - Plans
+      summary: Create a plan
+      description: 'Create a plan. <h3>OAuth</h3>Required scopes: <code>plans</code>'
+      operationId: createPlan
+      requestBody:
+        $ref: '#/components/requestBodies/createPlan'
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - plans
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  plan:
+                    $ref: '#/components/schemas/plan'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
   /plans/v1/{id}:
     get:
       tags:
@@ -6355,6 +6383,92 @@ components:
                 type: string
             required:
               - membership
+    createPlan:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              plan:
+                type: object
+                properties:
+                  access:
+                    type: object
+                    properties:
+                      brivoGroupRef:
+                        type: number
+                      kisiGroupRef:
+                        type: number
+                      saltoksAccessGroupRef:
+                        type: string
+                        format: uuid
+                      tapkeyGroupRef:
+                        type: string
+                        format: uuid
+                  credits:
+                    type: number
+                  customTax:
+                    type: object
+                    properties:
+                      enabled:
+                        type: boolean
+                      rate:
+                        type: number
+                  dayPasses:
+                    type: number
+                  description:
+                    type: string
+                  discounts:
+                    type: object
+                    properties:
+                      creditPackages:
+                        type: number
+                      desks:
+                        type: number
+                      events:
+                        type: number
+                      rooms:
+                        type: number
+                      shop:
+                        type: number
+                  locationRef:
+                    type: string
+                    format: uuid
+                  period:
+                    type: string
+                    enum:
+                      - day
+                      - week
+                      - month
+                      - threeMonths
+                      - sixMonths
+                      - year
+                  price:
+                    type: number
+                  printing:
+                    type: object
+                    properties:
+                      ezeepBlueGroupRef:
+                        type: string
+                        format: uuid
+                  selfSignup:
+                    type: object
+                    properties:
+                      enabled:
+                        type: boolean
+                      type:
+                        type: string
+                        enum:
+                          - immediate
+                          - request
+                  title:
+                    type: string
+                required:
+                  - locationRef
+                  - period
+                  - price
+                  - title
     createShopCategory:
       required: true
       content:
