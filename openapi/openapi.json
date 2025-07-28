@@ -3516,6 +3516,64 @@
             }
           }
         }
+      },
+      "patch": {
+        "tags": [
+          "Plans"
+        ],
+        "summary": "Update a plan",
+        "description": "Update a certain plan. <h3>OAuth</h3>Required scopes: <code>plans</code>",
+        "operationId": "updatePlan",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the plan.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/updatePlan"
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "plans"
+            ]
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/shop/categories/v1": {
@@ -9979,6 +10037,112 @@
                     "price",
                     "title"
                   ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "updatePlan": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "plan": {
+                  "type": "object",
+                  "properties": {
+                    "access": {
+                      "type": "object",
+                      "properties": {
+                        "brivoGroupRef": {
+                          "type": "number"
+                        },
+                        "kisiGroupRef": {
+                          "type": "number"
+                        },
+                        "saltoksAccessGroupRef": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "tapkeyGroupRef": {
+                          "type": "string",
+                          "format": "uuid"
+                        }
+                      }
+                    },
+                    "credits": {
+                      "type": "number"
+                    },
+                    "customTax": {
+                      "type": "object",
+                      "properties": {
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "rate": {
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "dayPasses": {
+                      "type": "number"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "discounts": {
+                      "type": "object",
+                      "properties": {
+                        "creditPackages": {
+                          "type": "number"
+                        },
+                        "desks": {
+                          "type": "number"
+                        },
+                        "events": {
+                          "type": "number"
+                        },
+                        "rooms": {
+                          "type": "number"
+                        },
+                        "shop": {
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "price": {
+                      "type": "number"
+                    },
+                    "printing": {
+                      "type": "object",
+                      "properties": {
+                        "ezeepBlueGroupRef": {
+                          "type": "string",
+                          "format": "uuid"
+                        }
+                      }
+                    },
+                    "selfSignup": {
+                      "type": "object",
+                      "properties": {
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "immediate",
+                            "request"
+                          ]
+                        }
+                      }
+                    },
+                    "title": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
