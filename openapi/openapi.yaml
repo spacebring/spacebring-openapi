@@ -4203,6 +4203,8 @@ components:
           $ref: '#/components/schemas/dateSchema'
         title:
           type: string
+        updateDate:
+          $ref: '#/components/schemas/dateSchema'
         userOwner:
           $ref: '#/components/schemas/user'
     metadata:
