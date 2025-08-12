@@ -5054,6 +5054,13 @@ components:
                         type: string
                       enabled:
                         type: boolean
+              stock:
+                type: object
+                properties:
+                  enabled:
+                    type: boolean
+                  quantity:
+                    type: number
               title:
                 type: string
         order:
