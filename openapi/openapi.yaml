@@ -828,6 +828,14 @@ paths:
           schema:
             type: string
           description: Filter by company's title
+        - in: query
+          name: types
+          schema:
+            type: string
+            enum:
+              - member
+              - nonmember
+          description: Filter by types. Pass them as comma separated values.
         - in: header
           name: spacebring-network-id
           schema:
@@ -4258,7 +4266,7 @@ components:
         billingAddress:
           type: string
         createDate:
-          type: string
+          $ref: '#/components/schemas/dateSchema'
         credits:
           type: object
           properties:
@@ -4271,6 +4279,8 @@ components:
           properties:
             expiring:
               type: number
+        deleteDate:
+          $ref: '#/components/schemas/dateSchema'
         id:
           type: string
         locationRef:
