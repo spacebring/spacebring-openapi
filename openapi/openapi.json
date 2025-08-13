@@ -2300,6 +2300,63 @@
         }
       }
     },
+    "/feed/posts/v1/{id}": {
+      "delete": {
+        "tags": [
+          "Feed posts"
+        ],
+        "summary": "Delete a feed post",
+        "description": "Delete a feed post. <h3>OAuth</h3>Required scopes: <code>feed</code>",
+        "operationId": "deleteFeedPost",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "description": "The id of the post."
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "feed"
+            ]
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/invoices/v1": {
       "get": {
         "tags": [
