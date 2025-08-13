@@ -1460,6 +1460,51 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
+  /feed/posts/v1/{id}/comments:
+    get:
+      tags:
+        - Feed posts
+      summary: Get comments for a post
+      description: 'Get comments for a post. <h3>OAuth</h3>Required scopes: <code>feed</code>'
+      operationId: getPostComments
+      parameters:
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: The id of the post.
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - feed
+            - feed.readonly
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  comments:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/postComment'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
   /invoices/v1:
     get:
       tags:
