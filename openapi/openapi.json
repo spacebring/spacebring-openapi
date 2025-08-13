@@ -8710,6 +8710,14 @@
               }
             }
           },
+          "status": {
+            "type": "string",
+            "enum": [
+              "canceled",
+              "failed",
+              "succeeded"
+            ]
+          },
           "ticket": {
             "type": "object",
             "properties": {
@@ -8806,6 +8814,14 @@
           "membershipRefCreator": {
             "type": "string",
             "format": "uuid"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "canceled",
+              "failed",
+              "succeeded"
+            ]
           },
           "type": {
             "type": "string",
