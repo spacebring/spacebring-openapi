@@ -1460,6 +1460,80 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
+  /feed/posts/v1/{id}/likes:
+    post:
+      tags:
+        - Feed posts
+      summary: Create a like for a post
+      description: 'Create a like for a post. <h3>OAuth</h3>Required scopes: <code>feed</code>'
+      operationId: createLikeForPost
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: The id of the post.
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - OAuth2:
+            - feed
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  like:
+                    $ref: '#/components/schemas/postLike'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+    delete:
+      tags:
+        - Feed posts
+      summary: Delete a like for a post
+      description: 'Delete a like for a post. <h3>OAuth</h3>Required scopes: <code>feed</code>'
+      operationId: deleteLikeForPost
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: The id of the post.
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - OAuth2:
+            - feed
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
   /feed/posts/v1/{id}/comments:
     get:
       tags:
@@ -4682,6 +4756,47 @@ components:
           type: string
         user:
           $ref: '#/components/schemas/user'
+    postLike:
+      type: object
+      properties:
+        createDate:
+          $ref: '#/components/schemas/dateSchema'
+        id:
+          type: string
+          format: uuid
+          description: The ID of the like
+        membership:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+              description: The ID of the membership
+            user:
+              type: object
+              properties:
+                blocked:
+                  type: boolean
+                  description: Whether the user is blocked
+                deleteDate:
+                  $ref: '#/components/schemas/dateSchema'
+                id:
+                  type: string
+                  format: uuid
+                  description: The ID of the user
+                name:
+                  type: string
+                  description: The name of the user
+                photoUrl:
+                  type: string
+                  description: The URL of the user's photo
+                surname:
+                  type: string
+                  description: The surname of the user
+        postRef:
+          type: string
+          format: uuid
+          description: The ID of the post
     invoiceItem:
       type: object
       properties:
