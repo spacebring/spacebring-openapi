@@ -2191,7 +2191,7 @@
         }
       }
     },
-    "/feed/comment/v1/{id}": {
+    "/feed/comments/v1/{id}": {
       "delete": {
         "tags": [
           "Feed posts"
@@ -2237,6 +2237,124 @@
           },
           "400": {
             "description": "Bad request"
+          }
+        }
+      }
+    },
+    "/feed/comments/v1/{id}/likes": {
+      "post": {
+        "tags": [
+          "Feed posts"
+        ],
+        "summary": "Create a like for a post comment",
+        "description": "Create a like for a post comment. <h3>OAuth</h3>Required scopes: <code>feed</code>",
+        "operationId": "createLikeForPostComment",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the post comment.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "OAuth2": [
+              "feed"
+            ]
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "like": {
+                      "$ref": "#/components/schemas/postLike"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Feed posts"
+        ],
+        "summary": "Delete a like for a post comment",
+        "description": "Delete a like for a post comment. <h3>OAuth</h3>Required scopes: <code>feed</code>",
+        "operationId": "deleteLikeForPostComment",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the post comment.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "OAuth2": [
+              "feed"
+            ]
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
           }
         }
       }
@@ -7479,60 +7597,14 @@
           }
         }
       },
-      "post": {
-        "type": "object",
-        "properties": {
-          "createDate": {
-            "$ref": "#/components/schemas/dateSchema"
-          },
-          "id": {
-            "format": "uuid",
-            "type": "string"
-          },
-          "locationRef": {
-            "format": "uuid",
-            "type": "string"
-          },
-          "media": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "height": {
-                  "type": "integer"
-                },
-                "id": {
-                  "format": "uuid",
-                  "type": "string"
-                },
-                "url": {
-                  "format": "uri",
-                  "type": "string"
-                },
-                "width": {
-                  "type": "integer"
-                }
-              }
-            }
-          },
-          "membershipRef": {
-            "format": "uuid",
-            "type": "string"
-          },
-          "og": {
-            "type": "object"
-          },
-          "text": {
-            "type": "string"
-          },
-          "user": {
-            "$ref": "#/components/schemas/user"
-          }
-        }
-      },
       "postLike": {
         "type": "object",
         "properties": {
+          "commentRef": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The ID of the comment"
+          },
           "createDate": {
             "$ref": "#/components/schemas/dateSchema"
           },
@@ -7584,6 +7656,57 @@
             "type": "string",
             "format": "uuid",
             "description": "The ID of the post"
+          }
+        }
+      },
+      "post": {
+        "type": "object",
+        "properties": {
+          "createDate": {
+            "$ref": "#/components/schemas/dateSchema"
+          },
+          "id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "locationRef": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "media": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "height": {
+                  "type": "integer"
+                },
+                "id": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "url": {
+                  "format": "uri",
+                  "type": "string"
+                },
+                "width": {
+                  "type": "integer"
+                }
+              }
+            }
+          },
+          "membershipRef": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "og": {
+            "type": "object"
+          },
+          "text": {
+            "type": "string"
+          },
+          "user": {
+            "$ref": "#/components/schemas/user"
           }
         }
       },
