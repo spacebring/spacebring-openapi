@@ -2360,6 +2360,77 @@
       }
     },
     "/feed/posts/v1": {
+      "get": {
+        "tags": [
+          "Feed posts"
+        ],
+        "summary": "Get feed posts",
+        "description": "Get feed posts. <h3>OAuth</h3>Required scopes: <code>feed.readonly</code> or <code>feed</code>",
+        "operationId": "getFeedPosts",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "locationRef",
+            "description": "The id of the location.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "feed.readonly",
+              "feed"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "posts": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/post"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      },
       "post": {
         "tags": [
           "Feed posts"
