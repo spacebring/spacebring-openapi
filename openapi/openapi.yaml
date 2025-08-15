@@ -1500,6 +1500,48 @@ paths:
               schema:
                 $ref: '#/components/schemas/responseError'
   /feed/posts/v1/{id}:
+    get:
+      tags:
+        - Feed posts
+      summary: Get a feed post
+      description: 'Get a feed post. <h3>OAuth</h3>Required scopes: <code>feed</code> or <code>feed.readonly</code>'
+      operationId: getFeedPost
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: The id of the post.
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - feed
+            - feed.readonly
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  post:
+                    $ref: '#/components/schemas/post'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
     delete:
       tags:
         - Feed posts
@@ -4887,10 +4929,18 @@ components:
     post:
       type: object
       properties:
+        comments:
+          type: integer
         createDate:
           $ref: '#/components/schemas/dateSchema'
         id:
           format: uuid
+          type: string
+        liked:
+          type: boolean
+        likes:
+          type: integer
+        locale:
           type: string
         locationRef:
           format: uuid
@@ -4905,16 +4955,30 @@ components:
               id:
                 format: uuid
                 type: string
+              key:
+                type: string
+              mime:
+                type: string
               url:
                 format: uri
                 type: string
               width:
                 type: integer
+        membership:
+          type: object
+          properties:
+            id:
+              format: uuid
+              type: string
+            user:
+              $ref: '#/components/schemas/user'
         membershipRef:
           format: uuid
           type: string
         og:
           type: object
+        pinned:
+          type: boolean
         text:
           type: string
         user:
