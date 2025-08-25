@@ -3234,6 +3234,36 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
+  /resources/v1/{id}:
+    patch:
+      tags:
+        - Resources
+      summary: Patch a resource
+      description: 'Patch a certain resource. <h3>OAuth</h3>Required scopes: <code>resources</code>'
+      operationId: patchResource
+      parameters:
+        - name: id
+          in: path
+          description: The id of the resource.
+          schema:
+            format: uuid
+            type: string
+          required: true
+      requestBody:
+        $ref: '#/components/requestBodies/patchResource'
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - resources
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
   /subscriptions/v1:
     get:
       tags:
@@ -7523,6 +7553,18 @@ components:
                   - categoryRef
             required:
               - product
+    patchResource:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              resource:
+                type: object
+                properties:
+                  title:
+                    type: string
     assignSubscription:
       required: true
       content:
