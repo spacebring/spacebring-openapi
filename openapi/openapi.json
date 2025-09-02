@@ -1561,20 +1561,45 @@
                       "billingAddress": {
                         "type": "string"
                       },
+                      "businessAddress": {
+                        "type": "object",
+                        "properties": {
+                          "city": {
+                            "type": "string"
+                          },
+                          "countryCode": {
+                            "type": "string"
+                          },
+                          "line1": {
+                            "type": "string"
+                          },
+                          "line2": {
+                            "type": "string"
+                          },
+                          "postalCode": {
+                            "type": "string"
+                          },
+                          "state": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "legalName": {
+                        "type": "string"
+                      },
                       "metadata": {
                         "$ref": "#/components/schemas/metadata"
                       },
                       "notes": {
                         "type": "string"
                       },
+                      "taxId": {
+                        "type": "string"
+                      },
                       "title": {
                         "type": "string"
                       }
-                    },
-                    "required": [
-                      "metadata",
-                      "title"
-                    ]
+                    }
                   }
                 },
                 "required": [
@@ -7588,6 +7613,29 @@
           "billingAddress": {
             "type": "string"
           },
+          "businessAddress": {
+            "type": "object",
+            "properties": {
+              "city": {
+                "type": "string"
+              },
+              "countryCode": {
+                "type": "string"
+              },
+              "line1": {
+                "type": "string"
+              },
+              "line2": {
+                "type": "string"
+              },
+              "postalCode": {
+                "type": "string"
+              },
+              "state": {
+                "type": "string"
+              }
+            }
+          },
           "createDate": {
             "$ref": "#/components/schemas/dateSchema"
           },
@@ -7616,6 +7664,9 @@
           "id": {
             "type": "string"
           },
+          "legalName": {
+            "type": "string"
+          },
           "locationRef": {
             "format": "uuid",
             "type": "string"
@@ -7628,6 +7679,9 @@
           },
           "subscriptionRef": {
             "format": "uuid",
+            "type": "string"
+          },
+          "taxId": {
             "type": "string"
           },
           "title": {
@@ -10639,6 +10693,39 @@
                       "type": "string",
                       "description": "The billing address of company to create."
                     },
+                    "businessAddress": {
+                      "type": "object",
+                      "properties": {
+                        "city": {
+                          "type": "string",
+                          "description": "The city of company to create."
+                        },
+                        "countryCode": {
+                          "type": "string",
+                          "description": "The country code of company to create."
+                        },
+                        "line1": {
+                          "type": "string",
+                          "description": "The line 1 of company to create."
+                        },
+                        "line2": {
+                          "type": "string",
+                          "description": "The line 2 of company to create."
+                        },
+                        "postalCode": {
+                          "type": "string",
+                          "description": "The postal code of company to create."
+                        },
+                        "state": {
+                          "type": "string",
+                          "description": "The state of company to create."
+                        }
+                      }
+                    },
+                    "legalName": {
+                      "type": "string",
+                      "description": "The legal name of company to create."
+                    },
                     "locationRef": {
                       "type": "string",
                       "format": "uuid",
@@ -10650,6 +10737,10 @@
                     "notes": {
                       "type": "string",
                       "description": "The notes of company to create."
+                    },
+                    "taxId": {
+                      "type": "string",
+                      "description": "The tax id of company to create."
                     },
                     "title": {
                       "type": "string",
