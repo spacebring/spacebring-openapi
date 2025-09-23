@@ -6911,6 +6911,76 @@
         }
       }
     },
+    "/visitors/requests/v1/{id}": {
+      "get": {
+        "tags": [
+          "Visitors"
+        ],
+        "summary": "Retrieve a request",
+        "description": "Retrieve a request. <h3>OAuth</h3>Required scopes: <code>visitors</code> or <code>visitors.readonly</code>",
+        "operationId": "getRequest",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "description": "The id of the request."
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "visitors",
+              "visitors.readonly"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "request": {
+                      "$ref": "#/components/schemas/visitRequest"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/visitors/visits/v1": {
       "get": {
         "tags": [
