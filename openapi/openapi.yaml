@@ -4261,6 +4261,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
+  /visitors/requests/v1:
+    post:
+      tags:
+        - Visitors
+      summary: Create a request
+      description: 'Create a request. <h3>OAuth</h3>Required scopes: <code>visitors</code>'
+      operationId: createRequest
+      parameters:
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - visitors
+      requestBody:
+        $ref: '#/components/requestBodies/createVisitRequest'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  request:
+                    $ref: '#/components/schemas/visitRequest'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
   /visitors/visits/v1:
     get:
       tags:
@@ -6656,6 +6693,36 @@ components:
           type: string
         user:
           $ref: '#/components/schemas/user'
+    visitRequest:
+      type: object
+      properties:
+        createDate:
+          $ref: '#/components/schemas/dateSchema'
+        id:
+          format: uuid
+          type: string
+        locationRef:
+          format: uuid
+          type: string
+        userHost:
+          $ref: '#/components/schemas/user'
+        userRefHost:
+          format: uuid
+          type: string
+        userRefVisitor:
+          format: uuid
+          type: string
+        visitor:
+          type: object
+          properties:
+            email:
+              type: string
+            name:
+              type: string
+            phoneNumber:
+              type: string
+            surname:
+              type: string
     visit:
       type: object
       properties:
@@ -7892,6 +7959,39 @@ components:
                       - companyRef
             required:
               - transaction
+    createVisitRequest:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              request:
+                type: object
+                properties:
+                  locationRef:
+                    type: string
+                    format: uuid
+                    description: The id of the location.
+                  userRefHost:
+                    type: string
+                    format: uuid
+                    description: The id of the user who is hosting the request.
+                  visitor:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                        description: Visitor email.
+                      name:
+                        type: string
+                        description: Visitor name.
+                      phoneNumber:
+                        type: string
+                        description: Visitor phone number.
+                      surname:
+                        type: string
+                        description: Visitor surname.
     createVisit:
       required: true
       content:
