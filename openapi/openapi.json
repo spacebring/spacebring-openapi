@@ -6849,6 +6849,139 @@
         }
       }
     },
+    "/visitors/contacts/v1": {
+      "post": {
+        "tags": [
+          "Visitors"
+        ],
+        "summary": "Create contact",
+        "description": "Create a contact. <h3>OAuth</h3>Required scopes: <code>visitors</code>",
+        "operationId": "createContact",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/createContact"
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "visitors"
+            ]
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "contact": {
+                      "$ref": "#/components/schemas/contact"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/visitors/contacts/v1/{contactId}": {
+      "get": {
+        "tags": [
+          "Visitors"
+        ],
+        "summary": "Get contact",
+        "description": "Get a contact. <h3>OAuth</h3>Required scopes: <code>visitors</code> or <code>visitors.readonly</code>",
+        "operationId": "getContact",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          },
+          {
+            "in": "path",
+            "name": "contactId",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "description": "The id of the contact."
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "visitors",
+              "visitors.readonly"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "contact": {
+                      "type": "object",
+                      "$ref": "#/components/schemas/contact"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/visitors/requests/v1": {
       "get": {
         "tags": [
@@ -10675,6 +10808,47 @@
           }
         }
       },
+      "contact": {
+        "type": "object",
+        "properties": {
+          "contact": {
+            "type": "object",
+            "properties": {
+              "createDate": {
+                "$ref": "#/components/schemas/dateSchema"
+              },
+              "date": {
+                "$ref": "#/components/schemas/dateSchema"
+              },
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "locationRef": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "visitor": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "phoneNumber": {
+                    "type": "string"
+                  },
+                  "surname": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
       "visitRequest": {
         "type": "object",
         "properties": {
@@ -12561,6 +12735,49 @@
               "required": [
                 "transaction"
               ]
+            }
+          }
+        }
+      },
+      "createContact": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "contact": {
+                  "type": "object",
+                  "properties": {
+                    "locationRef": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "The location id where to create a contact."
+                    },
+                    "visitor": {
+                      "type": "object",
+                      "properties": {
+                        "email": {
+                          "type": "string",
+                          "description": "Visitor email."
+                        },
+                        "name": {
+                          "type": "string",
+                          "description": "Visitor name."
+                        },
+                        "phoneNumber": {
+                          "type": "string",
+                          "description": "Visitor phone number."
+                        },
+                        "surname": {
+                          "type": "string",
+                          "description": "Visitor surname."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
             }
           }
         }
