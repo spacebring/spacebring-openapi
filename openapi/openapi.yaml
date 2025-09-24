@@ -4535,6 +4535,44 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
+  /visitors/visits/v1/checkout:
+    post:
+      tags:
+        - Visitors
+      summary: Check out a visit
+      description: 'Check out a visit. <h3>OAuth</h3>Required scopes: <code>visitors</code>'
+      operationId: checkOutVisit
+      parameters:
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      requestBody:
+        $ref: '#/components/requestBodies/checkInVisit'
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - visitors
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  visit:
+                    type: object
+                    $ref: '#/components/schemas/visit'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
   /visitors/visits/v1/{id}:
     get:
       tags:
