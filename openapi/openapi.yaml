@@ -4262,6 +4262,50 @@ paths:
               schema:
                 $ref: '#/components/schemas/responseError'
   /visitors/requests/v1:
+    get:
+      tags:
+        - Visitors
+      summary: Get requests
+      description: 'Get requests. <h3>OAuth</h3>Required scopes: <code>visitors</code> or <code>visitors.readonly</code>'
+      operationId: getRequests
+      parameters:
+        - in: query
+          name: locationRef
+          description: The id of the location.
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - visitors.readonly
+            - visitors
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  requests:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/visitRequest'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
     post:
       tags:
         - Visitors
@@ -6824,6 +6868,9 @@ components:
           format: uuid
           type: string
         locationRef:
+          format: uuid
+          type: string
+        membershipRefHost:
           format: uuid
           type: string
         userHost:
