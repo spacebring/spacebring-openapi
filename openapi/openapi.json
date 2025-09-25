@@ -6850,6 +6850,103 @@
       }
     },
     "/visitors/contacts/v1": {
+      "get": {
+        "tags": [
+          "Visitors"
+        ],
+        "summary": "Get contacts",
+        "description": "Get contacts. <h3>OAuth</h3>Required scopes: <code>visitors</code>",
+        "operationId": "getContacts",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            },
+            "required": false,
+            "description": "The maximum number of contacts to return. Default is 25."
+          },
+          {
+            "in": "query",
+            "name": "nextPageToken",
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "description": "The next page token."
+          },
+          {
+            "in": "query",
+            "name": "locationRef",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "description": "The id of the location."
+          },
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "visitors",
+              "visitors.readonly"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "contacts": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/contact"
+                      }
+                    },
+                    "nextPageToken": {
+                      "type": "string"
+                    },
+                    "searchQueryNext": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      },
       "post": {
         "tags": [
           "Visitors"
