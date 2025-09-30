@@ -5242,6 +5242,64 @@
       }
     },
     "/resources/v1/{id}": {
+      "get": {
+        "tags": [
+          "Resources"
+        ],
+        "summary": "Get a resource",
+        "description": "Get a certain resource. <h3>OAuth</h3>Required scopes: <code>resources.readonly</code> or <code>resources</code>",
+        "operationId": "getResource",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the resource.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "resources",
+              "resources.readonly"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "resource": {
+                      "$ref": "#/components/schemas/resource"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      },
       "patch": {
         "tags": [
           "Resources"
@@ -9437,6 +9495,9 @@
               }
             }
           },
+          "commitmentCycles": {
+            "type": "number"
+          },
           "createDate": {
             "$ref": "#/components/schemas/dateSchema"
           },
@@ -9839,6 +9900,60 @@
           "networkRef": {
             "format": "uuid",
             "type": "string"
+          },
+          "plans": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean"
+              },
+              "tiers": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "entire": {
+                      "type": "boolean"
+                    },
+                    "plan": {
+                      "type": "object",
+                      "properties": {
+                        "commitmentCycles": {
+                          "type": "number"
+                        },
+                        "credits": {
+                          "type": "number"
+                        },
+                        "dayPasses": {
+                          "type": "number"
+                        },
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "period": {
+                          "type": "string",
+                          "enum": [
+                            "day",
+                            "week",
+                            "month",
+                            "threeMonths",
+                            "sixMonths",
+                            "year"
+                          ]
+                        },
+                        "price": {
+                          "type": "number"
+                        },
+                        "title": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "refundThreshold": {
             "type": "string"
