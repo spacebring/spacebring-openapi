@@ -254,7 +254,7 @@ paths:
   /benefits/categories/v1/{id}:
     get:
       tags:
-        - Benefit Categories
+        - Benefit categories
       summary: Get a benefit category
       description: 'Get a benefit category. <h3>OAuth</h3>Required scopes: <code>benefits</code>'
       operationId: getBenefitCategory
@@ -296,7 +296,7 @@ paths:
                 $ref: '#/components/schemas/responseError'
     delete:
       tags:
-        - Benefit Categories
+        - Benefit categories
       summary: Delete a benefit category
       description: 'Delete a benefit category. <h3>OAuth</h3>Required scopes: <code>benefits</code>'
       operationId: deleteBenefitCategory
@@ -330,7 +330,7 @@ paths:
                 $ref: '#/components/schemas/responseError'
     put:
       tags:
-        - Benefit Categories
+        - Benefit categories
       summary: Update a benefit category
       description: 'Update a benefit category. <h3>OAuth</h3>Required scopes: <code>benefits</code>'
       operationId: updateBenefitCategory
@@ -2839,7 +2839,7 @@ paths:
   /shop/categories/v1/{id}:
     get:
       tags:
-        - Shop Categories
+        - Shop categories
       summary: Get a shop category
       description: 'Get a shop category. <h3>OAuth</h3>Required scopes: <code>shop</code>'
       operationId: getShopCategory
@@ -2881,7 +2881,7 @@ paths:
                 $ref: '#/components/schemas/responseError'
     delete:
       tags:
-        - Shop Categories
+        - Shop categories
       summary: Delete a shop category
       description: 'Delete a shop category. <h3>OAuth</h3>Required scopes: <code>shop</code>'
       operationId: deleteShopCategory
@@ -2915,7 +2915,7 @@ paths:
                 $ref: '#/components/schemas/responseError'
     put:
       tags:
-        - Shop Categories
+        - Shop categories
       summary: Update a shop category
       description: 'Update a shop category. <h3>OAuth</h3>Required scopes: <code>shop</code>'
       operationId: updateShopCategory
