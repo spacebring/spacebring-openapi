@@ -2176,6 +2176,12 @@ paths:
             type: string
             format: email
           description: Filter by user's email
+        - name: userRef
+          in: query
+          schema:
+            type: string
+            format: uuid
+          description: The id of the user
         - in: query
           name: status
           schema:
@@ -7124,6 +7130,9 @@ components:
               type: string
               format: uuid
             locationRef:
+              type: string
+              format: uuid
+            userRefVisitor:
               type: string
               format: uuid
             visitor:

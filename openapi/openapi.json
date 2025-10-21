@@ -3498,6 +3498,15 @@
             "description": "Filter by user's email"
           },
           {
+            "name": "userRef",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "The id of the user"
+          },
+          {
             "in": "query",
             "name": "status",
             "schema": {
@@ -11091,6 +11100,10 @@
                 "format": "uuid"
               },
               "locationRef": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "userRefVisitor": {
                 "type": "string",
                 "format": "uuid"
               },
