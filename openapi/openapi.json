@@ -892,6 +892,159 @@
         }
       }
     },
+    "/credit_notes/v1": {
+      "get": {
+        "tags": [
+          "Credit Notes"
+        ],
+        "summary": "Retrieve credit notes",
+        "description": "Retrieve all credit notes for a specific invoice. <h3>OAuth</h3>Required scopes: <code>invoices.readonly</code> or <code>invoices</code>",
+        "operationId": "getCreditNotes",
+        "parameters": [
+          {
+            "name": "invoiceRef",
+            "in": "query",
+            "description": "The id of the invoice",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "invoices.readonly",
+              "invoices"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "creditNotes": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/creditNote"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/credit_notes/v1/{id}": {
+      "get": {
+        "tags": [
+          "Credit Notes"
+        ],
+        "summary": "Retrieve a credit note",
+        "description": "Retrieve a specific credit note. <h3>OAuth</h3>Required scopes: <code>invoices.readonly</code> or <code>invoices</code>",
+        "operationId": "getCreditNote",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the credit note",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "invoices.readonly",
+              "invoices"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "creditNote": {
+                      "$ref": "#/components/schemas/creditNote"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/resources/bookings/v1": {
       "get": {
         "tags": [
@@ -8198,6 +8351,383 @@
           }
         }
       },
+      "creditNote": {
+        "type": "object",
+        "properties": {
+          "altCurrencyCode": {
+            "type": "string",
+            "description": "Alternative currency code"
+          },
+          "altGrossAmount": {
+            "type": "number",
+            "format": "float",
+            "description": "Gross amount in alternative currency"
+          },
+          "altPostPaymentAmount": {
+            "type": "number",
+            "format": "float",
+            "description": "Post payment amount in alternative currency"
+          },
+          "altPrePaymentAmount": {
+            "type": "number",
+            "format": "float",
+            "description": "Pre payment amount in alternative currency"
+          },
+          "altSubtotalAmount": {
+            "type": "number",
+            "format": "float",
+            "description": "Subtotal amount in alternative currency"
+          },
+          "altTotalAmount": {
+            "type": "number",
+            "format": "float",
+            "description": "Total amount in alternative currency"
+          },
+          "altTotalExcludingTaxAmount": {
+            "type": "number",
+            "format": "float",
+            "description": "Total excluding tax amount in alternative currency"
+          },
+          "createDate": {
+            "$ref": "#/components/schemas/dateSchema"
+          },
+          "creditAmount": {
+            "type": "number",
+            "format": "float",
+            "description": "Credit amount"
+          },
+          "currencyCode": {
+            "type": "string"
+          },
+          "effectiveDate": {
+            "$ref": "#/components/schemas/dateSchema"
+          },
+          "grossAmount": {
+            "type": "number",
+            "format": "float"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "invoiceRef": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "lines": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "altCurrencyCode": {
+                  "type": "string",
+                  "description": "Alternative currency code"
+                },
+                "altGrossAmount": {
+                  "type": "number",
+                  "format": "float",
+                  "description": "Gross amount in alternative currency"
+                },
+                "altTotalAmount": {
+                  "type": "number",
+                  "format": "float",
+                  "description": "Total amount in alternative currency"
+                },
+                "altTotalExcludingTaxAmount": {
+                  "type": "number",
+                  "format": "float",
+                  "description": "Total excluding tax amount in alternative currency"
+                },
+                "altUnitAmount": {
+                  "type": "number",
+                  "format": "float",
+                  "description": "Unit amount in alternative currency"
+                },
+                "altUnitExcludingTaxAmount": {
+                  "type": "number",
+                  "format": "float",
+                  "description": "Unit excluding tax amount in alternative currency"
+                },
+                "createDate": {
+                  "$ref": "#/components/schemas/dateSchema"
+                },
+                "currencyCode": {
+                  "type": "string"
+                },
+                "discounts": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "altAmount": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "amount": {
+                        "type": "number",
+                        "format": "float"
+                      },
+                      "coupon": {
+                        "type": "object",
+                        "properties": {
+                          "amountOff": {
+                            "type": "number",
+                            "format": "float"
+                          },
+                          "currencyCode": {
+                            "type": "string"
+                          },
+                          "duration": {
+                            "type": "string"
+                          },
+                          "durationInMonths": {
+                            "type": "integer"
+                          },
+                          "id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "percentOff": {
+                            "type": "number",
+                            "format": "float"
+                          },
+                          "type": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "promocode": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string"
+                          },
+                          "expiration": {
+                            "$ref": "#/components/schemas/dateSchema"
+                          },
+                          "id": {
+                            "type": "string",
+                            "format": "uuid"
+                          },
+                          "limitByFirstPurchase": {
+                            "type": "boolean"
+                          }
+                        }
+                      },
+                      "subscriptionId": {
+                        "type": "string",
+                        "format": "uuid"
+                      }
+                    }
+                  }
+                },
+                "grossAmount": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "invoiceItemRef": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "invoiceRef": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "memo": {
+                  "type": "string"
+                },
+                "networkRef": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "organizationRef": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "quantity": {
+                  "type": "integer"
+                },
+                "tax": {
+                  "type": "object",
+                  "properties": {
+                    "altAmount": {
+                      "type": "number",
+                      "format": "float"
+                    },
+                    "altTaxableAmount": {
+                      "type": "number",
+                      "format": "float"
+                    },
+                    "amount": {
+                      "type": "number",
+                      "format": "float"
+                    },
+                    "inclusive": {
+                      "type": "boolean"
+                    },
+                    "rate": {
+                      "type": "number",
+                      "format": "float"
+                    },
+                    "taxableAmount": {
+                      "type": "number",
+                      "format": "float"
+                    }
+                  }
+                },
+                "totalAmount": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "totalExcludingTaxAmount": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "unitAmount": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "unitExcludingTaxAmount": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "updateDate": {
+                  "$ref": "#/components/schemas/dateSchema"
+                }
+              }
+            }
+          },
+          "memo": {
+            "type": "string"
+          },
+          "networkRef": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "number": {
+            "type": "string"
+          },
+          "organizationRef": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "outOfBandAmount": {
+            "type": "number",
+            "format": "float",
+            "description": "Out of band amount"
+          },
+          "pdfUrl": {
+            "type": "string",
+            "format": "uri"
+          },
+          "postPaymentAmount": {
+            "type": "number",
+            "format": "float"
+          },
+          "prePaymentAmount": {
+            "type": "number",
+            "format": "float"
+          },
+          "reason": {
+            "type": "string",
+            "enum": [
+              "duplicate",
+              "orderChange",
+              "productUnsatisfactory",
+              "fraudulent",
+              "other"
+            ]
+          },
+          "refunds": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "amount": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "currencyCode": {
+                  "type": "string"
+                },
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "paymentMethodLabel": {
+                  "type": "string"
+                },
+                "transactionRef": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              }
+            }
+          },
+          "status": {
+            "type": "string"
+          },
+          "subtotalAmount": {
+            "type": "number",
+            "format": "float"
+          },
+          "taxes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "altAmount": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "altTaxableAmount": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "amount": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "inclusive": {
+                  "type": "boolean"
+                },
+                "rate": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "taxableAmount": {
+                  "type": "number",
+                  "format": "float"
+                }
+              }
+            }
+          },
+          "title": {
+            "type": "string"
+          },
+          "totalAmount": {
+            "type": "number",
+            "format": "float"
+          },
+          "totalExcludingTaxAmount": {
+            "type": "number",
+            "format": "float"
+          },
+          "type": {
+            "type": "string"
+          },
+          "updateDate": {
+            "$ref": "#/components/schemas/dateSchema"
+          },
+          "voidDate": {
+            "$ref": "#/components/schemas/dateSchema"
+          }
+        }
+      },
       "user": {
         "type": "object",
         "properties": {
@@ -9086,6 +9616,14 @@
       "invoice": {
         "type": "object",
         "properties": {
+          "prePaymentCreditAmount": {
+            "type": "number",
+            "format": "float"
+          },
+          "postPaymentCreditAmount": {
+            "type": "number",
+            "format": "float"
+          },
           "amount": {
             "type": "number",
             "format": "float"
