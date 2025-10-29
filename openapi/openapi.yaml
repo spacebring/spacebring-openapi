@@ -548,7 +548,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
-  /credit_notes/v1:
+  /billing/credit_notes/v1:
     get:
       tags:
         - Credit Notes
@@ -593,7 +593,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
-  /credit_notes/v1/{id}:
+  /billing/credit_notes/v1/{id}:
     get:
       tags:
         - Credit Notes

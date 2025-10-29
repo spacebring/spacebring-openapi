@@ -892,7 +892,7 @@
         }
       }
     },
-    "/credit_notes/v1": {
+    "/billing/credit_notes/v1": {
       "get": {
         "tags": [
           "Credit Notes"
@@ -965,7 +965,7 @@
         }
       }
     },
-    "/credit_notes/v1/{id}": {
+    "/billing/credit_notes/v1/{id}": {
       "get": {
         "tags": [
           "Credit Notes"
