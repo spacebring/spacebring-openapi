@@ -914,7 +914,7 @@
           {
             "name": "locationRef",
             "in": "query",
-            "description": "The id of the location (organization). One of invoiceRef or locationRef is required.",
+            "description": "The id of the location. One of invoiceRef or locationRef is required.",
             "schema": {
               "type": "string",
               "format": "uuid"
