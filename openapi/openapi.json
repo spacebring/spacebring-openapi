@@ -895,7 +895,7 @@
     "/billing/credit_notes/v1": {
       "get": {
         "tags": [
-          "Credit Notes"
+          "Credit notes"
         ],
         "summary": "Retrieve credit notes",
         "description": "Retrieve all credit notes for a specific invoice or location. One of invoiceRef or locationRef is required. <h3>OAuth</h3>Required scopes: <code>invoices.readonly</code> or <code>invoices</code>",
@@ -1027,7 +1027,7 @@
     "/billing/credit_notes/v1/{id}": {
       "get": {
         "tags": [
-          "Credit Notes"
+          "Credit notes"
         ],
         "summary": "Retrieve a credit note",
         "description": "Retrieve a specific credit note. <h3>OAuth</h3>Required scopes: <code>invoices.readonly</code> or <code>invoices</code>",
