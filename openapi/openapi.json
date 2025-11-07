@@ -13285,6 +13285,13 @@
                 "subscription": {
                   "type": "object",
                   "properties": {
+                    "billingCycleAnchor": {
+                      "type": "string",
+                      "enum": [
+                        "any",
+                        "day"
+                      ]
+                    },
                     "companyRef": {
                       "type": "string",
                       "format": "uuid"
