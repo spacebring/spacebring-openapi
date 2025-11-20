@@ -5759,6 +5759,8 @@ components:
             - oneWeek
             - twoWeeks
             - fourWeeks
+        showAttendees:
+          type: boolean
         startDate:
           $ref: '#/components/schemas/dateSchema'
         title:
@@ -7981,6 +7983,8 @@ components:
                       - oneWeek
                       - twoWeeks
                       - fourWeeks
+                  showAttendees:
+                    type: boolean
                   startDate:
                     $ref: '#/components/schemas/dateSchema'
                   title:

@@ -9114,6 +9114,9 @@
               "fourWeeks"
             ]
           },
+          "showAttendees": {
+            "type": "boolean"
+          },
           "startDate": {
             "$ref": "#/components/schemas/dateSchema"
           },
@@ -12335,6 +12338,9 @@
                         "twoWeeks",
                         "fourWeeks"
                       ]
+                    },
+                    "showAttendees": {
+                      "type": "boolean"
                     },
                     "startDate": {
                       "$ref": "#/components/schemas/dateSchema"
