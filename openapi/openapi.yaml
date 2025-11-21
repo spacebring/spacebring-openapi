@@ -682,6 +682,165 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
+  /contracts/v1:
+    post:
+      tags:
+        - Contracts
+      summary: Create contract
+      description: 'Create a contract. <h3>OAuth</h3>Required scopes: <code>community</code>'
+      operationId: createContract
+      parameters:
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      requestBody:
+        $ref: '#/components/requestBodies/createContract'
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - community
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  contract:
+                    $ref: '#/components/schemas/contract'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /contracts/v1/{id}:
+    get:
+      tags:
+        - Contracts
+      summary: Get contract
+      description: 'Get a contract. <h3>OAuth</h3>Required scopes: <code>community.readonly</code> or <code>community</code>'
+      operationId: getContract
+      parameters:
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: The id of the contract.
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - community
+            - community.readonly
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  contract:
+                    type: object
+                    $ref: '#/components/schemas/contract'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+    delete:
+      tags:
+        - Contracts
+      summary: Delete contract
+      description: 'Delete a contract. <h3>OAuth</h3>Required scopes: <code>community</code>'
+      operationId: deleteContract
+      parameters:
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: The id of the contract.
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - community
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /contracts/v1/{id}/issue:
+    post:
+      tags:
+        - Contracts
+      summary: Issue contract
+      description: 'Issue a contract. <h3>OAuth</h3>Required scopes: <code>community</code>'
+      operationId: issueContract
+      parameters:
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+        - in: path
+          name: id
+          schema:
+            type: string
+            format: uuid
+          required: true
+          description: The id of the contract.
+      requestBody:
+        $ref: '#/components/requestBodies/issueContract'
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - community
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  contract:
+                    $ref: '#/components/schemas/contract'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
   /resources/bookings/v1:
     get:
       tags:
@@ -5529,6 +5688,63 @@ components:
           $ref: '#/components/schemas/dateSchema'
         voidDate:
           $ref: '#/components/schemas/dateSchema'
+    contract:
+      type: object
+      properties:
+        contract:
+          type: object
+          properties:
+            createDate:
+              $ref: '#/components/schemas/dateSchema'
+            customer:
+              type: object
+            customerRef:
+              type: string
+              format: uuid
+            id:
+              type: string
+              format: uuid
+            issueDate:
+              $ref: '#/components/schemas/dateSchema'
+            items:
+              type: array
+            locationRef:
+              type: string
+              format: uuid
+            unsignedDocument:
+              type: object
+              properties:
+                key:
+                  type: string
+                url:
+                  type: string
+            signedDocument:
+              type: object
+              properties:
+                key:
+                  type: string
+                url:
+                  type: string
+            endDate:
+              $ref: '#/components/schemas/dateSchema'
+            expirationDate:
+              $ref: '#/components/schemas/dateSchema'
+            signers:
+              type: array
+            startDate:
+              $ref: '#/components/schemas/dateSchema'
+            status:
+              type: string
+              enum:
+                - draft
+                - issued
+                - signed
+                - declined
+            templateRef:
+              type: string
+              format: uuid
+            title:
+              type: string
     user:
       type: object
       properties:
@@ -7831,6 +8047,59 @@ components:
                       - networkMembers
             required:
               - benefit
+    createContract:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              contract:
+                type: object
+                properties:
+                  actionable:
+                    type: boolean
+                    description: Whether the contract is actionable.
+                  customerRef:
+                    type: string
+                    format: uuid
+                    description: The id of the customer.
+                  endDate:
+                    type: string
+                    description: The end date of the contract.
+                  expirationDate:
+                    type: string
+                    description: The expiration date of the contract.
+                  items:
+                    type: array
+                    description: The items of the contract.
+                  signers:
+                    type: array
+                    description: The signers of the contract.
+                  startDate:
+                    type: string
+                    description: The start date of the contract.
+                  templateRef:
+                    type: string
+                    format: uuid
+                    description: The id of the template.
+            required:
+              - contract
+    issueContract:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              signatureMethod:
+                type: string
+                enum:
+                  - eSignature
+                  - manual
+                description: The method to use to sign the contract.
+            required:
+              - signatureMethod
     createBooking:
       required: true
       content:
