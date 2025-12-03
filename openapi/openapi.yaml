@@ -3788,6 +3788,40 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
+    delete:
+      tags:
+        - Subscriptions
+      summary: Delete a subscription
+      description: 'Delete a certain subscription. <h3>OAuth</h3>Required scopes: <code>subscriptions</code>'
+      operationId: deleteSubscription
+      parameters:
+        - name: id
+          in: path
+          description: The id of the subscription.
+          schema:
+            format: uuid
+            type: string
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - subscriptions
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
   /support/tickets/v1:
     get:
       tags:
