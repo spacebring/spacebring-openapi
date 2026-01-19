@@ -2809,6 +2809,17 @@ paths:
             format: uuid
           required: true
         - in: query
+          name: status
+          description: The status of the order.
+          schema:
+            type: string
+            enum:
+              - new
+              - inProgress
+              - completed
+              - canceled
+          required: false
+        - in: query
           name: createDate
           description: The date filter of items.
           schema:
