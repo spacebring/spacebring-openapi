@@ -6181,6 +6181,78 @@
         }
       }
     },
+    "/subscriptions/v1/{id}/items": {
+      "post": {
+        "tags": [
+          "Subscriptions"
+        ],
+        "summary": "Create a subscription item",
+        "description": "Create a subscription item. <h3>OAuth</h3>Required scopes: <code>subscriptions</code>",
+        "operationId": "createSubscriptionItem",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the subscription.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/subscriptionItem"
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "subscriptions"
+            ]
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "subscription": {
+                      "$ref": "#/components/schemas/subscription"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/subscriptions/v1/{id}/items/{itemId}": {
       "delete": {
         "tags": [
@@ -13983,6 +14055,165 @@
               "required": [
                 "subscription"
               ]
+            }
+          }
+        }
+      },
+      "subscriptionItem": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "autoUpdateFromProduct": {
+                  "type": "boolean"
+                },
+                "avigilonAltaGroupRef": {
+                  "type": "number"
+                },
+                "brivoGroupRef": {
+                  "type": "number"
+                },
+                "commitmentCycles": {
+                  "type": "number"
+                },
+                "couponRef": {
+                  "type": "string"
+                },
+                "createDate": {
+                  "$ref": "#/components/schemas/dateSchema"
+                },
+                "credits": {
+                  "type": "number"
+                },
+                "customEnd": {
+                  "type": "boolean"
+                },
+                "customStart": {
+                  "type": "boolean"
+                },
+                "customTax": {
+                  "type": "object",
+                  "properties": {
+                    "enabled": {
+                      "type": "boolean"
+                    },
+                    "rate": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "dayPasses": {
+                  "type": "number"
+                },
+                "discounts": {
+                  "type": "object",
+                  "properties": {
+                    "creditPackages": {
+                      "type": "number"
+                    },
+                    "desks": {
+                      "type": "number"
+                    },
+                    "equipment": {
+                      "type": "number"
+                    },
+                    "events": {
+                      "type": "number"
+                    },
+                    "rooms": {
+                      "type": "number"
+                    },
+                    "shop": {
+                      "type": "number"
+                    }
+                  }
+                },
+                "endDate": {
+                  "$ref": "#/components/schemas/dateSchema"
+                },
+                "entire": {
+                  "type": "boolean"
+                },
+                "exclusiveAccess": {
+                  "type": "object",
+                  "properties": {
+                    "resourceRefs": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "format": "uuid"
+                      }
+                    }
+                  }
+                },
+                "ezeepBlueGroupRef": {
+                  "type": "number"
+                },
+                "id": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "kisiGroupRef": {
+                  "type": "number"
+                },
+                "plan": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "title": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "planRef": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "price": {
+                  "type": "number"
+                },
+                "quantity": {
+                  "type": "number"
+                },
+                "resourceRef": {
+                  "type": "string"
+                },
+                "saltoksAccessGroupRef": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "startDate": {
+                  "$ref": "#/components/schemas/dateSchema"
+                },
+                "tapkeyGroupRef": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "tier": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "title": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "tierRef": {
+                  "type": "string",
+                  "format": "uuid"
+                },
+                "title": {
+                  "type": "string"
+                }
+              }
             }
           }
         }
