@@ -9095,9 +9095,153 @@ components:
               subscription:
                 type: object
                 properties:
+                  advanceInvoicing:
+                    type: object
+                    properties:
+                      days:
+                        type: number
+                      type:
+                        type: string
+                        enum:
+                          - days
+                          - default
                   endDate:
                     $ref: '#/components/schemas/dateSchema'
                     nullable: true
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        autoUpdateFromProduct:
+                          type: boolean
+                        avigilonAltaGroupRef:
+                          type: number
+                        brivoGroupRef:
+                          type: number
+                        commitmentCycles:
+                          type: number
+                        couponRef:
+                          type: string
+                        createDate:
+                          $ref: '#/components/schemas/dateSchema'
+                        credits:
+                          type: number
+                        customEnd:
+                          type: boolean
+                        customStart:
+                          type: boolean
+                        customTax:
+                          type: object
+                          properties:
+                            enabled:
+                              type: boolean
+                            rate:
+                              type: number
+                        dayPasses:
+                          type: number
+                        discounts:
+                          type: object
+                          properties:
+                            creditPackages:
+                              type: number
+                            desks:
+                              type: number
+                            equipment:
+                              type: number
+                            events:
+                              type: number
+                            rooms:
+                              type: number
+                            shop:
+                              type: number
+                        endDate:
+                          $ref: '#/components/schemas/dateSchema'
+                        entire:
+                          type: boolean
+                        exclusiveAccess:
+                          type: object
+                          properties:
+                            resourceRefs:
+                              type: array
+                              items:
+                                type: string
+                                format: uuid
+                        ezeepBlueGroupRef:
+                          type: number
+                        id:
+                          type: string
+                          format: uuid
+                        kisiGroupRef:
+                          type: number
+                        plan:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                            title:
+                              type: string
+                        planRef:
+                          type: string
+                          format: uuid
+                        price:
+                          type: number
+                        quantity:
+                          type: number
+                        resourceRef:
+                          type: string
+                        saltoksAccessGroupRef:
+                          type: string
+                          format: uuid
+                        startDate:
+                          $ref: '#/components/schemas/dateSchema'
+                        tapkeyGroupRef:
+                          type: string
+                          format: uuid
+                        tier:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                            title:
+                              type: string
+                        tierRef:
+                          type: string
+                          format: uuid
+                        title:
+                          type: string
+                  pausePaymentCollection:
+                    type: object
+                    properties:
+                      behavior:
+                        type: string
+                        enum:
+                          - draft
+                          - void
+                      resumesAt:
+                        $ref: '#/components/schemas/dateSchema'
+                        nullable: true
+                  payWithInvoice:
+                    type: object
+                    properties:
+                      creditPackages:
+                        type: boolean
+                      desks:
+                        type: boolean
+                      equipment:
+                        type: boolean
+                      events:
+                        type: boolean
+                      parking:
+                        type: boolean
+                      rooms:
+                        type: boolean
+                      shop:
+                        type: boolean
+                  startDate:
+                    $ref: '#/components/schemas/dateSchema'
             required:
               - subscription
     subscriptionItem:
