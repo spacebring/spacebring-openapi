@@ -7127,6 +7127,8 @@ components:
           properties:
             endDate:
               $ref: '#/components/schemas/dateSchema'
+            futureIntervalItemsCreated:
+              type: boolean
             startDate:
               $ref: '#/components/schemas/dateSchema'
         dayPasses:
@@ -7179,6 +7181,8 @@ components:
           type: object
           properties:
             startDate:
+              $ref: '#/components/schemas/dateSchema'
+            endDate:
               $ref: '#/components/schemas/dateSchema'
         payWithInvoice:
           type: object

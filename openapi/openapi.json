@@ -11143,6 +11143,9 @@
               "endDate": {
                 "$ref": "#/components/schemas/dateSchema"
               },
+              "futureIntervalItemsCreated": {
+                "type": "boolean"
+              },
               "startDate": {
                 "$ref": "#/components/schemas/dateSchema"
               }
@@ -11220,6 +11223,9 @@
             "type": "object",
             "properties": {
               "startDate": {
+                "$ref": "#/components/schemas/dateSchema"
+              },
+              "endDate": {
                 "$ref": "#/components/schemas/dateSchema"
               }
             }
