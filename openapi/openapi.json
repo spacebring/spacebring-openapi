@@ -3769,7 +3769,7 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "transaction": {
+                    "invoice": {
                       "$ref": "#/components/schemas/invoice"
                     }
                   }

@@ -2346,7 +2346,7 @@ paths:
               schema:
                 type: object
                 properties:
-                  transaction:
+                  invoice:
                     $ref: '#/components/schemas/invoice'
         '400':
           description: Bad Request
