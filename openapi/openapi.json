@@ -6254,6 +6254,64 @@
       }
     },
     "/subscriptions/v1/{id}/items/{itemId}": {
+      "patch": {
+        "tags": [
+          "Subscriptions"
+        ],
+        "summary": "Update a subscription item",
+        "description": "Update a subscription item. <h3>OAuth</h3>Required scopes: <code>subscriptions</code>",
+        "operationId": "updateSubscriptionItem",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the subscription.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "name": "itemId",
+            "in": "path",
+            "description": "The id of the subscription item.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/subscriptionItem"
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "subscriptions"
+            ]
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      },
       "delete": {
         "tags": [
           "Subscriptions"
