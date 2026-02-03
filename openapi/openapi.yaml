@@ -2135,7 +2135,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
-  /invoices/v1:
+  /billing/invoices/v1:
     get:
       tags:
         - Invoices
@@ -2267,7 +2267,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
-  /invoices/v1/{id}:
+  /billing/invoices/v1/{id}:
     get:
       tags:
         - Invoices
@@ -2310,7 +2310,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
-  /invoices/v1/{id}/pay:
+  /billing/invoices/v1/{id}/pay:
     post:
       tags:
         - Invoices
@@ -2354,7 +2354,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
-  /invoices/items/v1:
+  /billing/invoices/items/v1:
     post:
       tags:
         - Invoice items

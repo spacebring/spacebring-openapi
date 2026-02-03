@@ -3443,7 +3443,7 @@
         }
       }
     },
-    "/invoices/v1": {
+    "/billing/invoices/v1": {
       "get": {
         "tags": [
           "Invoices"
@@ -3648,7 +3648,7 @@
         }
       }
     },
-    "/invoices/v1/{id}": {
+    "/billing/invoices/v1/{id}": {
       "get": {
         "tags": [
           "Invoices"
@@ -3718,7 +3718,7 @@
         }
       }
     },
-    "/invoices/v1/{id}/pay": {
+    "/billing/invoices/v1/{id}/pay": {
       "post": {
         "tags": [
           "Invoices"
@@ -3790,7 +3790,7 @@
         }
       }
     },
-    "/invoices/items/v1": {
+    "/billing/invoices/items/v1": {
       "post": {
         "tags": [
           "Invoice items"
