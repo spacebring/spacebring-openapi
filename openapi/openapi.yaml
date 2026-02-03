@@ -3856,7 +3856,14 @@ paths:
           required: false
           description: The id of the network. Required when using bearer token authentication
       requestBody:
-        $ref: '#/components/requestBodies/subscriptionItem'
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                item:
+                  $ref: '#/components/schemas/subscriptionItem'
       security:
         - BasicAuth: []
         - OAuth2:
@@ -9371,112 +9378,6 @@ components:
                     $ref: '#/components/schemas/dateSchema'
             required:
               - subscription
-    subscriptionItem:
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              autoUpdateFromProduct:
-                type: boolean
-              avigilonAltaGroupRef:
-                type: number
-              brivoGroupRef:
-                type: number
-              commitmentCycles:
-                type: number
-              couponRef:
-                type: string
-              createDate:
-                $ref: '#/components/schemas/dateSchema'
-              credits:
-                type: number
-              customEnd:
-                type: boolean
-              customStart:
-                type: boolean
-              customTax:
-                type: object
-                properties:
-                  enabled:
-                    type: boolean
-                  rate:
-                    type: number
-              dayPasses:
-                type: number
-              discounts:
-                type: object
-                properties:
-                  creditPackages:
-                    type: number
-                  desks:
-                    type: number
-                  equipment:
-                    type: number
-                  events:
-                    type: number
-                  rooms:
-                    type: number
-                  shop:
-                    type: number
-              endDate:
-                $ref: '#/components/schemas/dateSchema'
-              entire:
-                type: boolean
-              exclusiveAccess:
-                type: object
-                properties:
-                  resourceRefs:
-                    type: array
-                    items:
-                      type: string
-                      format: uuid
-              ezeepBlueGroupRef:
-                type: number
-              id:
-                type: string
-                format: uuid
-              kisiGroupRef:
-                type: number
-              plan:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uuid
-                  title:
-                    type: string
-              planRef:
-                type: string
-                format: uuid
-              price:
-                type: number
-              quantity:
-                type: number
-              resourceRef:
-                type: string
-              saltoksAccessGroupRef:
-                type: string
-                format: uuid
-              startDate:
-                $ref: '#/components/schemas/dateSchema'
-              tapkeyGroupRef:
-                type: string
-                format: uuid
-              tier:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    format: uuid
-                  title:
-                    type: string
-              tierRef:
-                type: string
-                format: uuid
-              title:
-                type: string
     createSupportTicket:
       required: true
       content:
