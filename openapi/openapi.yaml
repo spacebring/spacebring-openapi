@@ -4386,6 +4386,255 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
+  /support/guides/v1:
+    get:
+      tags:
+        - Support guides
+      summary: Retrieve guides
+      description: 'Retrieve all guides for an organization. Requires locationRef. When using bearer token (non-basic auth), results are filtered by the user''s access. <h3>OAuth</h3>Required scopes: <code>support.readonly</code> or <code>support</code>'
+      operationId: getGuides
+      parameters:
+        - in: query
+          name: locationRef
+          description: The id of the organization (location).
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - support
+            - support.readonly
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  guides:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/guide'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+    post:
+      tags:
+        - Support guides
+      summary: Create a guide
+      description: 'Create a guide in an organization. <h3>OAuth</h3>Required scopes: <code>support</code>. Admin (or equivalent) role in the organization is required.'
+      operationId: createGuide
+      parameters:
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      requestBody:
+        $ref: '#/components/requestBodies/createGuide'
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - support
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  guide:
+                    $ref: '#/components/schemas/guide'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /support/guides/v1/{id}:
+    get:
+      tags:
+        - Support guides
+      summary: Retrieve a guide
+      description: 'Retrieve a guide by id. <h3>OAuth</h3>Required scopes: <code>support.readonly</code> or <code>support</code>'
+      operationId: getGuide
+      parameters:
+        - in: path
+          name: id
+          description: The id of the guide
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - support
+            - support.readonly
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  guide:
+                    $ref: '#/components/schemas/guide'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+    patch:
+      tags:
+        - Support guides
+      summary: Update a guide
+      description: 'Update a guide. At least one guide property must be provided. <h3>OAuth</h3>Required scopes: <code>support</code>. Admin (or equivalent) role in the guide''s organization is required.'
+      operationId: patchGuide
+      parameters:
+        - in: path
+          name: id
+          description: The id of the guide
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      requestBody:
+        $ref: '#/components/requestBodies/patchGuide'
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - support
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  guide:
+                    $ref: '#/components/schemas/guide'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+    delete:
+      tags:
+        - Support guides
+      summary: Delete a guide
+      description: 'Delete a guide. <h3>OAuth</h3>Required scopes: <code>support</code>. Admin (or equivalent) role in the guide''s organization is required.'
+      operationId: deleteGuide
+      parameters:
+        - in: path
+          name: id
+          description: The id of the guide
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - support
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
   /transactions/credits/v1:
     get:
       tags:
@@ -7617,6 +7866,48 @@ components:
                           type: string
                         surname:
                           type: string
+    guide:
+      type: object
+      properties:
+        createDate:
+          $ref: '#/components/schemas/dateSchema'
+        description:
+          type: string
+        id:
+          format: uuid
+          type: string
+        locale:
+          type: string
+          description: Detected language of the description
+        locationRef:
+          format: uuid
+          type: string
+        media:
+          type: array
+          items:
+            type: object
+            properties:
+              create_date:
+                $ref: '#/components/schemas/dateSchema'
+              height:
+                type: integer
+              key:
+                type: string
+              mime:
+                type: string
+              url:
+                type: string
+              width:
+                type: integer
+        title:
+          type: string
+        visibility:
+          type: string
+          enum:
+            - public
+            - admins
+            - members
+            - networkMembers
     transactionCreditsExpanded:
       type: object
       properties:
@@ -9447,6 +9738,76 @@ components:
                   - type
                   - text
                   - locationRef
+    createGuide:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              guide:
+                type: object
+                properties:
+                  description:
+                    type: string
+                  locationRef:
+                    type: string
+                    format: uuid
+                    description: The id of the organization (location).
+                  media:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        key:
+                          type: string
+                    default: []
+                  title:
+                    type: string
+                  visibility:
+                    type: string
+                    enum:
+                      - public
+                      - admins
+                      - members
+                      - networkMembers
+                required:
+                  - locationRef
+                  - title
+                  - visibility
+            required:
+              - guide
+    patchGuide:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              guide:
+                type: object
+                minProperties: 1
+                properties:
+                  description:
+                    type: string
+                  media:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        key:
+                          type: string
+                  title:
+                    type: string
+                  visibility:
+                    type: string
+                    enum:
+                      - public
+                      - admins
+                      - members
+                      - networkMembers
+            required:
+              - guide
     createCreditsTransaction:
       required: true
       content:
