@@ -3790,7 +3790,7 @@
         }
       }
     },
-    "/billing/invoices/items/v1": {
+    "/billing/invoices/v1/items": {
       "post": {
         "tags": [
           "Invoice items"
