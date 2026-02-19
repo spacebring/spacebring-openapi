@@ -11520,55 +11520,6 @@
               }
             }
           },
-          "altAmounts": {
-            "type": "object",
-            "description": "Amounts in the alternative (display) currency, present only when the location uses an alternative currency.",
-            "properties": {
-              "currencyCode": {
-                "type": "string"
-              },
-              "discountedAmount": {
-                "type": "number",
-                "format": "float"
-              },
-              "tax": {
-                "type": "object",
-                "properties": {
-                  "amount": {
-                    "type": "number",
-                    "format": "float"
-                  },
-                  "inclusive": {
-                    "type": "boolean"
-                  },
-                  "rate": {
-                    "type": "number",
-                    "format": "float"
-                  },
-                  "taxableAmount": {
-                    "type": "number",
-                    "format": "float"
-                  }
-                }
-              },
-              "totalAmount": {
-                "type": "number",
-                "format": "float"
-              },
-              "totalExcludingTaxAmount": {
-                "type": "number",
-                "format": "float"
-              },
-              "unitAmount": {
-                "type": "number",
-                "format": "float"
-              },
-              "unitExcludingTaxAmount": {
-                "type": "number",
-                "format": "float"
-              }
-            }
-          },
           "companyRef": {
             "type": "string",
             "format": "uuid"
@@ -11729,10 +11680,47 @@
               }
             }
           },
+          "discountedAmount": {
+            "type": "number",
+            "format": "float"
+          },
+          "tax": {
+            "type": "object",
+            "properties": {
+              "amount": {
+                "type": "number",
+                "format": "float"
+              },
+              "inclusive": {
+                "type": "boolean"
+              },
+              "rate": {
+                "type": "number",
+                "format": "float"
+              },
+              "taxableAmount": {
+                "type": "number",
+                "format": "float"
+              }
+            }
+          },
+          "totalAmount": {
+            "type": "number",
+            "format": "float"
+          },
+          "totalExcludingTaxAmount": {
+            "type": "number",
+            "format": "float"
+          },
+          "unitExcludingTaxAmount": {
+            "type": "number",
+            "format": "float"
+          },
           "amount": {
             "type": "number",
             "format": "float",
-            "deprecated": true
+            "deprecated": true,
+            "description": "Deprecated. Use totalAmount instead."
           },
           "booking": {
             "type": "object",
@@ -11782,8 +11770,7 @@
             }
           },
           "currencyCode": {
-            "type": "string",
-            "deprecated": true
+            "type": "string"
           },
           "description": {
             "type": "string",
@@ -11890,8 +11877,7 @@
           },
           "unitAmount": {
             "type": "number",
-            "format": "float",
-            "deprecated": true
+            "format": "float"
           }
         }
       },
@@ -11975,69 +11961,13 @@
               }
             }
           },
-          "altAmounts": {
-            "type": "object",
-            "description": "Amounts in the alternative (display) currency, present only when the location uses an alternative currency.",
-            "properties": {
-              "amountDue": {
-                "type": "number",
-                "format": "float"
-              },
-              "appliedBalance": {
-                "type": "number",
-                "format": "float"
-              },
-              "currencyCode": {
-                "type": "string"
-              },
-              "postPaymentCreditNotesAmount": {
-                "type": "number",
-                "format": "float"
-              },
-              "prePaymentCreditNotesAmount": {
-                "type": "number",
-                "format": "float"
-              },
-              "subtotalAmount": {
-                "type": "number",
-                "format": "float"
-              },
-              "subtotalExcludingTaxAmount": {
-                "type": "number",
-                "format": "float"
-              },
-              "taxes": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "amount": {
-                      "type": "number",
-                      "format": "float"
-                    },
-                    "inclusive": {
-                      "type": "boolean"
-                    },
-                    "rate": {
-                      "type": "number",
-                      "format": "float"
-                    },
-                    "taxableAmount": {
-                      "type": "number",
-                      "format": "float"
-                    }
-                  }
-                }
-              },
-              "totalAmount": {
-                "type": "number",
-                "format": "float"
-              },
-              "totalExcludingTaxAmount": {
-                "type": "number",
-                "format": "float"
-              }
-            }
+          "amountDue": {
+            "type": "number",
+            "format": "float"
+          },
+          "appliedBalance": {
+            "type": "number",
+            "format": "float"
           },
           "companyRef": {
             "type": "string",
@@ -12283,18 +12213,65 @@
           "voidDate": {
             "$ref": "#/components/schemas/dateSchema"
           },
+          "postPaymentCreditNotesAmount": {
+            "type": "number",
+            "format": "float"
+          },
+          "prePaymentCreditNotesAmount": {
+            "type": "number",
+            "format": "float"
+          },
+          "subtotalAmount": {
+            "type": "number",
+            "format": "float"
+          },
+          "subtotalExcludingTaxAmount": {
+            "type": "number",
+            "format": "float"
+          },
+          "taxes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "amount": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "inclusive": {
+                  "type": "boolean"
+                },
+                "rate": {
+                  "type": "number",
+                  "format": "float"
+                },
+                "taxableAmount": {
+                  "type": "number",
+                  "format": "float"
+                }
+              }
+            }
+          },
+          "totalAmount": {
+            "type": "number",
+            "format": "float"
+          },
+          "totalExcludingTaxAmount": {
+            "type": "number",
+            "format": "float"
+          },
           "amount": {
             "type": "number",
             "format": "float",
-            "deprecated": true
+            "deprecated": true,
+            "description": "Deprecated. Use totalAmount instead."
           },
           "company": {
             "$ref": "#/components/schemas/company",
             "deprecated": true
           },
           "currencyCode": {
-            "type": "string",
-            "deprecated": true
+            "type": "string"
           },
           "items": {
             "type": "array",
