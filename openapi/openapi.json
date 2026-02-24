@@ -1022,6 +1022,193 @@
             }
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Credit notes"
+        ],
+        "summary": "Create a credit note",
+        "description": "Create a credit note for an invoice. <h3>OAuth</h3>Required scopes: <code>invoices</code>",
+        "operationId": "createCreditNote",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "creditNote"
+                ],
+                "properties": {
+                  "creditNote": {
+                    "type": "object",
+                    "required": [
+                      "invoiceRef",
+                      "reason",
+                      "lines"
+                    ],
+                    "properties": {
+                      "invoiceRef": {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "The id of the invoice"
+                      },
+                      "reason": {
+                        "type": "string",
+                        "enum": [
+                          "duplicate",
+                          "orderChange",
+                          "productUnsatisfactory",
+                          "fraudulent",
+                          "other"
+                        ],
+                        "description": "The reason for the credit note"
+                      },
+                      "lines": {
+                        "type": "array",
+                        "minItems": 1,
+                        "description": "Credit note line items. Each line must have either amount or quantity, but not both.",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "invoiceItemRef"
+                          ],
+                          "properties": {
+                            "invoiceItemRef": {
+                              "type": "string",
+                              "format": "uuid",
+                              "description": "The id of the invoice item"
+                            },
+                            "amount": {
+                              "type": "number",
+                              "format": "float",
+                              "description": "The amount to credit. Provide either amount or quantity."
+                            },
+                            "quantity": {
+                              "type": "integer",
+                              "description": "The quantity to credit. Provide either amount or quantity."
+                            }
+                          }
+                        }
+                      },
+                      "creditAmount": {
+                        "type": "number",
+                        "format": "float",
+                        "description": "Credit amount"
+                      },
+                      "effectiveDate": {
+                        "type": "string",
+                        "format": "date-time",
+                        "description": "Effective date of the credit note"
+                      },
+                      "memo": {
+                        "type": "string",
+                        "description": "Memo for the credit note"
+                      },
+                      "outOfBandAmount": {
+                        "type": "number",
+                        "format": "float",
+                        "description": "Out of band amount"
+                      },
+                      "refunds": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "amount": {
+                              "type": "number",
+                              "format": "float",
+                              "description": "The refund amount"
+                            },
+                            "id": {
+                              "type": "string",
+                              "format": "uuid",
+                              "description": "The id of the refund"
+                            },
+                            "transactionRef": {
+                              "type": "string",
+                              "format": "uuid",
+                              "description": "The transaction reference for the refund"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "invoices"
+            ]
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "creditNote": {
+                      "$ref": "#/components/schemas/creditNote"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - User lacks permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Invoice or invoice item not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/billing/credit_notes/v1/{id}": {
@@ -1093,6 +1280,273 @@
           },
           "404": {
             "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Credit notes"
+        ],
+        "summary": "Update a credit note",
+        "description": "Update a credit note. <h3>OAuth</h3>Required scopes: <code>invoices</code>",
+        "operationId": "updateCreditNote",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the credit note",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "creditNote"
+                ],
+                "properties": {
+                  "creditNote": {
+                    "type": "object",
+                    "properties": {
+                      "memo": {
+                        "type": "string",
+                        "description": "Memo for the credit note"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "invoices"
+            ]
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - User lacks permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Credit note not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/billing/credit_notes/v1/preview": {
+      "post": {
+        "tags": [
+          "Credit notes"
+        ],
+        "summary": "Preview a credit note",
+        "description": "Preview a credit note for an invoice without creating it. <h3>OAuth</h3>Required scopes: <code>invoices</code>",
+        "operationId": "previewCreditNote",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "creditNote"
+                ],
+                "properties": {
+                  "creditNote": {
+                    "type": "object",
+                    "required": [
+                      "invoiceRef",
+                      "lines"
+                    ],
+                    "properties": {
+                      "invoiceRef": {
+                        "type": "string",
+                        "format": "uuid",
+                        "description": "The id of the invoice"
+                      },
+                      "lines": {
+                        "type": "array",
+                        "minItems": 1,
+                        "description": "Credit note line items. Each line must have either amount or quantity, but not both.",
+                        "items": {
+                          "type": "object",
+                          "required": [
+                            "invoiceItemRef"
+                          ],
+                          "properties": {
+                            "invoiceItemRef": {
+                              "type": "string",
+                              "format": "uuid",
+                              "description": "The id of the invoice item"
+                            },
+                            "amount": {
+                              "type": "number",
+                              "format": "float",
+                              "description": "The amount to credit. Provide either amount or quantity."
+                            },
+                            "quantity": {
+                              "type": "integer",
+                              "description": "The quantity to credit. Provide either amount or quantity."
+                            }
+                          }
+                        }
+                      },
+                      "creditAmount": {
+                        "type": "number",
+                        "format": "float",
+                        "description": "Credit amount"
+                      },
+                      "outOfBandAmount": {
+                        "type": "number",
+                        "format": "float",
+                        "description": "Out of band amount"
+                      },
+                      "refunds": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "amount": {
+                              "type": "number",
+                              "format": "float",
+                              "description": "The refund amount"
+                            },
+                            "id": {
+                              "type": "string",
+                              "format": "uuid",
+                              "description": "The id of the refund"
+                            },
+                            "transactionRef": {
+                              "type": "string",
+                              "format": "uuid",
+                              "description": "The transaction reference for the refund"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "invoices"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "creditNote": {
+                      "$ref": "#/components/schemas/creditNote"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - User lacks permissions",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found - Invoice or invoice item not found",
             "content": {
               "application/json": {
                 "schema": {
