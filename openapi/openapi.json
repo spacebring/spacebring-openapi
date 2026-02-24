@@ -13402,9 +13402,6 @@
           "capacity": {
             "type": "integer"
           },
-          "capacityUnassigned": {
-            "type": "integer"
-          },
           "checkIn": {
             "type": "object",
             "properties": {
