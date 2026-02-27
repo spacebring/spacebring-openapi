@@ -3122,50 +3122,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
-  /billing/invoices/v1/items/scheduled:
-    get:
-      tags:
-        - Invoice items
-      summary: List scheduled invoice items
-      description: 'List scheduled invoice items. <h3>OAuth</h3>Required scopes: <code>invoices.readonly</code> or <code>invoices</code>'
-      operationId: getScheduledInvoiceItems
-      parameters:
-        - name: subscriptionRef
-          in: query
-          description: The id of the subscription.
-          schema:
-            type: string
-            format: uuid
-        - in: header
-          name: spacebring-network-id
-          schema:
-            type: string
-            format: uuid
-          required: false
-          description: The id of the network. Required when using bearer token authentication
-      security:
-        - BasicAuth: []
-        - OAuth2:
-            - invoices.readonly
-            - invoices
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  invoiceItems:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/invoiceItem'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/responseError'
   /billing/invoices/v1/items/upcoming:
     get:
       tags:
