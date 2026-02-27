@@ -8074,6 +8074,9 @@ components:
           type: string
         voidDate:
           $ref: '#/components/schemas/dateSchema'
+        postPaymentCreation:
+          type: boolean
+          description: Whether the invoice was created after payment.
         postPaymentCreditNotesAmount:
           type: number
           format: float
