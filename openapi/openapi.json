@@ -1818,6 +1818,139 @@
         }
       }
     },
+    "/floors/v1": {
+      "get": {
+        "tags": [
+          "Floors"
+        ],
+        "summary": "Get floors",
+        "description": "Get floors. <h3>OAuth</h3>Required scopes: <code>floors.readonly</code> or <code>floors</code>",
+        "operationId": "getFloors",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The limit of the floors.",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "required": false
+          },
+          {
+            "name": "locationRef",
+            "in": "query",
+            "description": "The id of the location.",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true
+          },
+          {
+            "name": "nextPageToken",
+            "in": "query",
+            "description": "The next page token.",
+            "schema": {
+              "type": "string"
+            },
+            "required": false
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "floors.readonly",
+              "floors"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "floors": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/floor"
+                      }
+                    },
+                    "searchQueryNext": {
+                      "type": "string",
+                      "description": "Full query string for the next page"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/floors/v1/{id}": {
+      "delete": {
+        "tags": [
+          "Floors"
+        ],
+        "summary": "Delete a floor",
+        "description": "Delete a floor. <h3>OAuth</h3>Required scopes: <code>floors</code>",
+        "operationId": "deleteFloor",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the floor.",
+            "schema": {
+              "format": "uuid",
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "floors"
+            ]
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/resources/bookings/v1": {
       "get": {
         "tags": [
@@ -11165,6 +11298,37 @@
                 "type": "string"
               }
             }
+          }
+        }
+      },
+      "floor": {
+        "type": "object",
+        "properties": {
+          "createDate": {
+            "$ref": "#/components/schemas/dateSchema"
+          },
+          "id": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "locationRef": {
+            "format": "uuid",
+            "type": "string"
+          },
+          "plan": {
+            "type": "object"
+          },
+          "title": {
+            "type": "string"
+          },
+          "visibility": {
+            "type": "string",
+            "enum": [
+              "public",
+              "admins",
+              "members",
+              "networkMembers"
+            ]
           }
         }
       },
