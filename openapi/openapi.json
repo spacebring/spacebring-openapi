@@ -16,7 +16,7 @@
         "tags": [
           "Benefits"
         ],
-        "summary": "Retrieve benefit applications",
+        "summary": "Retrieve applications",
         "description": "Retrieve all benefit applications in the location or for certain benefit. <h3>OAuth</h3>Required scopes: <code>benefits.readonly</code> or <code>benefits</code>",
         "operationId": "getBenefitApplications",
         "parameters": [
@@ -205,7 +205,7 @@
         "tags": [
           "Benefits"
         ],
-        "summary": "Retrieve a benefit application",
+        "summary": "Retrieve an application",
         "description": "Retrieve a benefit application by id. <h3>OAuth</h3>Required scopes: <code>benefits.readonly</code> or <code>benefits</code>",
         "operationId": "getBenefitApplication",
         "parameters": [
@@ -276,7 +276,7 @@
         "tags": [
           "Benefits"
         ],
-        "summary": "Retrieve benefit categories",
+        "summary": "Retrieve categories",
         "description": "Retrieve all benefit categories in the location. <h3>OAuth</h3>Required scopes: <code>benefits.readonly</code> or <code>benefits</code>",
         "operationId": "getBenefitCategories",
         "parameters": [
@@ -347,7 +347,7 @@
         "tags": [
           "Benefits"
         ],
-        "summary": "Create a benefit category",
+        "summary": "Create a category",
         "description": "Create a benefit category. <h3>OAuth</h3>Required scopes: <code>benefits</code>",
         "operationId": "createBenefitCategory",
         "parameters": [
@@ -409,7 +409,7 @@
         "tags": [
           "Benefits"
         ],
-        "summary": "Get a benefit category",
+        "summary": "Get a category",
         "description": "Get a benefit category. <h3>OAuth</h3>Required scopes: <code>benefits</code>",
         "operationId": "getBenefitCategory",
         "parameters": [
@@ -477,7 +477,7 @@
         "tags": [
           "Benefits"
         ],
-        "summary": "Delete a benefit category",
+        "summary": "Delete a category",
         "description": "Delete a benefit category. <h3>OAuth</h3>Required scopes: <code>benefits</code>",
         "operationId": "deleteBenefitCategory",
         "parameters": [
@@ -532,7 +532,7 @@
         "tags": [
           "Benefits"
         ],
-        "summary": "Update a benefit category",
+        "summary": "Update a category",
         "description": "Update a benefit category. <h3>OAuth</h3>Required scopes: <code>benefits</code>",
         "operationId": "updateBenefitCategory",
         "parameters": [
@@ -2423,7 +2423,7 @@
         "tags": [
           "Billing"
         ],
-        "summary": "Create a invoice item",
+        "summary": "Create an invoice item",
         "description": "Create an item in an invoice. <h3>OAuth</h3>Required scopes: <code>invoices</code>",
         "operationId": "createInvoiceItem",
         "parameters": [
@@ -2740,7 +2740,7 @@
         "tags": [
           "Billing"
         ],
-        "summary": "Retrieve upcoming invoice",
+        "summary": "Retrieve the upcoming invoice",
         "description": "Retrieve the upcoming invoice preview for a membership or subscription. <h3>OAuth</h3>Required scopes: <code>invoices.readonly</code> or <code>invoices</code>",
         "operationId": "getUpcomingInvoice",
         "parameters": [
@@ -3732,7 +3732,7 @@
         "tags": [
           "Contracts"
         ],
-        "summary": "Create contract",
+        "summary": "Create a contract",
         "description": "Create a contract. <h3>OAuth</h3>Required scopes: <code>community</code>",
         "operationId": "createContract",
         "parameters": [
@@ -3794,7 +3794,7 @@
         "tags": [
           "Contracts"
         ],
-        "summary": "Get contract",
+        "summary": "Get a contract",
         "description": "Get a contract. <h3>OAuth</h3>Required scopes: <code>community.readonly</code> or <code>community</code>",
         "operationId": "getContract",
         "parameters": [
@@ -3863,7 +3863,7 @@
         "tags": [
           "Contracts"
         ],
-        "summary": "Delete contract",
+        "summary": "Delete a contract",
         "description": "Delete a contract. <h3>OAuth</h3>Required scopes: <code>community</code>",
         "operationId": "deleteContract",
         "parameters": [
@@ -3920,7 +3920,7 @@
         "tags": [
           "Contracts"
         ],
-        "summary": "Issue contract",
+        "summary": "Issue a contract",
         "description": "Issue a contract. <h3>OAuth</h3>Required scopes: <code>community</code>",
         "operationId": "issueContract",
         "parameters": [
@@ -3992,7 +3992,7 @@
         "tags": [
           "Events"
         ],
-        "summary": "Retrieve event tickets",
+        "summary": "Retrieve tickets",
         "description": "Retrieve all event tickets. <h3>OAuth</h3>Required scopes: <code>events.readonly</code> or <code>events</code>",
         "operationId": "getEventTickets",
         "parameters": [
@@ -4088,7 +4088,7 @@
         "tags": [
           "Events"
         ],
-        "summary": "Retrieve an event ticket",
+        "summary": "Retrieve a ticket",
         "description": "Retrieve an event ticket. <h3>OAuth</h3>Required scopes: <code>events.readonly</code> or <code>events</code>",
         "operationId": "getEventTicket",
         "parameters": [
@@ -4501,7 +4501,7 @@
         "tags": [
           "Feed"
         ],
-        "summary": "Create a feed post comment",
+        "summary": "Create a post comment",
         "description": "Create a feed post comment. <h3>OAuth</h3>Required scopes: <code>feed</code>",
         "operationId": "createFeedPostComment",
         "parameters": [
@@ -4728,7 +4728,7 @@
         "tags": [
           "Feed"
         ],
-        "summary": "Get feed posts",
+        "summary": "Get posts",
         "description": "Get feed posts. <h3>OAuth</h3>Required scopes: <code>feed.readonly</code> or <code>feed</code>",
         "operationId": "getFeedPosts",
         "parameters": [
@@ -4799,7 +4799,7 @@
         "tags": [
           "Feed"
         ],
-        "summary": "Create a feed post",
+        "summary": "Create a post",
         "description": "Create a feed post. <h3>OAuth</h3>Required scopes: <code>feed</code>",
         "operationId": "createFeedPost",
         "parameters": [
@@ -4858,7 +4858,7 @@
         "tags": [
           "Feed"
         ],
-        "summary": "Get a feed post",
+        "summary": "Get a post",
         "description": "Get a feed post. <h3>OAuth</h3>Required scopes: <code>feed</code> or <code>feed.readonly</code>",
         "operationId": "getFeedPost",
         "parameters": [
@@ -4926,7 +4926,7 @@
         "tags": [
           "Feed"
         ],
-        "summary": "Delete a feed post",
+        "summary": "Delete a post",
         "description": "Delete a feed post. <h3>OAuth</h3>Required scopes: <code>feed</code>",
         "operationId": "deleteFeedPost",
         "parameters": [
@@ -4981,7 +4981,7 @@
         "tags": [
           "Feed"
         ],
-        "summary": "Update a feed post",
+        "summary": "Update a post",
         "description": "Update a feed post. <h3>OAuth</h3>Required scopes: <code>feed</code>",
         "operationId": "updateFeedPost",
         "parameters": [
@@ -5527,7 +5527,7 @@
       },
       "post": {
         "tags": [
-          "Support guides"
+          "Guides"
         ],
         "summary": "Create a guide",
         "description": "Create a guide in an organization. <h3>OAuth</h3>Required scopes: <code>support</code>. Admin (or equivalent) role in the organization is required.",
@@ -5687,7 +5687,7 @@
       },
       "patch": {
         "tags": [
-          "Support guides"
+          "Guides"
         ],
         "summary": "Update a guide",
         "description": "Update a guide. At least one guide property must be provided. <h3>OAuth</h3>Required scopes: <code>support</code>. Admin (or equivalent) role in the guide's organization is required.",
@@ -5777,7 +5777,7 @@
       },
       "delete": {
         "tags": [
-          "Support guides"
+          "Guides"
         ],
         "summary": "Delete a guide",
         "description": "Delete a guide. <h3>OAuth</h3>Required scopes: <code>support</code>. Admin (or equivalent) role in the guide's organization is required.",
@@ -6550,7 +6550,7 @@
         "tags": [
           "Bookings"
         ],
-        "summary": "Create booking",
+        "summary": "Create a booking",
         "description": "Create a booking. <h3>OAuth</h3>Required scopes: <code>resources</code>",
         "operationId": "createBooking",
         "parameters": [
@@ -6612,7 +6612,7 @@
         "tags": [
           "Resources"
         ],
-        "summary": "Get booking",
+        "summary": "Get a booking",
         "description": "Get a booking. <h3>OAuth</h3>Required scopes: <code>resources.readonly</code> or <code>resources</code>",
         "operationId": "getBooking",
         "parameters": [
@@ -6680,7 +6680,7 @@
         "tags": [
           "Bookings"
         ],
-        "summary": "Delete booking",
+        "summary": "Delete a booking",
         "description": "Delete a booking. <h3>OAuth</h3>Required scopes: <code>resources</code>",
         "operationId": "deleteBooking",
         "parameters": [
@@ -6933,7 +6933,7 @@
         "tags": [
           "Shop"
         ],
-        "summary": "Retrieve shop categories",
+        "summary": "Retrieve categories",
         "description": "Retrieve all shop categories in the location. <h3>OAuth</h3>Required scopes: <code>shop.readonly</code> or <code>shop</code>",
         "operationId": "getShopCategories",
         "parameters": [
@@ -7004,7 +7004,7 @@
         "tags": [
           "Shop"
         ],
-        "summary": "Create a shop category",
+        "summary": "Create a category",
         "description": "Create a shop category. <h3>OAuth</h3>Required scopes: <code>shop</code>",
         "operationId": "createShopCategory",
         "parameters": [
@@ -7066,7 +7066,7 @@
         "tags": [
           "Shop"
         ],
-        "summary": "Get a shop category",
+        "summary": "Get a category",
         "description": "Get a shop category. <h3>OAuth</h3>Required scopes: <code>shop</code>",
         "operationId": "getShopCategory",
         "parameters": [
@@ -7134,7 +7134,7 @@
         "tags": [
           "Shop"
         ],
-        "summary": "Delete a shop category",
+        "summary": "Delete a category",
         "description": "Delete a shop category. <h3>OAuth</h3>Required scopes: <code>shop</code>",
         "operationId": "deleteShopCategory",
         "parameters": [
@@ -7189,7 +7189,7 @@
         "tags": [
           "Shop"
         ],
-        "summary": "Update a shop category",
+        "summary": "Update a category",
         "description": "Update a shop category. <h3>OAuth</h3>Required scopes: <code>shop</code>",
         "operationId": "updateShopCategory",
         "parameters": [
@@ -8244,7 +8244,7 @@
         "tags": [
           "Support tickets"
         ],
-        "summary": "Retrieve support tickets",
+        "summary": "Retrieve tickets",
         "description": "Retrieve all support tickets. <h3>OAuth</h3>Required scopes: <code>support.readonly</code> or <code>support</code>",
         "operationId": "getSupportTickets",
         "parameters": [
@@ -8338,7 +8338,7 @@
         "tags": [
           "Support tickets"
         ],
-        "summary": "Create a support ticket",
+        "summary": "Create a ticket",
         "description": "Create a support ticket. <h3>OAuth</h3>Required scopes: <code>support</code>",
         "operationId": "createSupportTicket",
         "parameters": [
@@ -8403,7 +8403,7 @@
         "tags": [
           "Support tickets"
         ],
-        "summary": "Retrieve a support ticket",
+        "summary": "Retrieve a ticket",
         "description": "Retrieve a support ticket. <h3>OAuth</h3>Required scopes: <code>support.readonly</code> or <code>support</code>",
         "operationId": "getSupportTicket",
         "parameters": [
@@ -8479,7 +8479,7 @@
         "tags": [
           "Support tickets"
         ],
-        "summary": "Update support ticket assignee",
+        "summary": "Update a ticket's assignee",
         "description": "Update support ticket assignee. <h3>OAuth</h3>Required scopes: <code>support</code>",
         "operationId": "updateSupportTicketAssignee",
         "parameters": [
@@ -8573,7 +8573,7 @@
         "tags": [
           "Support tickets"
         ],
-        "summary": "Update support ticket status",
+        "summary": "Update a ticket's status",
         "description": "Update support ticket status. <h3>OAuth</h3>Required scopes: <code>support</code>",
         "operationId": "updateSupportTicketStatus",
         "parameters": [
@@ -8676,7 +8676,7 @@
         "tags": [
           "Support tickets"
         ],
-        "summary": "Update a support ticket type",
+        "summary": "Update a ticket's type",
         "description": "Update a support ticket type. <h3>OAuth</h3>Required scopes: <code>support</code>",
         "operationId": "updateSupportTicketType",
         "parameters": [
@@ -8769,7 +8769,7 @@
         "tags": [
           "Support tickets"
         ],
-        "summary": "Create a support ticket comment",
+        "summary": "Create a ticket comment",
         "description": "Create a support ticket comment. <h3>OAuth</h3>Required scopes: <code>support</code>",
         "operationId": "createSupportTicketComment",
         "parameters": [
@@ -8863,7 +8863,7 @@
         "tags": [
           "Support tickets"
         ],
-        "summary": "Delete a support ticket comment",
+        "summary": "Delete a ticket comment",
         "description": "Delete a support ticket comment. <h3>OAuth</h3>Required scopes: <code>support</code>",
         "operationId": "deleteSupportTicketComment",
         "parameters": [
@@ -8920,7 +8920,7 @@
         "tags": [
           "Transactions"
         ],
-        "summary": "Retrieve credits transactions",
+        "summary": "Retrieve credit transactions",
         "description": "Retrieve credits transactions. <h3>OAuth</h3>Required scopes: <code>transactions.readonly</code> or <code>transactions</code>",
         "operationId": "getCreditsTransactions",
         "parameters": [
@@ -9050,7 +9050,7 @@
         "tags": [
           "Transactions"
         ],
-        "summary": "Create a credits transaction",
+        "summary": "Create a credit transaction",
         "description": "Create a credits transaction. <h3>OAuth</h3>Required scopes: <code>transactions</code>",
         "operationId": "createCreditsTransaction",
         "parameters": [
@@ -9112,7 +9112,7 @@
         "tags": [
           "Transactions"
         ],
-        "summary": "Retrieve day passes transactions",
+        "summary": "Retrieve day pass transactions",
         "description": "Retrieve day passes transactions. <h3>OAuth</h3>Required scopes: <code>transactions.readonly</code> or <code>transactions</code>",
         "operationId": "getDayPassesTransactions",
         "parameters": [
@@ -9242,7 +9242,7 @@
         "tags": [
           "Transactions"
         ],
-        "summary": "Create a day passes transaction",
+        "summary": "Create a day pass transaction",
         "description": "Create a day passes transaction. <h3>OAuth</h3>Required scopes: <code>transactions</code>",
         "operationId": "createDayPassesTransaction",
         "parameters": [
@@ -9618,7 +9618,7 @@
         "tags": [
           "Visitors"
         ],
-        "summary": "Create contact",
+        "summary": "Create a contact",
         "description": "Create a contact. <h3>OAuth</h3>Required scopes: <code>visitors</code>",
         "operationId": "createContact",
         "parameters": [
@@ -9680,7 +9680,7 @@
         "tags": [
           "Visitors"
         ],
-        "summary": "Get contact",
+        "summary": "Get a contact",
         "description": "Get a contact. <h3>OAuth</h3>Required scopes: <code>visitors</code> or <code>visitors.readonly</code>",
         "operationId": "getContact",
         "parameters": [

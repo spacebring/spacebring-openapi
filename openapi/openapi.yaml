@@ -10,7 +10,7 @@ paths:
     get:
       tags:
         - Benefits
-      summary: Retrieve benefit applications
+      summary: Retrieve applications
       description: 'Retrieve all benefit applications in the location or for certain benefit. <h3>OAuth</h3>Required scopes: <code>benefits.readonly</code> or <code>benefits</code>'
       operationId: getBenefitApplications
       parameters:
@@ -130,7 +130,7 @@ paths:
     get:
       tags:
         - Benefits
-      summary: Retrieve a benefit application
+      summary: Retrieve an application
       description: 'Retrieve a benefit application by id. <h3>OAuth</h3>Required scopes: <code>benefits.readonly</code> or <code>benefits</code>'
       operationId: getBenefitApplication
       parameters:
@@ -174,7 +174,7 @@ paths:
     get:
       tags:
         - Benefits
-      summary: Retrieve benefit categories
+      summary: Retrieve categories
       description: 'Retrieve all benefit categories in the location. <h3>OAuth</h3>Required scopes: <code>benefits.readonly</code> or <code>benefits</code>'
       operationId: getBenefitCategories
       parameters:
@@ -218,7 +218,7 @@ paths:
     post:
       tags:
         - Benefits
-      summary: Create a benefit category
+      summary: Create a category
       description: 'Create a benefit category. <h3>OAuth</h3>Required scopes: <code>benefits</code>'
       operationId: createBenefitCategory
       parameters:
@@ -255,7 +255,7 @@ paths:
     get:
       tags:
         - Benefits
-      summary: Get a benefit category
+      summary: Get a category
       description: 'Get a benefit category. <h3>OAuth</h3>Required scopes: <code>benefits</code>'
       operationId: getBenefitCategory
       parameters:
@@ -297,7 +297,7 @@ paths:
     delete:
       tags:
         - Benefits
-      summary: Delete a benefit category
+      summary: Delete a category
       description: 'Delete a benefit category. <h3>OAuth</h3>Required scopes: <code>benefits</code>'
       operationId: deleteBenefitCategory
       parameters:
@@ -331,7 +331,7 @@ paths:
     put:
       tags:
         - Benefits
-      summary: Update a benefit category
+      summary: Update a category
       description: 'Update a benefit category. <h3>OAuth</h3>Required scopes: <code>benefits</code>'
       operationId: updateBenefitCategory
       parameters:
@@ -1526,7 +1526,7 @@ paths:
     post:
       tags:
         - Billing
-      summary: Create a invoice item
+      summary: Create an invoice item
       description: 'Create an item in an invoice. <h3>OAuth</h3>Required scopes: <code>invoices</code>'
       operationId: createInvoiceItem
       parameters:
@@ -1723,7 +1723,7 @@ paths:
     get:
       tags:
         - Billing
-      summary: Retrieve upcoming invoice
+      summary: Retrieve the upcoming invoice
       description: 'Retrieve the upcoming invoice preview for a membership or subscription. <h3>OAuth</h3>Required scopes: <code>invoices.readonly</code> or <code>invoices</code>'
       operationId: getUpcomingInvoice
       parameters:
@@ -2343,7 +2343,7 @@ paths:
     post:
       tags:
         - Contracts
-      summary: Create contract
+      summary: Create a contract
       description: 'Create a contract. <h3>OAuth</h3>Required scopes: <code>community</code>'
       operationId: createContract
       parameters:
@@ -2380,7 +2380,7 @@ paths:
     get:
       tags:
         - Contracts
-      summary: Get contract
+      summary: Get a contract
       description: 'Get a contract. <h3>OAuth</h3>Required scopes: <code>community.readonly</code> or <code>community</code>'
       operationId: getContract
       parameters:
@@ -2423,7 +2423,7 @@ paths:
     delete:
       tags:
         - Contracts
-      summary: Delete contract
+      summary: Delete a contract
       description: 'Delete a contract. <h3>OAuth</h3>Required scopes: <code>community</code>'
       operationId: deleteContract
       parameters:
@@ -2458,7 +2458,7 @@ paths:
     post:
       tags:
         - Contracts
-      summary: Issue contract
+      summary: Issue a contract
       description: 'Issue a contract. <h3>OAuth</h3>Required scopes: <code>community</code>'
       operationId: issueContract
       parameters:
@@ -2502,7 +2502,7 @@ paths:
     get:
       tags:
         - Events
-      summary: Retrieve event tickets
+      summary: Retrieve tickets
       description: 'Retrieve all event tickets. <h3>OAuth</h3>Required scopes: <code>events.readonly</code> or <code>events</code>'
       operationId: getEventTickets
       parameters:
@@ -2563,7 +2563,7 @@ paths:
     get:
       tags:
         - Events
-      summary: Retrieve an event ticket
+      summary: Retrieve a ticket
       description: 'Retrieve an event ticket. <h3>OAuth</h3>Required scopes: <code>events.readonly</code> or <code>events</code>'
       operationId: getEventTicket
       parameters:
@@ -2813,7 +2813,7 @@ paths:
     post:
       tags:
         - Feed
-      summary: Create a feed post comment
+      summary: Create a post comment
       description: 'Create a feed post comment. <h3>OAuth</h3>Required scopes: <code>feed</code>'
       operationId: createFeedPostComment
       parameters:
@@ -2954,7 +2954,7 @@ paths:
     get:
       tags:
         - Feed
-      summary: Get feed posts
+      summary: Get posts
       description: 'Get feed posts. <h3>OAuth</h3>Required scopes: <code>feed.readonly</code> or <code>feed</code>'
       operationId: getFeedPosts
       parameters:
@@ -2998,7 +2998,7 @@ paths:
     post:
       tags:
         - Feed
-      summary: Create a feed post
+      summary: Create a post
       description: 'Create a feed post. <h3>OAuth</h3>Required scopes: <code>feed</code>'
       operationId: createFeedPost
       parameters:
@@ -3034,7 +3034,7 @@ paths:
     get:
       tags:
         - Feed
-      summary: Get a feed post
+      summary: Get a post
       description: 'Get a feed post. <h3>OAuth</h3>Required scopes: <code>feed</code> or <code>feed.readonly</code>'
       operationId: getFeedPost
       parameters:
@@ -3076,7 +3076,7 @@ paths:
     delete:
       tags:
         - Feed
-      summary: Delete a feed post
+      summary: Delete a post
       description: 'Delete a feed post. <h3>OAuth</h3>Required scopes: <code>feed</code>'
       operationId: deleteFeedPost
       parameters:
@@ -3110,7 +3110,7 @@ paths:
     put:
       tags:
         - Feed
-      summary: Update a feed post
+      summary: Update a post
       description: 'Update a feed post. <h3>OAuth</h3>Required scopes: <code>feed</code>'
       operationId: updateFeedPost
       parameters:
@@ -3448,7 +3448,7 @@ paths:
                 $ref: '#/components/schemas/responseError'
     post:
       tags:
-        - Support guides
+        - Guides
       summary: Create a guide
       description: 'Create a guide in an organization. <h3>OAuth</h3>Required scopes: <code>support</code>. Admin (or equivalent) role in the organization is required.'
       operationId: createGuide
@@ -3545,7 +3545,7 @@ paths:
                 $ref: '#/components/schemas/responseError'
     patch:
       tags:
-        - Support guides
+        - Guides
       summary: Update a guide
       description: 'Update a guide. At least one guide property must be provided. <h3>OAuth</h3>Required scopes: <code>support</code>. Admin (or equivalent) role in the guide''s organization is required.'
       operationId: patchGuide
@@ -3600,7 +3600,7 @@ paths:
                 $ref: '#/components/schemas/responseError'
     delete:
       tags:
-        - Support guides
+        - Guides
       summary: Delete a guide
       description: 'Delete a guide. <h3>OAuth</h3>Required scopes: <code>support</code>. Admin (or equivalent) role in the guide''s organization is required.'
       operationId: deleteGuide
@@ -4085,7 +4085,7 @@ paths:
     post:
       tags:
         - Bookings
-      summary: Create booking
+      summary: Create a booking
       description: 'Create a booking. <h3>OAuth</h3>Required scopes: <code>resources</code>'
       operationId: createBooking
       parameters:
@@ -4122,7 +4122,7 @@ paths:
     get:
       tags:
         - Resources
-      summary: Get booking
+      summary: Get a booking
       description: 'Get a booking. <h3>OAuth</h3>Required scopes: <code>resources.readonly</code> or <code>resources</code>'
       operationId: getBooking
       parameters:
@@ -4164,7 +4164,7 @@ paths:
     delete:
       tags:
         - Bookings
-      summary: Delete booking
+      summary: Delete a booking
       description: 'Delete a booking. <h3>OAuth</h3>Required scopes: <code>resources</code>'
       operationId: deleteBooking
       parameters:
@@ -4320,7 +4320,7 @@ paths:
     get:
       tags:
         - Shop
-      summary: Retrieve shop categories
+      summary: Retrieve categories
       description: 'Retrieve all shop categories in the location. <h3>OAuth</h3>Required scopes: <code>shop.readonly</code> or <code>shop</code>'
       operationId: getShopCategories
       parameters:
@@ -4364,7 +4364,7 @@ paths:
     post:
       tags:
         - Shop
-      summary: Create a shop category
+      summary: Create a category
       description: 'Create a shop category. <h3>OAuth</h3>Required scopes: <code>shop</code>'
       operationId: createShopCategory
       parameters:
@@ -4401,7 +4401,7 @@ paths:
     get:
       tags:
         - Shop
-      summary: Get a shop category
+      summary: Get a category
       description: 'Get a shop category. <h3>OAuth</h3>Required scopes: <code>shop</code>'
       operationId: getShopCategory
       parameters:
@@ -4443,7 +4443,7 @@ paths:
     delete:
       tags:
         - Shop
-      summary: Delete a shop category
+      summary: Delete a category
       description: 'Delete a shop category. <h3>OAuth</h3>Required scopes: <code>shop</code>'
       operationId: deleteShopCategory
       parameters:
@@ -4477,7 +4477,7 @@ paths:
     put:
       tags:
         - Shop
-      summary: Update a shop category
+      summary: Update a category
       description: 'Update a shop category. <h3>OAuth</h3>Required scopes: <code>shop</code>'
       operationId: updateShopCategory
       parameters:
@@ -5129,7 +5129,7 @@ paths:
     get:
       tags:
         - Support tickets
-      summary: Retrieve support tickets
+      summary: Retrieve tickets
       description: 'Retrieve all support tickets. <h3>OAuth</h3>Required scopes: <code>support.readonly</code> or <code>support</code>'
       operationId: getSupportTickets
       parameters:
@@ -5189,7 +5189,7 @@ paths:
     post:
       tags:
         - Support tickets
-      summary: Create a support ticket
+      summary: Create a ticket
       description: 'Create a support ticket. <h3>OAuth</h3>Required scopes: <code>support</code>'
       operationId: createSupportTicket
       parameters:
@@ -5229,7 +5229,7 @@ paths:
     get:
       tags:
         - Support tickets
-      summary: Retrieve a support ticket
+      summary: Retrieve a ticket
       description: 'Retrieve a support ticket. <h3>OAuth</h3>Required scopes: <code>support.readonly</code> or <code>support</code>'
       operationId: getSupportTicket
       parameters:
@@ -5276,7 +5276,7 @@ paths:
     put:
       tags:
         - Support tickets
-      summary: Update support ticket assignee
+      summary: Update a ticket's assignee
       description: 'Update support ticket assignee. <h3>OAuth</h3>Required scopes: <code>support</code>'
       operationId: updateSupportTicketAssignee
       parameters:
@@ -5334,7 +5334,7 @@ paths:
     put:
       tags:
         - Support tickets
-      summary: Update support ticket status
+      summary: Update a ticket's status
       description: 'Update support ticket status. <h3>OAuth</h3>Required scopes: <code>support</code>'
       operationId: updateSupportTicketStatus
       parameters:
@@ -5398,7 +5398,7 @@ paths:
     patch:
       tags:
         - Support tickets
-      summary: Update a support ticket type
+      summary: Update a ticket's type
       description: 'Update a support ticket type. <h3>OAuth</h3>Required scopes: <code>support</code>'
       operationId: updateSupportTicketType
       parameters:
@@ -5460,7 +5460,7 @@ paths:
     post:
       tags:
         - Support tickets
-      summary: Create a support ticket comment
+      summary: Create a ticket comment
       description: 'Create a support ticket comment. <h3>OAuth</h3>Required scopes: <code>support</code>'
       operationId: createSupportTicketComment
       parameters:
@@ -5518,7 +5518,7 @@ paths:
     delete:
       tags:
         - Support tickets
-      summary: Delete a support ticket comment
+      summary: Delete a ticket comment
       description: 'Delete a support ticket comment. <h3>OAuth</h3>Required scopes: <code>support</code>'
       operationId: deleteSupportTicketComment
       parameters:
@@ -5553,7 +5553,7 @@ paths:
     get:
       tags:
         - Transactions
-      summary: Retrieve credits transactions
+      summary: Retrieve credit transactions
       description: 'Retrieve credits transactions. <h3>OAuth</h3>Required scopes: <code>transactions.readonly</code> or <code>transactions</code>'
       operationId: getCreditsTransactions
       parameters:
@@ -5637,7 +5637,7 @@ paths:
     post:
       tags:
         - Transactions
-      summary: Create a credits transaction
+      summary: Create a credit transaction
       description: 'Create a credits transaction. <h3>OAuth</h3>Required scopes: <code>transactions</code>'
       operationId: createCreditsTransaction
       parameters:
@@ -5674,7 +5674,7 @@ paths:
     get:
       tags:
         - Transactions
-      summary: Retrieve day passes transactions
+      summary: Retrieve day pass transactions
       description: 'Retrieve day passes transactions. <h3>OAuth</h3>Required scopes: <code>transactions.readonly</code> or <code>transactions</code>'
       operationId: getDayPassesTransactions
       parameters:
@@ -5758,7 +5758,7 @@ paths:
     post:
       tags:
         - Transactions
-      summary: Create a day passes transaction
+      summary: Create a day pass transaction
       description: 'Create a day passes transaction. <h3>OAuth</h3>Required scopes: <code>transactions</code>'
       operationId: createDayPassesTransaction
       parameters:
@@ -5998,7 +5998,7 @@ paths:
     post:
       tags:
         - Visitors
-      summary: Create contact
+      summary: Create a contact
       description: 'Create a contact. <h3>OAuth</h3>Required scopes: <code>visitors</code>'
       operationId: createContact
       parameters:
@@ -6035,7 +6035,7 @@ paths:
     get:
       tags:
         - Visitors
-      summary: Get contact
+      summary: Get a contact
       description: 'Get a contact. <h3>OAuth</h3>Required scopes: <code>visitors</code> or <code>visitors.readonly</code>'
       operationId: getContact
       parameters:
