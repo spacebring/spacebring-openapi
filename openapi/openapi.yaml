@@ -4564,7 +4564,7 @@ paths:
                 $ref: '#/components/schemas/responseError'
     post:
       tags:
-        - Products
+        - Shop
       summary: Create a product
       description: 'Create a product in shop. <h3>OAuth</h3>Required scopes: <code>shop</code>'
       operationId: createProduct
@@ -4636,7 +4636,7 @@ paths:
                 $ref: '#/components/schemas/responseError'
     get:
       tags:
-        - Products
+        - Shop
       summary: Get a product
       description: 'Get a certain product. <h3>OAuth</h3>Required scopes: <code>shop</code>'
       operationId: getProduct
@@ -4677,7 +4677,7 @@ paths:
                 $ref: '#/components/schemas/responseError'
     delete:
       tags:
-        - Products
+        - Shop
       summary: Delete a product
       description: 'Delete a certain product. <h3>OAuth</h3>Required scopes: <code>shop</code>'
       operationId: deleteProduct
@@ -5128,7 +5128,7 @@ paths:
   /support/tickets/v1:
     get:
       tags:
-        - Support tickets
+        - Support
       summary: Retrieve tickets
       description: 'Retrieve all support tickets. <h3>OAuth</h3>Required scopes: <code>support.readonly</code> or <code>support</code>'
       operationId: getSupportTickets
@@ -5188,7 +5188,7 @@ paths:
                 $ref: '#/components/schemas/responseError'
     post:
       tags:
-        - Support tickets
+        - Support
       summary: Create a ticket
       description: 'Create a support ticket. <h3>OAuth</h3>Required scopes: <code>support</code>'
       operationId: createSupportTicket
@@ -5228,7 +5228,7 @@ paths:
   /support/tickets/v1/{id}:
     get:
       tags:
-        - Support tickets
+        - Support
       summary: Retrieve a ticket
       description: 'Retrieve a support ticket. <h3>OAuth</h3>Required scopes: <code>support.readonly</code> or <code>support</code>'
       operationId: getSupportTicket
@@ -5275,7 +5275,7 @@ paths:
   /support/tickets/v1/{id}/assignee:
     put:
       tags:
-        - Support tickets
+        - Support
       summary: Update a ticket's assignee
       description: 'Update support ticket assignee. <h3>OAuth</h3>Required scopes: <code>support</code>'
       operationId: updateSupportTicketAssignee
@@ -5333,7 +5333,7 @@ paths:
   /support/tickets/v1/{id}/status:
     put:
       tags:
-        - Support tickets
+        - Support
       summary: Update a ticket's status
       description: 'Update support ticket status. <h3>OAuth</h3>Required scopes: <code>support</code>'
       operationId: updateSupportTicketStatus
@@ -5397,7 +5397,7 @@ paths:
   /support/tickets/v1/{id}/type:
     patch:
       tags:
-        - Support tickets
+        - Support
       summary: Update a ticket's type
       description: 'Update a support ticket type. <h3>OAuth</h3>Required scopes: <code>support</code>'
       operationId: updateSupportTicketType
@@ -5459,7 +5459,7 @@ paths:
   /support/tickets/v1/comment:
     post:
       tags:
-        - Support tickets
+        - Support
       summary: Create a ticket comment
       description: 'Create a support ticket comment. <h3>OAuth</h3>Required scopes: <code>support</code>'
       operationId: createSupportTicketComment
@@ -5517,7 +5517,7 @@ paths:
   /support/tickets/v1/comment/{id}:
     delete:
       tags:
-        - Support tickets
+        - Support
       summary: Delete a ticket comment
       description: 'Delete a support ticket comment. <h3>OAuth</h3>Required scopes: <code>support</code>'
       operationId: deleteSupportTicketComment
