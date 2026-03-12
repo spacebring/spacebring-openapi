@@ -4084,7 +4084,7 @@ paths:
                 $ref: '#/components/schemas/responseError'
     post:
       tags:
-        - Bookings
+        - Resources
       summary: Create a booking
       description: 'Create a booking. <h3>OAuth</h3>Required scopes: <code>resources</code>'
       operationId: createBooking
@@ -4163,7 +4163,7 @@ paths:
                 $ref: '#/components/schemas/responseError'
     delete:
       tags:
-        - Bookings
+        - Resources
       summary: Delete a booking
       description: 'Delete a booking. <h3>OAuth</h3>Required scopes: <code>resources</code>'
       operationId: deleteBooking
