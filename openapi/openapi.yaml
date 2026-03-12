@@ -6,170 +6,6 @@ info:
 servers:
   - url: https://api.spacebring.com
 paths:
-  /benefits/applications/v1:
-    get:
-      tags:
-        - Benefits
-      summary: Retrieve applications
-      description: 'Retrieve all benefit applications in the location or for certain benefit. <h3>OAuth</h3>Required scopes: <code>benefits.readonly</code> or <code>benefits</code>'
-      operationId: getBenefitApplications
-      parameters:
-        - in: query
-          name: locationRef
-          description: The id of the location
-          schema:
-            type: string
-            format: uuid
-          required: false
-        - in: query
-          name: benefitRef
-          description: The id of the benefit
-          schema:
-            type: string
-            format: uuid
-          required: false
-        - in: query
-          name: limit
-          schema:
-            type: integer
-            format: int64
-            minimum: 1
-            maximum: 100
-            default: 25
-          description: The number of items to return
-        - in: query
-          name: nextPageToken
-          schema:
-            type: string
-          description: nextPageToken retrieved from a previous request
-          required: false
-        - in: query
-          name: categoryRef
-          schema:
-            type: array
-            items:
-              type: string
-              format: uuid
-          description: The ids of the categories to filter by
-          required: false
-        - name: userRef
-          in: query
-          schema:
-            type: string
-            format: uuid
-          required: false
-        - in: header
-          name: spacebring-network-id
-          schema:
-            type: string
-            format: uuid
-          required: false
-          description: The id of the network. Required when using bearer token authentication
-      security:
-        - BasicAuth: []
-        - OAuth2:
-            - benefits.readonly
-            - benefits
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  applications:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/benefitApplication'
-                  nextPageToken:
-                    type: string
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/responseError'
-    post:
-      tags:
-        - Benefits
-      summary: Apply for a benefit
-      description: 'Apply for a benefit. <h3>OAuth</h3>Required scopes: <code>benefits</code>'
-      operationId: applyBenefit
-      parameters:
-        - in: header
-          name: spacebring-network-id
-          schema:
-            type: string
-            format: uuid
-          required: false
-          description: The id of the network. Required when using bearer token authentication
-      security:
-        - BasicAuth: []
-        - OAuth2:
-            - benefits
-      requestBody:
-        $ref: '#/components/requestBodies/applyBenefit'
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  application:
-                    $ref: '#/components/schemas/benefitApplication'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/responseError'
-  /benefits/applications/v1/{id}:
-    get:
-      tags:
-        - Benefits
-      summary: Retrieve an application
-      description: 'Retrieve a benefit application by id. <h3>OAuth</h3>Required scopes: <code>benefits.readonly</code> or <code>benefits</code>'
-      operationId: getBenefitApplication
-      parameters:
-        - in: path
-          name: id
-          description: The id of the benefit application
-          schema:
-            type: string
-            format: uuid
-          required: true
-        - in: header
-          name: spacebring-network-id
-          schema:
-            type: string
-            format: uuid
-          required: false
-          description: The id of the network. Required when using bearer token authentication
-      security:
-        - BasicAuth: []
-        - OAuth2:
-            - benefits.readonly
-            - benefits
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  application:
-                    type: object
-                    $ref: '#/components/schemas/benefitApplication'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/responseError'
   /benefits/categories/v1:
     get:
       tags:
@@ -548,42 +384,57 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
-  /billing/credit_notes/v1:
+  /benefits/applications/v1:
     get:
       tags:
-        - Billing
-      summary: Retrieve credit notes
-      description: 'Retrieve all credit notes for a specific invoice or location. One of invoiceRef or locationRef is required. <h3>OAuth</h3>Required scopes: <code>invoices.readonly</code> or <code>invoices</code>'
-      operationId: getCreditNotes
+        - Benefits
+      summary: Retrieve applications
+      description: 'Retrieve all benefit applications in the location or for certain benefit. <h3>OAuth</h3>Required scopes: <code>benefits.readonly</code> or <code>benefits</code>'
+      operationId: getBenefitApplications
       parameters:
-        - name: invoiceRef
-          in: query
-          description: The id of the invoice. One of invoiceRef or locationRef is required.
+        - in: query
+          name: locationRef
+          description: The id of the location
           schema:
             type: string
             format: uuid
           required: false
-        - name: locationRef
-          in: query
-          description: The id of the location. One of invoiceRef or locationRef is required.
+        - in: query
+          name: benefitRef
+          description: The id of the benefit
           schema:
             type: string
             format: uuid
           required: false
-        - name: limit
-          in: query
-          description: The maximum number of items to return (max 100, default 25)
+        - in: query
+          name: limit
           schema:
             type: integer
+            format: int64
             minimum: 1
             maximum: 100
             default: 25
-          required: false
-        - name: nextPageToken
-          in: query
-          description: Token for pagination to get the next page of results
+          description: The number of items to return
+        - in: query
+          name: nextPageToken
           schema:
             type: string
+          description: nextPageToken retrieved from a previous request
+          required: false
+        - in: query
+          name: categoryRef
+          schema:
+            type: array
+            items:
+              type: string
+              format: uuid
+          description: The ids of the categories to filter by
+          required: false
+        - name: userRef
+          in: query
+          schema:
+            type: string
+            format: uuid
           required: false
         - in: header
           name: spacebring-network-id
@@ -595,8 +446,8 @@ paths:
       security:
         - BasicAuth: []
         - OAuth2:
-            - invoices.readonly
-            - invoices
+            - benefits.readonly
+            - benefits
       responses:
         '200':
           description: OK
@@ -605,40 +456,24 @@ paths:
               schema:
                 type: object
                 properties:
-                  creditNotes:
+                  applications:
                     type: array
                     items:
-                      $ref: '#/components/schemas/creditNote'
+                      $ref: '#/components/schemas/benefitApplication'
                   nextPageToken:
                     type: string
-                    description: Token to retrieve the next page of results
-                  searchQueryNext:
-                    type: string
-                    description: Full query string for the next page
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
-        '403':
-          description: Forbidden - User lacks permissions
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/responseError'
-        '404':
-          description: Not Found - Invoice or location not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/responseError'
     post:
       tags:
-        - Billing
-      summary: Create a credit note
-      description: 'Create a credit note for an invoice. <h3>OAuth</h3>Required scopes: <code>invoices</code>'
-      operationId: createCreditNote
+        - Benefits
+      summary: Apply for a benefit
+      description: 'Apply for a benefit. <h3>OAuth</h3>Required scopes: <code>benefits</code>'
+      operationId: applyBenefit
       parameters:
         - in: header
           name: spacebring-network-id
@@ -647,133 +482,42 @@ paths:
             format: uuid
           required: false
           description: The id of the network. Required when using bearer token authentication
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - creditNote
-              properties:
-                creditNote:
-                  type: object
-                  required:
-                    - invoiceRef
-                    - reason
-                    - lines
-                  properties:
-                    invoiceRef:
-                      type: string
-                      format: uuid
-                      description: The id of the invoice
-                    reason:
-                      type: string
-                      enum:
-                        - duplicate
-                        - orderChange
-                        - productUnsatisfactory
-                        - fraudulent
-                        - other
-                      description: The reason for the credit note
-                    lines:
-                      type: array
-                      minItems: 1
-                      description: Credit note line items. Each line must have either amount or quantity, but not both.
-                      items:
-                        type: object
-                        required:
-                          - invoiceItemRef
-                        properties:
-                          invoiceItemRef:
-                            type: string
-                            format: uuid
-                            description: The id of the invoice item
-                          amount:
-                            type: number
-                            format: float
-                            description: The amount to credit. Provide either amount or quantity.
-                          quantity:
-                            type: integer
-                            description: The quantity to credit. Provide either amount or quantity.
-                    creditAmount:
-                      type: number
-                      format: float
-                      description: Credit amount
-                    effectiveDate:
-                      type: string
-                      format: date-time
-                      description: Effective date of the credit note
-                    memo:
-                      type: string
-                      description: Memo for the credit note
-                    outOfBandAmount:
-                      type: number
-                      format: float
-                      description: Out of band amount
-                    refunds:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          amount:
-                            type: number
-                            format: float
-                            description: The refund amount
-                          id:
-                            type: string
-                            format: uuid
-                            description: The id of the refund
-                          transactionRef:
-                            type: string
-                            format: uuid
-                            description: The transaction reference for the refund
       security:
         - BasicAuth: []
         - OAuth2:
-            - invoices
+            - benefits
+      requestBody:
+        $ref: '#/components/requestBodies/applyBenefit'
       responses:
-        '201':
-          description: Created
+        '200':
+          description: OK
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  creditNote:
-                    $ref: '#/components/schemas/creditNote'
+                  application:
+                    $ref: '#/components/schemas/benefitApplication'
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
-        '403':
-          description: Forbidden - User lacks permissions
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/responseError'
-        '404':
-          description: Not Found - Invoice or invoice item not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/responseError'
-  /billing/credit_notes/v1/{id}:
+  /benefits/applications/v1/{id}:
     get:
       tags:
-        - Billing
-      summary: Retrieve a credit note
-      description: 'Retrieve a specific credit note. <h3>OAuth</h3>Required scopes: <code>invoices.readonly</code> or <code>invoices</code>'
-      operationId: getCreditNote
+        - Benefits
+      summary: Retrieve an application
+      description: 'Retrieve a benefit application by id. <h3>OAuth</h3>Required scopes: <code>benefits.readonly</code> or <code>benefits</code>'
+      operationId: getBenefitApplication
       parameters:
-        - name: id
-          in: path
-          description: The id of the credit note
+        - in: path
+          name: id
+          description: The id of the benefit application
           schema:
-            format: uuid
             type: string
+            format: uuid
           required: true
         - in: header
           name: spacebring-network-id
@@ -785,8 +529,8 @@ paths:
       security:
         - BasicAuth: []
         - OAuth2:
-            - invoices.readonly
-            - invoices
+            - benefits.readonly
+            - benefits
       responses:
         '200':
           description: OK
@@ -795,188 +539,11 @@ paths:
               schema:
                 type: object
                 properties:
-                  creditNote:
-                    $ref: '#/components/schemas/creditNote'
+                  application:
+                    type: object
+                    $ref: '#/components/schemas/benefitApplication'
         '400':
           description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/responseError'
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/responseError'
-    patch:
-      tags:
-        - Billing
-      summary: Update a credit note
-      description: 'Update a credit note. <h3>OAuth</h3>Required scopes: <code>invoices</code>'
-      operationId: updateCreditNote
-      parameters:
-        - name: id
-          in: path
-          description: The id of the credit note
-          schema:
-            format: uuid
-            type: string
-          required: true
-        - in: header
-          name: spacebring-network-id
-          schema:
-            type: string
-            format: uuid
-          required: false
-          description: The id of the network. Required when using bearer token authentication
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - creditNote
-              properties:
-                creditNote:
-                  type: object
-                  properties:
-                    memo:
-                      type: string
-                      description: Memo for the credit note
-      security:
-        - BasicAuth: []
-        - OAuth2:
-            - invoices
-      responses:
-        '204':
-          description: No Content
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/responseError'
-        '403':
-          description: Forbidden - User lacks permissions
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/responseError'
-        '404':
-          description: Not Found - Credit note not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/responseError'
-  /billing/credit_notes/v1/preview:
-    post:
-      tags:
-        - Billing
-      summary: Preview a credit note
-      description: 'Preview a credit note for an invoice without creating it. <h3>OAuth</h3>Required scopes: <code>invoices</code>'
-      operationId: previewCreditNote
-      parameters:
-        - in: header
-          name: spacebring-network-id
-          schema:
-            type: string
-            format: uuid
-          required: false
-          description: The id of the network. Required when using bearer token authentication
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - creditNote
-              properties:
-                creditNote:
-                  type: object
-                  required:
-                    - invoiceRef
-                    - lines
-                  properties:
-                    invoiceRef:
-                      type: string
-                      format: uuid
-                      description: The id of the invoice
-                    lines:
-                      type: array
-                      minItems: 1
-                      description: Credit note line items. Each line must have either amount or quantity, but not both.
-                      items:
-                        type: object
-                        required:
-                          - invoiceItemRef
-                        properties:
-                          invoiceItemRef:
-                            type: string
-                            format: uuid
-                            description: The id of the invoice item
-                          amount:
-                            type: number
-                            format: float
-                            description: The amount to credit. Provide either amount or quantity.
-                          quantity:
-                            type: integer
-                            description: The quantity to credit. Provide either amount or quantity.
-                    creditAmount:
-                      type: number
-                      format: float
-                      description: Credit amount
-                    outOfBandAmount:
-                      type: number
-                      format: float
-                      description: Out of band amount
-                    refunds:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          amount:
-                            type: number
-                            format: float
-                            description: The refund amount
-                          id:
-                            type: string
-                            format: uuid
-                            description: The id of the refund
-                          transactionRef:
-                            type: string
-                            format: uuid
-                            description: The transaction reference for the refund
-      security:
-        - BasicAuth: []
-        - OAuth2:
-            - invoices
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  creditNote:
-                    $ref: '#/components/schemas/creditNote'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/responseError'
-        '403':
-          description: Forbidden - User lacks permissions
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/responseError'
-        '404':
-          description: Not Found - Invoice or invoice item not found
           content:
             application/json:
               schema:
@@ -1769,6 +1336,439 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
+  /billing/credit_notes/v1:
+    get:
+      tags:
+        - Billing
+      summary: Retrieve credit notes
+      description: 'Retrieve all credit notes for a specific invoice or location. One of invoiceRef or locationRef is required. <h3>OAuth</h3>Required scopes: <code>invoices.readonly</code> or <code>invoices</code>'
+      operationId: getCreditNotes
+      parameters:
+        - name: invoiceRef
+          in: query
+          description: The id of the invoice. One of invoiceRef or locationRef is required.
+          schema:
+            type: string
+            format: uuid
+          required: false
+        - name: locationRef
+          in: query
+          description: The id of the location. One of invoiceRef or locationRef is required.
+          schema:
+            type: string
+            format: uuid
+          required: false
+        - name: limit
+          in: query
+          description: The maximum number of items to return (max 100, default 25)
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 25
+          required: false
+        - name: nextPageToken
+          in: query
+          description: Token for pagination to get the next page of results
+          schema:
+            type: string
+          required: false
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - invoices.readonly
+            - invoices
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  creditNotes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/creditNote'
+                  nextPageToken:
+                    type: string
+                    description: Token to retrieve the next page of results
+                  searchQueryNext:
+                    type: string
+                    description: Full query string for the next page
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+        '403':
+          description: Forbidden - User lacks permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+        '404':
+          description: Not Found - Invoice or location not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+    post:
+      tags:
+        - Billing
+      summary: Create a credit note
+      description: 'Create a credit note for an invoice. <h3>OAuth</h3>Required scopes: <code>invoices</code>'
+      operationId: createCreditNote
+      parameters:
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - creditNote
+              properties:
+                creditNote:
+                  type: object
+                  required:
+                    - invoiceRef
+                    - reason
+                    - lines
+                  properties:
+                    invoiceRef:
+                      type: string
+                      format: uuid
+                      description: The id of the invoice
+                    reason:
+                      type: string
+                      enum:
+                        - duplicate
+                        - orderChange
+                        - productUnsatisfactory
+                        - fraudulent
+                        - other
+                      description: The reason for the credit note
+                    lines:
+                      type: array
+                      minItems: 1
+                      description: Credit note line items. Each line must have either amount or quantity, but not both.
+                      items:
+                        type: object
+                        required:
+                          - invoiceItemRef
+                        properties:
+                          invoiceItemRef:
+                            type: string
+                            format: uuid
+                            description: The id of the invoice item
+                          amount:
+                            type: number
+                            format: float
+                            description: The amount to credit. Provide either amount or quantity.
+                          quantity:
+                            type: integer
+                            description: The quantity to credit. Provide either amount or quantity.
+                    creditAmount:
+                      type: number
+                      format: float
+                      description: Credit amount
+                    effectiveDate:
+                      type: string
+                      format: date-time
+                      description: Effective date of the credit note
+                    memo:
+                      type: string
+                      description: Memo for the credit note
+                    outOfBandAmount:
+                      type: number
+                      format: float
+                      description: Out of band amount
+                    refunds:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          amount:
+                            type: number
+                            format: float
+                            description: The refund amount
+                          id:
+                            type: string
+                            format: uuid
+                            description: The id of the refund
+                          transactionRef:
+                            type: string
+                            format: uuid
+                            description: The transaction reference for the refund
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - invoices
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  creditNote:
+                    $ref: '#/components/schemas/creditNote'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+        '403':
+          description: Forbidden - User lacks permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+        '404':
+          description: Not Found - Invoice or invoice item not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /billing/credit_notes/v1/{id}:
+    get:
+      tags:
+        - Billing
+      summary: Retrieve a credit note
+      description: 'Retrieve a specific credit note. <h3>OAuth</h3>Required scopes: <code>invoices.readonly</code> or <code>invoices</code>'
+      operationId: getCreditNote
+      parameters:
+        - name: id
+          in: path
+          description: The id of the credit note
+          schema:
+            format: uuid
+            type: string
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - invoices.readonly
+            - invoices
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  creditNote:
+                    $ref: '#/components/schemas/creditNote'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+    patch:
+      tags:
+        - Billing
+      summary: Update a credit note
+      description: 'Update a credit note. <h3>OAuth</h3>Required scopes: <code>invoices</code>'
+      operationId: updateCreditNote
+      parameters:
+        - name: id
+          in: path
+          description: The id of the credit note
+          schema:
+            format: uuid
+            type: string
+          required: true
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - creditNote
+              properties:
+                creditNote:
+                  type: object
+                  properties:
+                    memo:
+                      type: string
+                      description: Memo for the credit note
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - invoices
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+        '403':
+          description: Forbidden - User lacks permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+        '404':
+          description: Not Found - Credit note not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /billing/credit_notes/v1/preview:
+    post:
+      tags:
+        - Billing
+      summary: Preview a credit note
+      description: 'Preview a credit note for an invoice without creating it. <h3>OAuth</h3>Required scopes: <code>invoices</code>'
+      operationId: previewCreditNote
+      parameters:
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - creditNote
+              properties:
+                creditNote:
+                  type: object
+                  required:
+                    - invoiceRef
+                    - lines
+                  properties:
+                    invoiceRef:
+                      type: string
+                      format: uuid
+                      description: The id of the invoice
+                    lines:
+                      type: array
+                      minItems: 1
+                      description: Credit note line items. Each line must have either amount or quantity, but not both.
+                      items:
+                        type: object
+                        required:
+                          - invoiceItemRef
+                        properties:
+                          invoiceItemRef:
+                            type: string
+                            format: uuid
+                            description: The id of the invoice item
+                          amount:
+                            type: number
+                            format: float
+                            description: The amount to credit. Provide either amount or quantity.
+                          quantity:
+                            type: integer
+                            description: The quantity to credit. Provide either amount or quantity.
+                    creditAmount:
+                      type: number
+                      format: float
+                      description: Credit amount
+                    outOfBandAmount:
+                      type: number
+                      format: float
+                      description: Out of band amount
+                    refunds:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          amount:
+                            type: number
+                            format: float
+                            description: The refund amount
+                          id:
+                            type: string
+                            format: uuid
+                            description: The id of the refund
+                          transactionRef:
+                            type: string
+                            format: uuid
+                            description: The transaction reference for the refund
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - invoices
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  creditNote:
+                    $ref: '#/components/schemas/creditNote'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+        '403':
+          description: Forbidden - User lacks permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+        '404':
+          description: Not Found - Invoice or invoice item not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
   /community/companies/v1:
     get:
       tags:
@@ -2498,103 +2498,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
-  /events/tickets/v1:
-    get:
-      tags:
-        - Events
-      summary: Retrieve tickets
-      description: 'Retrieve all event tickets. <h3>OAuth</h3>Required scopes: <code>events.readonly</code> or <code>events</code>'
-      operationId: getEventTickets
-      parameters:
-        - name: locationRef
-          in: query
-          description: The id of the location.
-          schema:
-            type: string
-            format: uuid
-          required: true
-        - in: query
-          name: limit
-          schema:
-            type: integer
-            format: int64
-            minimum: 1
-            maximum: 100
-            default: 25
-          description: The number of items to return
-        - in: query
-          name: nextPageToken
-          schema:
-            type: string
-          description: nextPageToken retrieved from a previous request
-        - in: header
-          name: spacebring-network-id
-          schema:
-            type: string
-            format: uuid
-          required: false
-          description: The id of the network. Required when using bearer token authentication
-      security:
-        - BasicAuth: []
-        - OAuth2:
-            - events.readonly
-            - events
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  tickets:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/eventTicket'
-                  nextPageToken:
-                    type: string
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/responseError'
-  /events/tickets/v1/{id}:
-    get:
-      tags:
-        - Events
-      summary: Retrieve a ticket
-      description: 'Retrieve an event ticket. <h3>OAuth</h3>Required scopes: <code>events.readonly</code> or <code>events</code>'
-      operationId: getEventTicket
-      parameters:
-        - name: id
-          in: path
-          description: The id of the event ticket.
-          schema:
-            type: string
-            format: uuid
-          required: true
-      security:
-        - BasicAuth: []
-        - OAuth2:
-            - events.readonly
-            - events
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  ticket:
-                    $ref: '#/components/schemas/eventTicket'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/responseError'
   /events/v1:
     post:
       tags:
@@ -2809,14 +2712,35 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
-  /feed/comments/v1:
-    post:
+  /events/tickets/v1:
+    get:
       tags:
-        - Feed
-      summary: Create a post comment
-      description: 'Create a feed post comment. <h3>OAuth</h3>Required scopes: <code>feed</code>'
-      operationId: createFeedPostComment
+        - Events
+      summary: Retrieve tickets
+      description: 'Retrieve all event tickets. <h3>OAuth</h3>Required scopes: <code>events.readonly</code> or <code>events</code>'
+      operationId: getEventTickets
       parameters:
+        - name: locationRef
+          in: query
+          description: The id of the location.
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+            maximum: 100
+            default: 25
+          description: The number of items to return
+        - in: query
+          name: nextPageToken
+          schema:
+            type: string
+          description: nextPageToken retrieved from a previous request
         - in: header
           name: spacebring-network-id
           schema:
@@ -2824,45 +2748,42 @@ paths:
             format: uuid
           required: false
           description: The id of the network. Required when using bearer token authentication
-      requestBody:
-        $ref: '#/components/requestBodies/createFeedPostComment'
       security:
+        - BasicAuth: []
         - OAuth2:
-            - feed
+            - events.readonly
+            - events
       responses:
-        '201':
-          description: Created
+        '200':
+          description: OK
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  comment:
-                    $ref: '#/components/schemas/postComment'
+                  tickets:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/eventTicket'
+                  nextPageToken:
+                    type: string
         '400':
           description: Bad Request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
-  /feed/comments/v1/{id}:
-    delete:
+  /events/tickets/v1/{id}:
+    get:
       tags:
-        - Feed
-      summary: Delete a post comment
-      description: 'Delete a post comment. <h3>OAuth</h3>Required scopes: <code>feed</code>'
-      operationId: deletePostComment
+        - Events
+      summary: Retrieve a ticket
+      description: 'Retrieve an event ticket. <h3>OAuth</h3>Required scopes: <code>events.readonly</code> or <code>events</code>'
+      operationId: getEventTicket
       parameters:
-        - in: header
-          name: spacebring-network-id
-          schema:
-            type: string
-            format: uuid
-          required: false
-          description: The id of the network. Required when using bearer token authentication
         - name: id
           in: path
-          description: The id of the post comment.
+          description: The id of the event ticket.
           schema:
             type: string
             format: uuid
@@ -2870,80 +2791,18 @@ paths:
       security:
         - BasicAuth: []
         - OAuth2:
-            - feed
+            - events.readonly
+            - events
       responses:
-        '204':
-          description: No content
-        '400':
-          description: Bad request
-  /feed/comments/v1/{id}/likes:
-    post:
-      tags:
-        - Feed
-      summary: Create a like for a post comment
-      description: 'Create a like for a post comment. <h3>OAuth</h3>Required scopes: <code>feed</code>'
-      operationId: createLikeForPostComment
-      parameters:
-        - in: header
-          name: spacebring-network-id
-          schema:
-            type: string
-            format: uuid
-          required: false
-          description: The id of the network. Required when using bearer token authentication
-        - name: id
-          in: path
-          description: The id of the post comment.
-          schema:
-            type: string
-            format: uuid
-          required: true
-      security:
-        - OAuth2:
-            - feed
-      responses:
-        '201':
-          description: Created
+        '200':
+          description: OK
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  like:
-                    $ref: '#/components/schemas/postLike'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/responseError'
-    delete:
-      tags:
-        - Feed
-      summary: Delete a like for a post comment
-      description: 'Delete a like for a post comment. <h3>OAuth</h3>Required scopes: <code>feed</code>'
-      operationId: deleteLikeForPostComment
-      parameters:
-        - in: header
-          name: spacebring-network-id
-          schema:
-            type: string
-            format: uuid
-          required: false
-          description: The id of the network. Required when using bearer token authentication
-        - name: id
-          in: path
-          description: The id of the post comment.
-          schema:
-            type: string
-            format: uuid
-          required: true
-      security:
-        - OAuth2:
-            - feed
-      responses:
-        '204':
-          description: No content
+                  ticket:
+                    $ref: '#/components/schemas/eventTicket'
         '400':
           description: Bad Request
           content:
@@ -3307,6 +3166,147 @@ paths:
       responses:
         '204':
           description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /feed/comments/v1:
+    post:
+      tags:
+        - Feed
+      summary: Create a post comment
+      description: 'Create a feed post comment. <h3>OAuth</h3>Required scopes: <code>feed</code>'
+      operationId: createFeedPostComment
+      parameters:
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      requestBody:
+        $ref: '#/components/requestBodies/createFeedPostComment'
+      security:
+        - OAuth2:
+            - feed
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  comment:
+                    $ref: '#/components/schemas/postComment'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /feed/comments/v1/{id}:
+    delete:
+      tags:
+        - Feed
+      summary: Delete a post comment
+      description: 'Delete a post comment. <h3>OAuth</h3>Required scopes: <code>feed</code>'
+      operationId: deletePostComment
+      parameters:
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+        - name: id
+          in: path
+          description: The id of the post comment.
+          schema:
+            type: string
+            format: uuid
+          required: true
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - feed
+      responses:
+        '204':
+          description: No content
+        '400':
+          description: Bad request
+  /feed/comments/v1/{id}/likes:
+    post:
+      tags:
+        - Feed
+      summary: Create a like for a post comment
+      description: 'Create a like for a post comment. <h3>OAuth</h3>Required scopes: <code>feed</code>'
+      operationId: createLikeForPostComment
+      parameters:
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+        - name: id
+          in: path
+          description: The id of the post comment.
+          schema:
+            type: string
+            format: uuid
+          required: true
+      security:
+        - OAuth2:
+            - feed
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  like:
+                    $ref: '#/components/schemas/postLike'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+    delete:
+      tags:
+        - Feed
+      summary: Delete a like for a post comment
+      description: 'Delete a like for a post comment. <h3>OAuth</h3>Required scopes: <code>feed</code>'
+      operationId: deleteLikeForPostComment
+      parameters:
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+        - name: id
+          in: path
+          description: The id of the post comment.
+          schema:
+            type: string
+            format: uuid
+          required: true
+      security:
+        - OAuth2:
+            - feed
+      responses:
+        '204':
+          description: No content
         '400':
           description: Bad Request
           content:
@@ -3949,6 +3949,127 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
+  /resources/v1:
+    get:
+      tags:
+        - Resources
+      summary: Retrieve resources
+      description: 'Retrieve resources in the location. Resources represent all kind of bookable items like rooms, hot desks, dedicated desks, parking lots. <h3>OAuth</h3>Required scopes: <code>resources.readonly</code> or <code>resources</code>'
+      operationId: getResources
+      parameters:
+        - name: locationRef
+          in: query
+          description: The id of the location.
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - name: types
+          in: query
+          description: The types of resources to retrieve. Pass them as comma separated values.
+          schema:
+            type: string
+            enum:
+              - hotDesk
+              - dedicatedDesk
+              - office
+              - parkingLot
+              - room
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - resources.readonly
+            - resources
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  resources:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/resource'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /resources/v1/{id}:
+    get:
+      tags:
+        - Resources
+      summary: Get a resource
+      description: 'Get a certain resource. <h3>OAuth</h3>Required scopes: <code>resources.readonly</code> or <code>resources</code>'
+      operationId: getResource
+      parameters:
+        - name: id
+          in: path
+          description: The id of the resource.
+          schema:
+            format: uuid
+            type: string
+          required: true
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - resources
+            - resources.readonly
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  resource:
+                    $ref: '#/components/schemas/resource'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+    patch:
+      tags:
+        - Resources
+      summary: Patch a resource
+      description: 'Patch a certain resource. <h3>OAuth</h3>Required scopes: <code>resources</code>'
+      operationId: patchResource
+      parameters:
+        - name: id
+          in: path
+          description: The id of the resource.
+          schema:
+            format: uuid
+            type: string
+          required: true
+      requestBody:
+        $ref: '#/components/requestBodies/patchResource'
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - resources
+      responses:
+        '204':
+          description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
   /resources/bookings/v1:
     get:
       tags:
@@ -4195,127 +4316,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
-  /resources/v1:
-    get:
-      tags:
-        - Resources
-      summary: Retrieve resources
-      description: 'Retrieve resources in the location. Resources represent all kind of bookable items like rooms, hot desks, dedicated desks, parking lots. <h3>OAuth</h3>Required scopes: <code>resources.readonly</code> or <code>resources</code>'
-      operationId: getResources
-      parameters:
-        - name: locationRef
-          in: query
-          description: The id of the location.
-          schema:
-            type: string
-            format: uuid
-          required: true
-        - name: types
-          in: query
-          description: The types of resources to retrieve. Pass them as comma separated values.
-          schema:
-            type: string
-            enum:
-              - hotDesk
-              - dedicatedDesk
-              - office
-              - parkingLot
-              - room
-        - in: header
-          name: spacebring-network-id
-          schema:
-            type: string
-            format: uuid
-          required: false
-          description: The id of the network. Required when using bearer token authentication
-      security:
-        - BasicAuth: []
-        - OAuth2:
-            - resources.readonly
-            - resources
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  resources:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/resource'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/responseError'
-  /resources/v1/{id}:
-    get:
-      tags:
-        - Resources
-      summary: Get a resource
-      description: 'Get a certain resource. <h3>OAuth</h3>Required scopes: <code>resources.readonly</code> or <code>resources</code>'
-      operationId: getResource
-      parameters:
-        - name: id
-          in: path
-          description: The id of the resource.
-          schema:
-            format: uuid
-            type: string
-          required: true
-      security:
-        - BasicAuth: []
-        - OAuth2:
-            - resources
-            - resources.readonly
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  resource:
-                    $ref: '#/components/schemas/resource'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/responseError'
-    patch:
-      tags:
-        - Resources
-      summary: Patch a resource
-      description: 'Patch a certain resource. <h3>OAuth</h3>Required scopes: <code>resources</code>'
-      operationId: patchResource
-      parameters:
-        - name: id
-          in: path
-          description: The id of the resource.
-          schema:
-            format: uuid
-            type: string
-          required: true
-      requestBody:
-        $ref: '#/components/requestBodies/patchResource'
-      security:
-        - BasicAuth: []
-        - OAuth2:
-            - resources
-      responses:
-        '204':
-          description: No Content
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/responseError'
   /shop/categories/v1:
     get:
       tags:
@@ -4517,92 +4517,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/responseError'
-  /shop/orders/v1:
-    get:
-      tags:
-        - Shop
-      summary: Retrieve orders
-      description: 'Retrieve all orders of products from shop. <h3>OAuth</h3>Required scopes: <code>shop.readonly</code> or <code>shop</code>'
-      operationId: getOrders
-      parameters:
-        - in: query
-          name: locationRef
-          description: The id of the location.
-          schema:
-            type: string
-            format: uuid
-          required: true
-        - in: query
-          name: status
-          description: The status of the order.
-          schema:
-            type: string
-            enum:
-              - new
-              - inProgress
-              - completed
-              - canceled
-          required: false
-        - in: query
-          name: createDate
-          description: The date filter of items.
-          schema:
-            type: object
-            properties:
-              lte:
-                format: date-time
-                type: string
-                description: 'Get orders with less createDate. Example: createDate[lte]=2021-05-21T10:00:00Z'
-              gte:
-                format: date-time
-                type: string
-                description: 'Get orders with greater createDate. Example: createDate[gte]=2021-05-21T10:00:00Z'
-        - in: query
-          name: limit
-          schema:
-            type: integer
-            format: int64
-            minimum: 1
-            maximum: 100
-            default: 25
-          description: The number of items to return
-        - in: query
-          name: nextPageToken
-          schema:
-            type: string
-          description: nextPageToken retrieved from a previous request
-        - in: header
-          name: spacebring-network-id
-          schema:
-            type: string
-            format: uuid
-          required: false
-          description: The id of the network. Required when using bearer token authentication
-      security:
-        - BasicAuth: []
-        - OAuth2:
-            - shop.readonly
-            - shop
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  orders:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/order'
-                  nextPageToken:
-                    type: string
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/responseError'
   /shop/products/v1:
     get:
       tags:
@@ -4782,6 +4696,92 @@ paths:
       responses:
         '204':
           description: No Content
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/responseError'
+  /shop/orders/v1:
+    get:
+      tags:
+        - Shop
+      summary: Retrieve orders
+      description: 'Retrieve all orders of products from shop. <h3>OAuth</h3>Required scopes: <code>shop.readonly</code> or <code>shop</code>'
+      operationId: getOrders
+      parameters:
+        - in: query
+          name: locationRef
+          description: The id of the location.
+          schema:
+            type: string
+            format: uuid
+          required: true
+        - in: query
+          name: status
+          description: The status of the order.
+          schema:
+            type: string
+            enum:
+              - new
+              - inProgress
+              - completed
+              - canceled
+          required: false
+        - in: query
+          name: createDate
+          description: The date filter of items.
+          schema:
+            type: object
+            properties:
+              lte:
+                format: date-time
+                type: string
+                description: 'Get orders with less createDate. Example: createDate[lte]=2021-05-21T10:00:00Z'
+              gte:
+                format: date-time
+                type: string
+                description: 'Get orders with greater createDate. Example: createDate[gte]=2021-05-21T10:00:00Z'
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+            maximum: 100
+            default: 25
+          description: The number of items to return
+        - in: query
+          name: nextPageToken
+          schema:
+            type: string
+          description: nextPageToken retrieved from a previous request
+        - in: header
+          name: spacebring-network-id
+          schema:
+            type: string
+            format: uuid
+          required: false
+          description: The id of the network. Required when using bearer token authentication
+      security:
+        - BasicAuth: []
+        - OAuth2:
+            - shop.readonly
+            - shop
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  orders:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/order'
+                  nextPageToken:
+                    type: string
         '400':
           description: Bad Request
           content:
@@ -6619,6 +6619,78 @@ components:
       format: date-time
       type: string
       description: The date and time in ISO 8601 format, e.g. 2021-05-21T10:00:00Z
+    benefitCategory:
+      type: object
+      properties:
+        createDate:
+          $ref: '#/components/schemas/dateSchema'
+        id:
+          type: string
+          format: uuid
+        locationRef:
+          type: string
+          format: uuid
+        networkRef:
+          type: string
+          format: uuid
+        title:
+          type: string
+    responseError:
+      type: object
+      properties:
+        message:
+          type: string
+        type:
+          type: string
+    benefit:
+      type: object
+      properties:
+        application:
+          type: object
+          properties:
+            confirmationEmail:
+              type: object
+              properties:
+                enabled:
+                  type: boolean
+                template:
+                  type: string
+            allowance:
+              type: string
+              enum:
+                - once
+                - unlimited
+            enabled:
+              type: boolean
+            buttonLabel:
+              type: string
+              enum:
+                - apply
+                - buy
+                - contact
+                - get
+                - learnMore
+        categoryRef:
+          type: string
+          format: uuid
+        createDate:
+          $ref: '#/components/schemas/dateSchema'
+        description:
+          type: string
+        id:
+          type: string
+          format: uuid
+        locationRef:
+          type: string
+          format: uuid
+        subtitle:
+          type: string
+        title:
+          type: string
+        updateDate:
+          $ref: '#/components/schemas/dateSchema'
+        visibilityType:
+          type: string
     benefitApplication:
       type: object
       properties:
@@ -6680,378 +6752,6 @@ components:
               type: boolean
             surname:
               type: string
-    responseError:
-      type: object
-      properties:
-        message:
-          type: string
-        type:
-          type: string
-    benefitCategory:
-      type: object
-      properties:
-        createDate:
-          $ref: '#/components/schemas/dateSchema'
-        id:
-          type: string
-          format: uuid
-        locationRef:
-          type: string
-          format: uuid
-        networkRef:
-          type: string
-          format: uuid
-        title:
-          type: string
-    benefit:
-      type: object
-      properties:
-        application:
-          type: object
-          properties:
-            confirmationEmail:
-              type: object
-              properties:
-                enabled:
-                  type: boolean
-                template:
-                  type: string
-            allowance:
-              type: string
-              enum:
-                - once
-                - unlimited
-            enabled:
-              type: boolean
-            buttonLabel:
-              type: string
-              enum:
-                - apply
-                - buy
-                - contact
-                - get
-                - learnMore
-        categoryRef:
-          type: string
-          format: uuid
-        createDate:
-          $ref: '#/components/schemas/dateSchema'
-        description:
-          type: string
-        id:
-          type: string
-          format: uuid
-        locationRef:
-          type: string
-          format: uuid
-        subtitle:
-          type: string
-        title:
-          type: string
-        updateDate:
-          $ref: '#/components/schemas/dateSchema'
-        visibilityType:
-          type: string
-    creditNote:
-      type: object
-      properties:
-        baseAmounts:
-          type: object
-          properties:
-            currencyCode:
-              type: string
-            postPaymentAmount:
-              type: number
-              format: float
-            prePaymentAmount:
-              type: number
-              format: float
-            subtotalAmount:
-              type: number
-              format: float
-            subtotalAmountExcludingTax:
-              type: number
-              format: float
-            taxes:
-              type: array
-              items:
-                type: object
-                properties:
-                  amount:
-                    type: number
-                    format: float
-                  inclusive:
-                    type: boolean
-                  rate:
-                    type: number
-                    format: float
-                  taxableAmount:
-                    type: number
-                    format: float
-            totalAmount:
-              type: number
-              format: float
-            totalExcludingTaxAmount:
-              type: number
-              format: float
-        createDate:
-          $ref: '#/components/schemas/dateSchema'
-        creditAmount:
-          type: number
-          format: float
-          description: Credit amount
-        currencyCode:
-          type: string
-          description: Currency code
-        effectiveDate:
-          $ref: '#/components/schemas/dateSchema'
-        id:
-          type: string
-          format: uuid
-        invoiceRef:
-          type: string
-          format: uuid
-        lines:
-          type: array
-          items:
-            type: object
-            properties:
-              baseAmounts:
-                type: object
-                properties:
-                  currencyCode:
-                    type: string
-                  discountedAmount:
-                    type: number
-                    format: float
-                  tax:
-                    type: object
-                    properties:
-                      amount:
-                        type: number
-                        format: float
-                      inclusive:
-                        type: boolean
-                      rate:
-                        type: number
-                        format: float
-                      taxableAmount:
-                        type: number
-                        format: float
-                  totalAmount:
-                    type: number
-                    format: float
-                  totalExcludingTaxAmount:
-                    type: number
-                    format: float
-                  unitAmount:
-                    type: number
-                    format: float
-                  unitExcludingTaxAmount:
-                    type: number
-                    format: float
-              createDate:
-                $ref: '#/components/schemas/dateSchema'
-              currencyCode:
-                type: string
-                description: Currency code
-              discountedAmount:
-                type: number
-                format: float
-                description: Discounted amount
-              discounts:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    coupon:
-                      type: object
-                      properties:
-                        amountOff:
-                          type: number
-                          format: float
-                        currencyCode:
-                          type: string
-                        duration:
-                          type: string
-                        durationInMonths:
-                          type: integer
-                        id:
-                          type: string
-                          format: uuid
-                        percentOff:
-                          type: number
-                          format: float
-                        type:
-                          type: string
-                    promocode:
-                      type: object
-                      properties:
-                        code:
-                          type: string
-                        expiration:
-                          $ref: '#/components/schemas/dateSchema'
-                        id:
-                          type: string
-                          format: uuid
-                        limitByFirstPurchase:
-                          type: boolean
-                    subscriptionId:
-                      type: string
-                      format: uuid
-              id:
-                type: string
-                format: uuid
-              invoiceItemRef:
-                type: string
-                format: uuid
-              invoiceRef:
-                type: string
-                format: uuid
-              locationRef:
-                type: string
-                format: uuid
-              memo:
-                type: string
-              networkRef:
-                type: string
-                format: uuid
-              quantity:
-                type: integer
-              tax:
-                type: object
-                properties:
-                  amount:
-                    type: number
-                    format: float
-                  inclusive:
-                    type: boolean
-                  rate:
-                    type: number
-                    format: float
-                  taxableAmount:
-                    type: number
-                    format: float
-              totalAmount:
-                type: number
-                format: float
-                description: Total amount
-              totalExcludingTaxAmount:
-                type: number
-                format: float
-                description: Total excluding tax amount
-              unitAmount:
-                type: number
-                format: float
-                description: Unit amount
-              unitExcludingTaxAmount:
-                type: number
-                format: float
-                description: Unit excluding tax amount
-              updateDate:
-                $ref: '#/components/schemas/dateSchema'
-        locationRef:
-          type: string
-          format: uuid
-        memo:
-          type: string
-        networkRef:
-          type: string
-          format: uuid
-        number:
-          type: string
-        outOfBandAmount:
-          type: number
-          format: float
-          description: Out of band amount
-        pdfUrl:
-          type: string
-          format: uri
-        postPaymentAmount:
-          type: number
-          format: float
-          description: Post payment amount
-        prePaymentAmount:
-          type: number
-          format: float
-          description: Pre payment amount
-        reason:
-          type: string
-          enum:
-            - duplicate
-            - orderChange
-            - productUnsatisfactory
-            - fraudulent
-            - other
-        refunds:
-          type: array
-          items:
-            type: object
-            properties:
-              amount:
-                type: number
-                format: float
-              currencyCode:
-                type: string
-              id:
-                type: string
-                format: uuid
-              method:
-                type: object
-                properties:
-                  label:
-                    type: string
-                  type:
-                    type: string
-                    enum:
-                      - external
-                      - paymentGateway
-              transactionRef:
-                type: string
-                format: uuid
-        status:
-          type: string
-        subtotalAmount:
-          type: number
-          format: float
-          description: Subtotal amount
-        subtotalAmountExcludingTax:
-          type: number
-          format: float
-          description: Subtotal amount excluding tax
-        taxes:
-          type: array
-          description: Taxes
-          items:
-            type: object
-            properties:
-              amount:
-                type: number
-                format: float
-              inclusive:
-                type: boolean
-              rate:
-                type: number
-                format: float
-              taxableAmount:
-                type: number
-                format: float
-        title:
-          type: string
-        totalAmount:
-          type: number
-          format: float
-          description: Total amount
-        totalExcludingTaxAmount:
-          type: number
-          format: float
-          description: Total excluding tax amount
-        type:
-          type: string
-        updateDate:
-          $ref: '#/components/schemas/dateSchema'
-        voidDate:
-          $ref: '#/components/schemas/dateSchema'
     timezoneId:
       type: string
       description: Timezone identifier for the location (e.g. 'Europe/Kyiv')
@@ -7820,6 +7520,306 @@ components:
             - stripe
             - tap
             - wayforpay
+    creditNote:
+      type: object
+      properties:
+        baseAmounts:
+          type: object
+          properties:
+            currencyCode:
+              type: string
+            postPaymentAmount:
+              type: number
+              format: float
+            prePaymentAmount:
+              type: number
+              format: float
+            subtotalAmount:
+              type: number
+              format: float
+            subtotalAmountExcludingTax:
+              type: number
+              format: float
+            taxes:
+              type: array
+              items:
+                type: object
+                properties:
+                  amount:
+                    type: number
+                    format: float
+                  inclusive:
+                    type: boolean
+                  rate:
+                    type: number
+                    format: float
+                  taxableAmount:
+                    type: number
+                    format: float
+            totalAmount:
+              type: number
+              format: float
+            totalExcludingTaxAmount:
+              type: number
+              format: float
+        createDate:
+          $ref: '#/components/schemas/dateSchema'
+        creditAmount:
+          type: number
+          format: float
+          description: Credit amount
+        currencyCode:
+          type: string
+          description: Currency code
+        effectiveDate:
+          $ref: '#/components/schemas/dateSchema'
+        id:
+          type: string
+          format: uuid
+        invoiceRef:
+          type: string
+          format: uuid
+        lines:
+          type: array
+          items:
+            type: object
+            properties:
+              baseAmounts:
+                type: object
+                properties:
+                  currencyCode:
+                    type: string
+                  discountedAmount:
+                    type: number
+                    format: float
+                  tax:
+                    type: object
+                    properties:
+                      amount:
+                        type: number
+                        format: float
+                      inclusive:
+                        type: boolean
+                      rate:
+                        type: number
+                        format: float
+                      taxableAmount:
+                        type: number
+                        format: float
+                  totalAmount:
+                    type: number
+                    format: float
+                  totalExcludingTaxAmount:
+                    type: number
+                    format: float
+                  unitAmount:
+                    type: number
+                    format: float
+                  unitExcludingTaxAmount:
+                    type: number
+                    format: float
+              createDate:
+                $ref: '#/components/schemas/dateSchema'
+              currencyCode:
+                type: string
+                description: Currency code
+              discountedAmount:
+                type: number
+                format: float
+                description: Discounted amount
+              discounts:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    coupon:
+                      type: object
+                      properties:
+                        amountOff:
+                          type: number
+                          format: float
+                        currencyCode:
+                          type: string
+                        duration:
+                          type: string
+                        durationInMonths:
+                          type: integer
+                        id:
+                          type: string
+                          format: uuid
+                        percentOff:
+                          type: number
+                          format: float
+                        type:
+                          type: string
+                    promocode:
+                      type: object
+                      properties:
+                        code:
+                          type: string
+                        expiration:
+                          $ref: '#/components/schemas/dateSchema'
+                        id:
+                          type: string
+                          format: uuid
+                        limitByFirstPurchase:
+                          type: boolean
+                    subscriptionId:
+                      type: string
+                      format: uuid
+              id:
+                type: string
+                format: uuid
+              invoiceItemRef:
+                type: string
+                format: uuid
+              invoiceRef:
+                type: string
+                format: uuid
+              locationRef:
+                type: string
+                format: uuid
+              memo:
+                type: string
+              networkRef:
+                type: string
+                format: uuid
+              quantity:
+                type: integer
+              tax:
+                type: object
+                properties:
+                  amount:
+                    type: number
+                    format: float
+                  inclusive:
+                    type: boolean
+                  rate:
+                    type: number
+                    format: float
+                  taxableAmount:
+                    type: number
+                    format: float
+              totalAmount:
+                type: number
+                format: float
+                description: Total amount
+              totalExcludingTaxAmount:
+                type: number
+                format: float
+                description: Total excluding tax amount
+              unitAmount:
+                type: number
+                format: float
+                description: Unit amount
+              unitExcludingTaxAmount:
+                type: number
+                format: float
+                description: Unit excluding tax amount
+              updateDate:
+                $ref: '#/components/schemas/dateSchema'
+        locationRef:
+          type: string
+          format: uuid
+        memo:
+          type: string
+        networkRef:
+          type: string
+          format: uuid
+        number:
+          type: string
+        outOfBandAmount:
+          type: number
+          format: float
+          description: Out of band amount
+        pdfUrl:
+          type: string
+          format: uri
+        postPaymentAmount:
+          type: number
+          format: float
+          description: Post payment amount
+        prePaymentAmount:
+          type: number
+          format: float
+          description: Pre payment amount
+        reason:
+          type: string
+          enum:
+            - duplicate
+            - orderChange
+            - productUnsatisfactory
+            - fraudulent
+            - other
+        refunds:
+          type: array
+          items:
+            type: object
+            properties:
+              amount:
+                type: number
+                format: float
+              currencyCode:
+                type: string
+              id:
+                type: string
+                format: uuid
+              method:
+                type: object
+                properties:
+                  label:
+                    type: string
+                  type:
+                    type: string
+                    enum:
+                      - external
+                      - paymentGateway
+              transactionRef:
+                type: string
+                format: uuid
+        status:
+          type: string
+        subtotalAmount:
+          type: number
+          format: float
+          description: Subtotal amount
+        subtotalAmountExcludingTax:
+          type: number
+          format: float
+          description: Subtotal amount excluding tax
+        taxes:
+          type: array
+          description: Taxes
+          items:
+            type: object
+            properties:
+              amount:
+                type: number
+                format: float
+              inclusive:
+                type: boolean
+              rate:
+                type: number
+                format: float
+              taxableAmount:
+                type: number
+                format: float
+        title:
+          type: string
+        totalAmount:
+          type: number
+          format: float
+          description: Total amount
+        totalExcludingTaxAmount:
+          type: number
+          format: float
+          description: Total excluding tax amount
+        type:
+          type: string
+        updateDate:
+          $ref: '#/components/schemas/dateSchema'
+        voidDate:
+          $ref: '#/components/schemas/dateSchema'
     membership:
       type: object
       properties:
@@ -7938,67 +7938,6 @@ components:
               format: uuid
             title:
               type: string
-    eventTicket:
-      type: object
-      properties:
-        checkInDate:
-          $ref: '#/components/schemas/dateSchema'
-        createDate:
-          $ref: '#/components/schemas/dateSchema'
-        deleteDate:
-          $ref: '#/components/schemas/dateSchema'
-        event:
-          type: object
-          properties:
-            endDate:
-              $ref: '#/components/schemas/dateSchema'
-            id:
-              format: uuid
-              type: string
-            media:
-              type: array
-              items:
-                type: object
-                properties:
-                  key:
-                    type: string
-                  url:
-                    type: string
-            location:
-              type: object
-              properties:
-                id:
-                  format: uuid
-                timezoneId:
-                  type: string
-                title:
-                  type: string
-            startDate:
-              $ref: '#/components/schemas/dateSchema'
-            title:
-              type: string
-            venue:
-              type: string
-            visibilityType:
-              type: string
-        id:
-          format: uuid
-          type: string
-        locationRef:
-          format: uuid
-          type: string
-        membershipRef:
-          format: uuid
-          type: string
-        payment:
-          $ref: '#/components/schemas/payment'
-        role:
-          type: string
-          enum:
-            - attendee
-            - host
-        user:
-          $ref: '#/components/schemas/user'
     event:
       type: object
       properties:
@@ -8079,6 +8018,124 @@ components:
             - admins
             - networkMembers
             - members
+    eventTicket:
+      type: object
+      properties:
+        checkInDate:
+          $ref: '#/components/schemas/dateSchema'
+        createDate:
+          $ref: '#/components/schemas/dateSchema'
+        deleteDate:
+          $ref: '#/components/schemas/dateSchema'
+        event:
+          type: object
+          properties:
+            endDate:
+              $ref: '#/components/schemas/dateSchema'
+            id:
+              format: uuid
+              type: string
+            media:
+              type: array
+              items:
+                type: object
+                properties:
+                  key:
+                    type: string
+                  url:
+                    type: string
+            location:
+              type: object
+              properties:
+                id:
+                  format: uuid
+                timezoneId:
+                  type: string
+                title:
+                  type: string
+            startDate:
+              $ref: '#/components/schemas/dateSchema'
+            title:
+              type: string
+            venue:
+              type: string
+            visibilityType:
+              type: string
+        id:
+          format: uuid
+          type: string
+        locationRef:
+          format: uuid
+          type: string
+        membershipRef:
+          format: uuid
+          type: string
+        payment:
+          $ref: '#/components/schemas/payment'
+        role:
+          type: string
+          enum:
+            - attendee
+            - host
+        user:
+          $ref: '#/components/schemas/user'
+    post:
+      type: object
+      properties:
+        comments:
+          type: integer
+        createDate:
+          $ref: '#/components/schemas/dateSchema'
+        id:
+          format: uuid
+          type: string
+        liked:
+          type: boolean
+        likes:
+          type: integer
+        locale:
+          type: string
+        locationRef:
+          format: uuid
+          type: string
+        media:
+          type: array
+          items:
+            type: object
+            properties:
+              height:
+                type: integer
+              id:
+                format: uuid
+                type: string
+              key:
+                type: string
+              mime:
+                type: string
+              url:
+                format: uri
+                type: string
+              width:
+                type: integer
+        membership:
+          type: object
+          properties:
+            id:
+              format: uuid
+              type: string
+            user:
+              $ref: '#/components/schemas/user'
+        membershipRef:
+          format: uuid
+          type: string
+        og:
+          type: object
+        pinned:
+          type: boolean
+        text:
+          type: string
+        user:
+          $ref: '#/components/schemas/user'
     postComment:
       type: object
       properties:
@@ -8190,63 +8247,6 @@ components:
           type: string
           format: uuid
           description: The ID of the post
-    post:
-      type: object
-      properties:
-        comments:
-          type: integer
-        createDate:
-          $ref: '#/components/schemas/dateSchema'
-        id:
-          format: uuid
-          type: string
-        liked:
-          type: boolean
-        likes:
-          type: integer
-        locale:
-          type: string
-        locationRef:
-          format: uuid
-          type: string
-        media:
-          type: array
-          items:
-            type: object
-            properties:
-              height:
-                type: integer
-              id:
-                format: uuid
-                type: string
-              key:
-                type: string
-              mime:
-                type: string
-              url:
-                format: uri
-                type: string
-              width:
-                type: integer
-        membership:
-          type: object
-          properties:
-            id:
-              format: uuid
-              type: string
-            user:
-              $ref: '#/components/schemas/user'
-        membershipRef:
-          format: uuid
-          type: string
-        og:
-          type: object
-        pinned:
-          type: boolean
-        text:
-          type: string
-        user:
-          $ref: '#/components/schemas/user'
     floor:
       type: object
       properties:
@@ -8445,48 +8445,6 @@ components:
           $ref: '#/components/schemas/dateSchema'
         user:
           $ref: '#/components/schemas/user'
-    booking:
-      type: object
-      properties:
-        attendees:
-          type: array
-          items:
-            type: object
-            properties:
-              membershipRef:
-                type: string
-                format: uuid
-              user:
-                $ref: '#/components/schemas/user'
-        createDate:
-          $ref: '#/components/schemas/dateSchema'
-        deleteDate:
-          $ref: '#/components/schemas/dateSchema'
-        endDate:
-          $ref: '#/components/schemas/dateSchema'
-        id:
-          format: uuid
-          type: string
-        memo:
-          type: string
-        membershipRefOwner:
-          format: uuid
-          type: string
-        payment:
-          $ref: '#/components/schemas/payment'
-        resourceRef:
-          format: uuid
-          type: string
-        seats:
-          type: integer
-        startDate:
-          $ref: '#/components/schemas/dateSchema'
-        title:
-          type: string
-        updateDate:
-          $ref: '#/components/schemas/dateSchema'
-        userOwner:
-          $ref: '#/components/schemas/user'
     resource:
       type: object
       properties:
@@ -8608,6 +8566,48 @@ components:
           type: string
         visibilityType:
           type: string
+    booking:
+      type: object
+      properties:
+        attendees:
+          type: array
+          items:
+            type: object
+            properties:
+              membershipRef:
+                type: string
+                format: uuid
+              user:
+                $ref: '#/components/schemas/user'
+        createDate:
+          $ref: '#/components/schemas/dateSchema'
+        deleteDate:
+          $ref: '#/components/schemas/dateSchema'
+        endDate:
+          $ref: '#/components/schemas/dateSchema'
+        id:
+          format: uuid
+          type: string
+        memo:
+          type: string
+        membershipRefOwner:
+          format: uuid
+          type: string
+        payment:
+          $ref: '#/components/schemas/payment'
+        resourceRef:
+          format: uuid
+          type: string
+        seats:
+          type: integer
+        startDate:
+          $ref: '#/components/schemas/dateSchema'
+        title:
+          type: string
+        updateDate:
+          $ref: '#/components/schemas/dateSchema'
+        userOwner:
+          $ref: '#/components/schemas/user'
     shopCategory:
       type: object
       properties:
@@ -8624,71 +8624,6 @@ components:
           format: uuid
         title:
           type: string
-    order:
-      type: object
-      properties:
-        comment:
-          type: string
-        createDate:
-          type: string
-          format: date-time
-        deleteDate:
-          type: string
-          format: date-time
-        id:
-          type: string
-          format: uuid
-        locationRef:
-          type: string
-          format: uuid
-        membershipRef:
-          type: string
-          format: uuid
-        number:
-          type: number
-        option:
-          type: object
-          properties:
-            id:
-              type: string
-              format: uuid
-            title:
-              type: string
-        payment:
-          $ref: '#/components/schemas/payment'
-        product:
-          type: object
-          properties:
-            createDate:
-              type: string
-              format: date-time
-            description:
-              type: string
-            id:
-              type: string
-              format: uuid
-            media:
-              type: array
-              items:
-                type: object
-                properties:
-                  key:
-                    type: string
-                  url:
-                    type: string
-            title:
-              type: string
-        quantity:
-          type: number
-        status:
-          type: string
-          enum:
-            - new
-            - inProgress
-            - completed
-            - canceled
-        user:
-          $ref: '#/components/schemas/user'
     product:
       type: object
       properties:
@@ -8789,6 +8724,71 @@ components:
           $ref: '#/components/schemas/dateSchema'
         visibility:
           type: string
+    order:
+      type: object
+      properties:
+        comment:
+          type: string
+        createDate:
+          type: string
+          format: date-time
+        deleteDate:
+          type: string
+          format: date-time
+        id:
+          type: string
+          format: uuid
+        locationRef:
+          type: string
+          format: uuid
+        membershipRef:
+          type: string
+          format: uuid
+        number:
+          type: number
+        option:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            title:
+              type: string
+        payment:
+          $ref: '#/components/schemas/payment'
+        product:
+          type: object
+          properties:
+            createDate:
+              type: string
+              format: date-time
+            description:
+              type: string
+            id:
+              type: string
+              format: uuid
+            media:
+              type: array
+              items:
+                type: object
+                properties:
+                  key:
+                    type: string
+                  url:
+                    type: string
+            title:
+              type: string
+        quantity:
+          type: number
+        status:
+          type: string
+          enum:
+            - new
+            - inProgress
+            - completed
+            - canceled
+        user:
+          $ref: '#/components/schemas/user'
     subscription:
       type: object
       properties:
@@ -9773,24 +9773,6 @@ components:
             surname:
               type: string
   requestBodies:
-    applyBenefit:
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              application:
-                type: object
-                properties:
-                  benefitId:
-                    type: string
-                    format: uuid
-                  comment:
-                    type: string
-                    description: The comment of the application
-                required:
-                  - benefitId
     createBenefitCategory:
       required: true
       content:
@@ -9956,6 +9938,24 @@ components:
                       - networkMembers
             required:
               - benefit
+    applyBenefit:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              application:
+                type: object
+                properties:
+                  benefitId:
+                    type: string
+                    format: uuid
+                  comment:
+                    type: string
+                    description: The comment of the application
+                required:
+                  - benefitId
     createInvoice:
       required: true
       content:
@@ -10484,38 +10484,6 @@ components:
                   - title
             required:
               - event
-    createFeedPostComment:
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              comment:
-                type: object
-                properties:
-                  parentCommentRef:
-                    type: string
-                    format: uuid
-                    description: The ID of the parent comment. If the comment is a reply, this will be the ID of the parent comment. If the comment is a top-level comment, this property won't be present.
-                  postRef:
-                    type: string
-                    format: uuid
-                    description: The ID of the post
-                  text:
-                    type: string
-                    description: The text of the comment
-                  type:
-                    type: string
-                    enum:
-                      - comment
-                    description: The type of the comment
-                required:
-                  - text
-                  - type
-                  - postRef
-            required:
-              - comment
     createFeedPost:
       required: true
       content:
@@ -10558,6 +10526,38 @@ components:
                           format: uuid
                   text:
                     type: string
+    createFeedPostComment:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              comment:
+                type: object
+                properties:
+                  parentCommentRef:
+                    type: string
+                    format: uuid
+                    description: The ID of the parent comment. If the comment is a reply, this will be the ID of the parent comment. If the comment is a top-level comment, this property won't be present.
+                  postRef:
+                    type: string
+                    format: uuid
+                    description: The ID of the post
+                  text:
+                    type: string
+                    description: The text of the comment
+                  type:
+                    type: string
+                    enum:
+                      - comment
+                    description: The type of the comment
+                required:
+                  - text
+                  - type
+                  - postRef
+            required:
+              - comment
     createGuide:
       required: true
       content:
@@ -10783,6 +10783,18 @@ components:
                           - request
                   title:
                     type: string
+    patchResource:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              resource:
+                type: object
+                properties:
+                  title:
+                    type: string
     createBooking:
       required: true
       content:
@@ -10815,18 +10827,6 @@ components:
                   - resourceRef
             required:
               - booking
-    patchResource:
-      required: true
-      content:
-        application/json:
-          schema:
-            type: object
-            properties:
-              resource:
-                type: object
-                properties:
-                  title:
-                    type: string
     createShopCategory:
       required: true
       content:
