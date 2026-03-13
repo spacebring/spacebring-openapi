@@ -3987,6 +3987,66 @@
         }
       }
     },
+    "/contracts/v1/{id}/terminate": {
+      "patch": {
+        "tags": [
+          "Contracts"
+        ],
+        "summary": "Terminate a contract",
+        "description": "Terminate a contract. <h3>OAuth</h3>Required scopes: <code>community</code>",
+        "operationId": "terminateContract",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          },
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true,
+            "description": "The id of the contract."
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/terminateContract"
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "community"
+            ]
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/events/v1": {
       "post": {
         "tags": [
@@ -16049,6 +16109,32 @@
               },
               "required": [
                 "signatureMethod"
+              ]
+            }
+          }
+        }
+      },
+      "terminateContract": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "reason": {
+                  "type": "string",
+                  "enum": [
+                    "forceMajeure",
+                    "mutualAgreement",
+                    "other",
+                    "policyViolation",
+                    "productUnsatisfactory"
+                  ],
+                  "description": "The reason for terminating the contract."
+                }
+              },
+              "required": [
+                "reason"
               ]
             }
           }
