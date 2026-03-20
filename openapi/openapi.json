@@ -4047,6 +4047,728 @@
         }
       }
     },
+    "/discounts/coupons/v1": {
+      "get": {
+        "tags": [
+          "Discounts"
+        ],
+        "summary": "Retrieve coupons",
+        "description": "Retrieve all coupons in the location. <h3>OAuth</h3>Required scopes: <code>invoices.readonly</code> or <code>invoices</code>",
+        "operationId": "getCoupons",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "locationRef",
+            "description": "The id of the location",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "type",
+            "description": "Comma-separated list of coupon types to filter by",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "creditPackages",
+                "desks",
+                "equipment",
+                "events",
+                "products",
+                "rooms",
+                "subscriptionItems"
+              ]
+            },
+            "required": false
+          },
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "invoices.readonly",
+              "invoices"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "coupons": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/coupon"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Discounts"
+        ],
+        "summary": "Create a coupon",
+        "description": "Create a coupon. <h3>OAuth</h3>Required scopes: <code>invoices</code>",
+        "operationId": "createCoupon",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/createCoupon"
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "invoices"
+            ]
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "coupon": {
+                      "$ref": "#/components/schemas/coupon"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/discounts/coupons/v1/{id}": {
+      "get": {
+        "tags": [
+          "Discounts"
+        ],
+        "summary": "Get a coupon",
+        "description": "Get a coupon. <h3>OAuth</h3>Required scopes: <code>invoices.readonly</code> or <code>invoices</code>",
+        "operationId": "getCoupon",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "The id of the coupon",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "invoices.readonly",
+              "invoices"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "coupon": {
+                      "$ref": "#/components/schemas/coupon"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Discounts"
+        ],
+        "summary": "Update a coupon",
+        "description": "Update a coupon. <h3>OAuth</h3>Required scopes: <code>invoices</code>",
+        "operationId": "updateCoupon",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "The id of the coupon",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/updateCoupon"
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "invoices"
+            ]
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Discounts"
+        ],
+        "summary": "Delete a coupon",
+        "description": "Delete a coupon. <h3>OAuth</h3>Required scopes: <code>invoices</code>",
+        "operationId": "deleteCoupon",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "The id of the coupon",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "invoices"
+            ]
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/discounts/promocodes/v1": {
+      "get": {
+        "tags": [
+          "Discounts"
+        ],
+        "summary": "Retrieve promocodes",
+        "description": "Retrieve all promocodes. <h3>OAuth</h3>Required scopes: <code>invoices.readonly</code> or <code>invoices</code>",
+        "operationId": "getPromocodes",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "locationRef",
+            "description": "The id of the location. At least one of locationRef or couponRef is required",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "couponRef",
+            "description": "The id of the coupon. At least one of locationRef or couponRef is required",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false
+          },
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "invoices.readonly",
+              "invoices"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "promocodes": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/promocode"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Discounts"
+        ],
+        "summary": "Create a promocode",
+        "description": "Create a promocode. <h3>OAuth</h3>Required scopes: <code>invoices</code>",
+        "operationId": "createPromocode",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/createPromocode"
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "invoices"
+            ]
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "promocode": {
+                      "$ref": "#/components/schemas/promocode"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/discounts/promocodes/v1/{id}": {
+      "get": {
+        "tags": [
+          "Discounts"
+        ],
+        "summary": "Get a promocode",
+        "description": "Get a promocode. <h3>OAuth</h3>Required scopes: <code>invoices.readonly</code> or <code>invoices</code>",
+        "operationId": "getPromocode",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "The id of the promocode",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "invoices.readonly",
+              "invoices"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "promocode": {
+                      "$ref": "#/components/schemas/promocode"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/discounts/promocodes/v1/{id}/archive": {
+      "put": {
+        "tags": [
+          "Discounts"
+        ],
+        "summary": "Archive a promocode",
+        "description": "Archive a promocode. <h3>OAuth</h3>Required scopes: <code>invoices</code>",
+        "operationId": "archivePromocode",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "The id of the promocode",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": true
+          },
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "invoices"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "promocode": {
+                      "$ref": "#/components/schemas/promocode"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/discounts/redemptions/v1": {
+      "get": {
+        "tags": [
+          "Discounts"
+        ],
+        "summary": "Retrieve redemptions",
+        "description": "Retrieve all discount redemptions. Either couponRef or promocodeRef is required. <h3>OAuth</h3>Required scopes: <code>invoices.readonly</code> or <code>invoices</code>",
+        "operationId": "getDiscountRedemptions",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "couponRef",
+            "description": "The id of the coupon. Either couponRef or promocodeRef is required",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "promocodeRef",
+            "description": "The id of the promocode. Either couponRef or promocodeRef is required",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 25
+            },
+            "description": "The number of items to return"
+          },
+          {
+            "in": "query",
+            "name": "nextPageToken",
+            "schema": {
+              "type": "string"
+            },
+            "description": "nextPageToken retrieved from a previous request"
+          },
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "invoices.readonly",
+              "invoices"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "redemptions": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/discountRedemption"
+                      }
+                    },
+                    "searchQueryNext": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/events/v1": {
       "post": {
         "tags": [
@@ -12537,6 +13259,391 @@
           }
         }
       },
+      "coupon": {
+        "type": "object",
+        "properties": {
+          "amountOff": {
+            "type": "number",
+            "nullable": true
+          },
+          "archiveDate": {
+            "$ref": "#/components/schemas/dateSchema"
+          },
+          "createDate": {
+            "$ref": "#/components/schemas/dateSchema"
+          },
+          "currencyCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "deleteDate": {
+            "$ref": "#/components/schemas/dateSchema"
+          },
+          "duration": {
+            "type": "string",
+            "enum": [
+              "forever",
+              "once",
+              "repeating"
+            ],
+            "nullable": true
+          },
+          "durationInMonths": {
+            "type": "integer",
+            "nullable": true
+          },
+          "enabledForCredits": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "limitedItems": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean"
+              },
+              "values": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "title": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "limitedRedemption": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean"
+              },
+              "usage": {
+                "type": "integer"
+              },
+              "value": {
+                "type": "integer"
+              }
+            }
+          },
+          "locationRef": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "networkRef": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "percentOff": {
+            "type": "number",
+            "nullable": true
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "creditPackages",
+              "desks",
+              "equipment",
+              "events",
+              "products",
+              "rooms",
+              "subscriptionItems"
+            ]
+          }
+        }
+      },
+      "promocode": {
+        "type": "object",
+        "properties": {
+          "archiveDate": {
+            "$ref": "#/components/schemas/dateSchema"
+          },
+          "code": {
+            "type": "string"
+          },
+          "couponRef": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "createDate": {
+            "$ref": "#/components/schemas/dateSchema"
+          },
+          "expiration": {
+            "type": "object",
+            "properties": {
+              "date": {
+                "$ref": "#/components/schemas/dateSchema"
+              },
+              "enabled": {
+                "type": "boolean"
+              }
+            }
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "limitByFirstPurchase": {
+            "type": "boolean"
+          },
+          "limitedRedemption": {
+            "type": "object",
+            "properties": {
+              "enabled": {
+                "type": "boolean"
+              },
+              "usage": {
+                "type": "integer"
+              },
+              "value": {
+                "type": "integer"
+              }
+            }
+          },
+          "locationRef": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "networkRef": {
+            "type": "string",
+            "format": "uuid"
+          }
+        }
+      },
+      "discountRedemption": {
+        "type": "object",
+        "properties": {
+          "coupon": {
+            "type": "object",
+            "properties": {
+              "amountOff": {
+                "type": "number",
+                "nullable": true
+              },
+              "currencyCode": {
+                "type": "string",
+                "nullable": true
+              },
+              "enabledForCredits": {
+                "type": "boolean",
+                "nullable": true
+              },
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "limitedItems": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "values": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "format": "uuid"
+                        },
+                        "title": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "limitedRedemption": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "usage": {
+                    "type": "integer"
+                  },
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              },
+              "percentOff": {
+                "type": "number",
+                "nullable": true
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "creditPackages",
+                  "desks",
+                  "equipment",
+                  "events",
+                  "products",
+                  "rooms",
+                  "subscriptionItems"
+                ]
+              }
+            }
+          },
+          "createDate": {
+            "$ref": "#/components/schemas/dateSchema"
+          },
+          "customer": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string",
+                "nullable": true
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "person",
+                  "company"
+                ]
+              },
+              "user": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "photoUrl": {
+                    "type": "string",
+                    "nullable": true
+                  },
+                  "surname": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "locationRef": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "networkRef": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "product": {
+            "type": "object",
+            "properties": {
+              "bookingRef": {
+                "type": "string",
+                "format": "uuid",
+                "nullable": true
+              },
+              "creditPackageRef": {
+                "type": "string",
+                "format": "uuid",
+                "nullable": true
+              },
+              "eventTicketRef": {
+                "type": "string",
+                "format": "uuid",
+                "nullable": true
+              },
+              "optionRef": {
+                "type": "string",
+                "format": "uuid",
+                "nullable": true
+              },
+              "orderRef": {
+                "type": "string",
+                "format": "uuid",
+                "nullable": true
+              },
+              "subscriptionItemRef": {
+                "type": "string",
+                "format": "uuid",
+                "nullable": true
+              },
+              "title": {
+                "type": "string",
+                "nullable": true
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "booking",
+                  "creditPackage",
+                  "eventTicket",
+                  "order",
+                  "subscriptionItem"
+                ],
+                "nullable": true
+              }
+            }
+          },
+          "promocode": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "expiration": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "$ref": "#/components/schemas/dateSchema"
+                  },
+                  "enabled": {
+                    "type": "boolean"
+                  }
+                }
+              },
+              "id": {
+                "type": "string",
+                "format": "uuid"
+              },
+              "limitByFirstPurchase": {
+                "type": "boolean"
+              },
+              "limitedRedemption": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "usage": {
+                    "type": "integer"
+                  },
+                  "value": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          },
+          "promocodeRef": {
+            "type": "string",
+            "format": "uuid",
+            "nullable": true
+          }
+        }
+      },
       "event": {
         "type": "object",
         "properties": {
@@ -16135,6 +17242,231 @@
               },
               "required": [
                 "reason"
+              ]
+            }
+          }
+        }
+      },
+      "createCoupon": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "coupon": {
+                  "type": "object",
+                  "properties": {
+                    "amountOff": {
+                      "type": "number",
+                      "minimum": 0,
+                      "exclusiveMinimum": true,
+                      "description": "Fixed discount amount. Either amountOff or percentOff is required, but not both"
+                    },
+                    "duration": {
+                      "type": "string",
+                      "enum": [
+                        "forever",
+                        "once",
+                        "repeating"
+                      ],
+                      "description": "Required when type is subscriptionItems"
+                    },
+                    "durationInMonths": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "description": "Required when duration is repeating"
+                    },
+                    "enabledForCredits": {
+                      "type": "boolean",
+                      "description": "Required when percentOff is provided"
+                    },
+                    "limitedItems": {
+                      "type": "object",
+                      "properties": {
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "values": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "enabled",
+                        "values"
+                      ]
+                    },
+                    "limitedRedemption": {
+                      "type": "object",
+                      "properties": {
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "value": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "enabled",
+                        "value"
+                      ]
+                    },
+                    "locationRef": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "percentOff": {
+                      "type": "number",
+                      "minimum": 0,
+                      "exclusiveMinimum": true,
+                      "maximum": 100,
+                      "description": "Percentage discount. Either amountOff or percentOff is required, but not both"
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "creditPackages",
+                        "desks",
+                        "equipment",
+                        "events",
+                        "products",
+                        "rooms",
+                        "subscriptionItems"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "limitedItems",
+                    "limitedRedemption",
+                    "locationRef",
+                    "type"
+                  ]
+                }
+              },
+              "required": [
+                "coupon"
+              ]
+            }
+          }
+        }
+      },
+      "updateCoupon": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "coupon": {
+                  "type": "object",
+                  "properties": {
+                    "limitedItems": {
+                      "type": "object",
+                      "properties": {
+                        "values": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              }
+                            }
+                          }
+                        }
+                      },
+                      "required": [
+                        "values"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "limitedItems"
+                  ]
+                }
+              },
+              "required": [
+                "coupon"
+              ]
+            }
+          }
+        }
+      },
+      "createPromocode": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "promocode": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "couponRef": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "expiration": {
+                      "type": "object",
+                      "properties": {
+                        "date": {
+                          "type": "string",
+                          "format": "date-time",
+                          "description": "Required when expiration is enabled"
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "enabled"
+                      ]
+                    },
+                    "limitByFirstPurchase": {
+                      "type": "boolean"
+                    },
+                    "limitedRedemption": {
+                      "type": "object",
+                      "properties": {
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "value": {
+                          "type": "integer",
+                          "description": "Must be positive when enabled is true. Must not exceed the coupon's limited redemption value"
+                        }
+                      },
+                      "required": [
+                        "enabled",
+                        "value"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "code",
+                    "couponRef",
+                    "expiration",
+                    "limitByFirstPurchase",
+                    "limitedRedemption"
+                  ]
+                }
+              },
+              "required": [
+                "promocode"
               ]
             }
           }
