@@ -2976,6 +2976,8 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/discountRedemption'
+                  nextPageToken:
+                    type: string
                   searchQueryNext:
                     type: string
         '400':

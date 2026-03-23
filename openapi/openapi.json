@@ -4748,6 +4748,9 @@
                         "$ref": "#/components/schemas/discountRedemption"
                       }
                     },
+                    "nextPageToken": {
+                      "type": "string"
+                    },
                     "searchQueryNext": {
                       "type": "string"
                     }
