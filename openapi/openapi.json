@@ -15560,6 +15560,9 @@
           "createDate": {
             "$ref": "#/components/schemas/dateSchema"
           },
+          "description": {
+            "type": "string"
+          },
           "id": {
             "type": "string",
             "format": "uuid"
