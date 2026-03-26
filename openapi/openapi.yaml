@@ -10006,6 +10006,7 @@ components:
           $ref: '#/components/schemas/dateSchema'
         description:
           type: string
+          description: The memo of the transaction.
         id:
           type: string
           format: uuid
@@ -10115,6 +10116,7 @@ components:
           $ref: '#/components/schemas/dateSchema'
         description:
           type: string
+          description: The memo of the transaction.
         id:
           type: string
           format: uuid

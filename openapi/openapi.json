@@ -15561,7 +15561,8 @@
             "$ref": "#/components/schemas/dateSchema"
           },
           "description": {
-            "type": "string"
+            "type": "string",
+            "description": "The memo of the transaction."
           },
           "id": {
             "type": "string",
@@ -15716,7 +15717,8 @@
             "$ref": "#/components/schemas/dateSchema"
           },
           "description": {
-            "type": "string"
+            "type": "string",
+            "description": "The memo of the transaction."
           },
           "id": {
             "type": "string",
