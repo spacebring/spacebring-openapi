@@ -7221,6 +7221,86 @@
             }
           }
         }
+      },
+      "post": {
+        "tags": [
+          "Resources"
+        ],
+        "summary": "Create a resource",
+        "description": "Create a new resource in a location. The request body must match the schema exactly—unknown properties are rejected. <h3>OAuth</h3>Required scopes: <code>resources</code>",
+        "operationId": "createResource",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "spacebring-network-id",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "required": false,
+            "description": "The id of the network. Required when using bearer token authentication"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/createResource"
+        },
+        "security": [
+          {
+            "BasicAuth": []
+          },
+          {
+            "OAuth2": [
+              "resources"
+            ]
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "resource": {
+                      "$ref": "#/components/schemas/resource"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/responseError"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/resources/v1/{id}": {
@@ -14377,6 +14457,7 @@
       },
       "resource": {
         "type": "object",
+        "description": "Resource representation. Public create uses the same field set with required top-level fields\ndocumented on the create request body; omit read-only fields (`createDate`, `imageUrl`, `locale`, `networkRef`) on create.\n",
         "properties": {
           "autoRelease": {
             "type": "object",
@@ -14385,15 +14466,33 @@
                 "type": "boolean"
               },
               "interval": {
-                "type": "string"
+                "type": "string",
+                "enum": [
+                  "fiveMinutes",
+                  "tenMinutes",
+                  "fifteenMinutes"
+                ]
               }
             }
           },
-          "bookingPermission": {
+          "avigilonAltaGroupRef": {
             "type": "string"
+          },
+          "bookingPermission": {
+            "type": "string",
+            "enum": [
+              "admins",
+              "exclusiveMembers",
+              "members",
+              "networkMembers",
+              "public"
+            ]
           },
           "bookingStepMinutes": {
             "type": "integer"
+          },
+          "brivoGroupRef": {
+            "type": "string"
           },
           "capacity": {
             "type": "integer"
@@ -14402,18 +14501,53 @@
             "type": "object",
             "properties": {
               "interval": {
+                "type": "string",
+                "enum": [
+                  "zeroMinutes",
+                  "fiveMinutes",
+                  "tenMinutes",
+                  "fifteenMinutes"
+                ]
+              }
+            }
+          },
+          "confirmationEmail": {
+            "type": "object",
+            "properties": {
+              "bookingCreatedByAdmin": {
+                "type": "boolean"
+              },
+              "bookingCreatedByMember": {
+                "type": "boolean"
+              },
+              "bookingCreatedByNetworkMember": {
+                "type": "boolean"
+              },
+              "bookingCreatedByPublic": {
+                "type": "boolean"
+              },
+              "template": {
                 "type": "string"
               }
             }
           },
           "createDate": {
-            "$ref": "#/components/schemas/dateSchema"
+            "readOnly": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/dateSchema"
+              }
+            ]
           },
           "credits": {
             "type": "object",
             "properties": {
               "enabled": {
                 "type": "boolean"
+              },
+              "price": {
+                "type": "number",
+                "description": "Optional display price; tier data is authoritative."
               },
               "tiers": {
                 "type": "array",
@@ -14424,7 +14558,7 @@
                       "type": "number"
                     },
                     "from": {
-                      "type": "integer"
+                      "type": "number"
                     },
                     "unitAmount": {
                       "type": "number"
@@ -14443,25 +14577,96 @@
           "description": {
             "type": "string"
           },
+          "dynamicPricing": {
+            "type": "object",
+            "properties": {
+              "deltaAbove": {
+                "type": "number"
+              },
+              "deltaBelow": {
+                "type": "number"
+              },
+              "enabled": {
+                "type": "boolean"
+              }
+            }
+          },
+          "duration": {
+            "type": "object",
+            "description": "Booking duration bounds and public-facing limits.",
+            "properties": {
+              "max": {
+                "type": "number"
+              },
+              "min": {
+                "type": "number"
+              },
+              "public": {
+                "type": "object",
+                "properties": {
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          },
+          "googleCalendar": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "twoWaySyncEnabled": {
+                "type": "boolean"
+              }
+            }
+          },
           "id": {
+            "type": "string",
             "format": "uuid",
-            "type": "string"
+            "description": "Resource id. Optional client-provided id may be sent on public create; server behavior may ignore it."
+          },
+          "image": {
+            "type": "object",
+            "description": "Image upload descriptor for creates. Responses use `imageUrl`.",
+            "properties": {
+              "key": {
+                "type": "string"
+              }
+            }
           },
           "imageUrl": {
+            "readOnly": true,
             "type": "string"
           },
+          "kisiGroupRef": {
+            "type": "number"
+          },
           "locale": {
+            "readOnly": true,
             "type": "string"
           },
           "locationRef": {
             "format": "uuid",
-            "type": "string"
+            "type": "string",
+            "description": "Location (organization) id. On public create use `locationRef`, not `organizationRef`."
           },
           "money": {
             "type": "object",
             "properties": {
               "enabled": {
                 "type": "boolean"
+              },
+              "price": {
+                "type": "number",
+                "description": "Optional display price; tier data is authoritative."
               },
               "tiers": {
                 "type": "array",
@@ -14472,7 +14677,7 @@
                       "type": "number"
                     },
                     "from": {
-                      "type": "integer"
+                      "type": "number"
                     },
                     "unitAmount": {
                       "type": "number"
@@ -14486,8 +14691,14 @@
             }
           },
           "networkRef": {
+            "readOnly": true,
             "format": "uuid",
             "type": "string"
+          },
+          "parentRef": {
+            "type": "string",
+            "format": "uuid",
+            "description": "Parent room id when creating a child resource."
           },
           "plans": {
             "type": "object",
@@ -14499,6 +14710,7 @@
                 "type": "array",
                 "items": {
                   "type": "object",
+                  "description": "Create payloads use flat tier fields; responses may nest details under `plan`.",
                   "properties": {
                     "entire": {
                       "type": "boolean"
@@ -14537,23 +14749,255 @@
                           "type": "string"
                         }
                       }
+                    },
+                    "commitmentCycles": {
+                      "type": "number"
+                    },
+                    "credits": {
+                      "type": "number"
+                    },
+                    "dayPasses": {
+                      "type": "number"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "discounts": {
+                      "type": "object",
+                      "properties": {
+                        "creditPackages": {
+                          "type": "number"
+                        },
+                        "desks": {
+                          "type": "number"
+                        },
+                        "equipment": {
+                          "type": "number"
+                        },
+                        "events": {
+                          "type": "number"
+                        },
+                        "rooms": {
+                          "type": "number"
+                        },
+                        "shop": {
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "ezeepBlueGroupRef": {
+                      "type": "string"
+                    },
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "period": {
+                      "type": "string"
+                    },
+                    "price": {
+                      "type": "number"
+                    },
+                    "selfSignupType": {
+                      "type": "string"
+                    },
+                    "setupFee": {
+                      "type": "number"
+                    },
+                    "title": {
+                      "type": "string"
                     }
                   }
                 }
               }
             }
           },
+          "preparationMinutes": {
+            "type": "string",
+            "enum": [
+              "zeroMinutes",
+              "fiveMinutes",
+              "tenMinutes",
+              "fifteenMinutes",
+              "thirtyMinutes",
+              "sixtyMinutes"
+            ]
+          },
           "refundThreshold": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "noRefund",
+              "zeroMinutes",
+              "fifteenMinutes",
+              "thirtyMinutes",
+              "oneHour",
+              "twoHours",
+              "fourHours",
+              "sixHours",
+              "twelveHours",
+              "oneDay",
+              "twoDays",
+              "oneWeek",
+              "twoWeeks",
+              "fourWeeks"
+            ]
+          },
+          "saltoksAccessGroupRef": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "schedule": {
+            "type": "object",
+            "description": "Default and public availability windows.",
+            "properties": {
+              "default": {
+                "type": "object",
+                "properties": {
+                  "closedDays": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "days": {
+                          "type": "object",
+                          "properties": {
+                            "friday": {
+                              "type": "boolean"
+                            },
+                            "monday": {
+                              "type": "boolean"
+                            },
+                            "saturday": {
+                              "type": "boolean"
+                            },
+                            "sunday": {
+                              "type": "boolean"
+                            },
+                            "thursday": {
+                              "type": "boolean"
+                            },
+                            "tuesday": {
+                              "type": "boolean"
+                            },
+                            "wednesday": {
+                              "type": "boolean"
+                            }
+                          }
+                        },
+                        "hours": {
+                          "type": "object",
+                          "properties": {
+                            "from": {
+                              "type": "string"
+                            },
+                            "to": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "enabled": {
+                "type": "boolean"
+              },
+              "public": {
+                "type": "object",
+                "properties": {
+                  "closedDays": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "enabled": {
+                    "type": "boolean"
+                  },
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "days": {
+                          "type": "object",
+                          "properties": {
+                            "friday": {
+                              "type": "boolean"
+                            },
+                            "monday": {
+                              "type": "boolean"
+                            },
+                            "saturday": {
+                              "type": "boolean"
+                            },
+                            "sunday": {
+                              "type": "boolean"
+                            },
+                            "thursday": {
+                              "type": "boolean"
+                            },
+                            "tuesday": {
+                              "type": "boolean"
+                            },
+                            "wednesday": {
+                              "type": "boolean"
+                            }
+                          }
+                        },
+                        "hours": {
+                          "type": "object",
+                          "properties": {
+                            "from": {
+                              "type": "string"
+                            },
+                            "to": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "tapkeyGroupRef": {
+            "type": "string",
+            "format": "uuid"
           },
           "title": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1
           },
           "type": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "dedicatedDesk",
+              "equipment",
+              "hotDesk",
+              "office",
+              "parkingLot",
+              "room"
+            ]
           },
-          "visibilityType": {
-            "type": "string"
+          "visibility": {
+            "type": "string",
+            "enum": [
+              "admins",
+              "exclusiveMembers",
+              "members",
+              "networkMembers",
+              "public"
+            ]
           }
         }
       },
@@ -18045,6 +18489,536 @@
                   }
                 }
               }
+            }
+          }
+        }
+      },
+      "createResource": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "resource": {
+                  "type": "object",
+                  "properties": {
+                    "autoRelease": {
+                      "type": "object",
+                      "properties": {
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "interval": {
+                          "type": "string",
+                          "enum": [
+                            "fiveMinutes",
+                            "tenMinutes",
+                            "fifteenMinutes"
+                          ]
+                        }
+                      }
+                    },
+                    "avigilonAltaGroupRef": {
+                      "type": "string"
+                    },
+                    "bookingPermission": {
+                      "type": "string",
+                      "enum": [
+                        "admins",
+                        "exclusiveMembers",
+                        "members",
+                        "networkMembers",
+                        "public"
+                      ]
+                    },
+                    "bookingStepMinutes": {
+                      "type": "integer"
+                    },
+                    "brivoGroupRef": {
+                      "type": "string"
+                    },
+                    "capacity": {
+                      "type": "integer"
+                    },
+                    "checkIn": {
+                      "type": "object",
+                      "properties": {
+                        "interval": {
+                          "type": "string",
+                          "enum": [
+                            "zeroMinutes",
+                            "fiveMinutes",
+                            "tenMinutes",
+                            "fifteenMinutes"
+                          ]
+                        }
+                      }
+                    },
+                    "confirmationEmail": {
+                      "type": "object",
+                      "properties": {
+                        "bookingCreatedByAdmin": {
+                          "type": "boolean"
+                        },
+                        "bookingCreatedByMember": {
+                          "type": "boolean"
+                        },
+                        "bookingCreatedByNetworkMember": {
+                          "type": "boolean"
+                        },
+                        "bookingCreatedByPublic": {
+                          "type": "boolean"
+                        },
+                        "template": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "credits": {
+                      "type": "object",
+                      "properties": {
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "price": {
+                          "type": "number",
+                          "description": "Optional display price; tier data is authoritative."
+                        },
+                        "tiers": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "flatAmount": {
+                                "type": "number"
+                              },
+                              "from": {
+                                "type": "number"
+                              },
+                              "unitAmount": {
+                                "type": "number"
+                              },
+                              "upTo": {
+                                "type": "integer"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "dayPassesEnabled": {
+                      "type": "boolean"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "dynamicPricing": {
+                      "type": "object",
+                      "properties": {
+                        "deltaAbove": {
+                          "type": "number"
+                        },
+                        "deltaBelow": {
+                          "type": "number"
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        }
+                      }
+                    },
+                    "duration": {
+                      "type": "object",
+                      "description": "Booking duration bounds and public-facing limits.",
+                      "properties": {
+                        "max": {
+                          "type": "number"
+                        },
+                        "min": {
+                          "type": "number"
+                        },
+                        "public": {
+                          "type": "object",
+                          "properties": {
+                            "enabled": {
+                              "type": "boolean"
+                            },
+                            "max": {
+                              "type": "number"
+                            },
+                            "min": {
+                              "type": "number"
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "googleCalendar": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "twoWaySyncEnabled": {
+                          "type": "boolean"
+                        }
+                      }
+                    },
+                    "kisiGroupRef": {
+                      "type": "number"
+                    },
+                    "locationRef": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "Location id."
+                    },
+                    "money": {
+                      "type": "object",
+                      "properties": {
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "price": {
+                          "type": "number",
+                          "description": "Optional display price; tier data is authoritative."
+                        },
+                        "tiers": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "flatAmount": {
+                                "type": "number"
+                              },
+                              "from": {
+                                "type": "number"
+                              },
+                              "unitAmount": {
+                                "type": "number"
+                              },
+                              "upTo": {
+                                "type": "integer"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "parentRef": {
+                      "type": "string",
+                      "format": "uuid",
+                      "description": "Parent room id when creating a child resource."
+                    },
+                    "plans": {
+                      "type": "object",
+                      "properties": {
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "tiers": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "description": "Create payloads use flat tier fields; responses may nest details under `plan`.",
+                            "properties": {
+                              "entire": {
+                                "type": "boolean"
+                              },
+                              "plan": {
+                                "type": "object",
+                                "properties": {
+                                  "commitmentCycles": {
+                                    "type": "number"
+                                  },
+                                  "credits": {
+                                    "type": "number"
+                                  },
+                                  "dayPasses": {
+                                    "type": "number"
+                                  },
+                                  "id": {
+                                    "type": "string",
+                                    "format": "uuid"
+                                  },
+                                  "period": {
+                                    "type": "string",
+                                    "enum": [
+                                      "day",
+                                      "week",
+                                      "month",
+                                      "threeMonths",
+                                      "sixMonths",
+                                      "year"
+                                    ]
+                                  },
+                                  "price": {
+                                    "type": "number"
+                                  },
+                                  "title": {
+                                    "type": "string"
+                                  }
+                                }
+                              },
+                              "commitmentCycles": {
+                                "type": "number"
+                              },
+                              "credits": {
+                                "type": "number"
+                              },
+                              "dayPasses": {
+                                "type": "number"
+                              },
+                              "description": {
+                                "type": "string"
+                              },
+                              "discounts": {
+                                "type": "object",
+                                "properties": {
+                                  "creditPackages": {
+                                    "type": "number"
+                                  },
+                                  "desks": {
+                                    "type": "number"
+                                  },
+                                  "equipment": {
+                                    "type": "number"
+                                  },
+                                  "events": {
+                                    "type": "number"
+                                  },
+                                  "rooms": {
+                                    "type": "number"
+                                  },
+                                  "shop": {
+                                    "type": "number"
+                                  }
+                                }
+                              },
+                              "ezeepBlueGroupRef": {
+                                "type": "string"
+                              },
+                              "id": {
+                                "type": "string",
+                                "format": "uuid"
+                              },
+                              "period": {
+                                "type": "string"
+                              },
+                              "price": {
+                                "type": "number"
+                              },
+                              "selfSignupType": {
+                                "type": "string"
+                              },
+                              "setupFee": {
+                                "type": "number"
+                              },
+                              "title": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "preparationMinutes": {
+                      "type": "string",
+                      "enum": [
+                        "zeroMinutes",
+                        "fiveMinutes",
+                        "tenMinutes",
+                        "fifteenMinutes",
+                        "thirtyMinutes",
+                        "sixtyMinutes"
+                      ]
+                    },
+                    "refundThreshold": {
+                      "type": "string",
+                      "enum": [
+                        "noRefund",
+                        "zeroMinutes",
+                        "fifteenMinutes",
+                        "thirtyMinutes",
+                        "oneHour",
+                        "twoHours",
+                        "fourHours",
+                        "sixHours",
+                        "twelveHours",
+                        "oneDay",
+                        "twoDays",
+                        "oneWeek",
+                        "twoWeeks",
+                        "fourWeeks"
+                      ]
+                    },
+                    "saltoksAccessGroupRef": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "schedule": {
+                      "type": "object",
+                      "description": "Default and public availability windows.",
+                      "properties": {
+                        "default": {
+                          "type": "object",
+                          "properties": {
+                            "closedDays": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "items": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "days": {
+                                    "type": "object",
+                                    "properties": {
+                                      "friday": {
+                                        "type": "boolean"
+                                      },
+                                      "monday": {
+                                        "type": "boolean"
+                                      },
+                                      "saturday": {
+                                        "type": "boolean"
+                                      },
+                                      "sunday": {
+                                        "type": "boolean"
+                                      },
+                                      "thursday": {
+                                        "type": "boolean"
+                                      },
+                                      "tuesday": {
+                                        "type": "boolean"
+                                      },
+                                      "wednesday": {
+                                        "type": "boolean"
+                                      }
+                                    }
+                                  },
+                                  "hours": {
+                                    "type": "object",
+                                    "properties": {
+                                      "from": {
+                                        "type": "string"
+                                      },
+                                      "to": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "public": {
+                          "type": "object",
+                          "properties": {
+                            "closedDays": {
+                              "type": "array",
+                              "items": {
+                                "type": "string"
+                              }
+                            },
+                            "enabled": {
+                              "type": "boolean"
+                            },
+                            "items": {
+                              "type": "array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "days": {
+                                    "type": "object",
+                                    "properties": {
+                                      "friday": {
+                                        "type": "boolean"
+                                      },
+                                      "monday": {
+                                        "type": "boolean"
+                                      },
+                                      "saturday": {
+                                        "type": "boolean"
+                                      },
+                                      "sunday": {
+                                        "type": "boolean"
+                                      },
+                                      "thursday": {
+                                        "type": "boolean"
+                                      },
+                                      "tuesday": {
+                                        "type": "boolean"
+                                      },
+                                      "wednesday": {
+                                        "type": "boolean"
+                                      }
+                                    }
+                                  },
+                                  "hours": {
+                                    "type": "object",
+                                    "properties": {
+                                      "from": {
+                                        "type": "string"
+                                      },
+                                      "to": {
+                                        "type": "string"
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "tapkeyGroupRef": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "title": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "dedicatedDesk",
+                        "equipment",
+                        "hotDesk",
+                        "office",
+                        "parkingLot",
+                        "room"
+                      ]
+                    },
+                    "visibility": {
+                      "type": "string",
+                      "enum": [
+                        "admins",
+                        "exclusiveMembers",
+                        "members",
+                        "networkMembers",
+                        "public"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "locationRef",
+                    "title",
+                    "type"
+                  ]
+                }
+              },
+              "required": [
+                "resource"
+              ]
             }
           }
         }
