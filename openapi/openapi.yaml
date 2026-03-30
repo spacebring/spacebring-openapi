@@ -7793,14 +7793,14 @@ components:
         itemsCount:
           type: integer
           description: Number of line items on the invoice.
+        internalNote:
+          type: string
         locationRef:
           type: string
           format: uuid
         membershipRef:
           type: string
           format: uuid
-        memo:
-          type: string
         payments:
           type: array
           items:
@@ -8115,6 +8115,8 @@ components:
         invoiceRef:
           type: string
           format: uuid
+        internalNote:
+          type: string
         lines:
           type: array
           items:
@@ -8215,8 +8217,6 @@ components:
               locationRef:
                 type: string
                 format: uuid
-              memo:
-                type: string
               networkRef:
                 type: string
                 format: uuid
@@ -8257,8 +8257,6 @@ components:
         locationRef:
           type: string
           format: uuid
-        memo:
-          type: string
         networkRef:
           type: string
           format: uuid

@@ -12382,6 +12382,9 @@
             "type": "integer",
             "description": "Number of line items on the invoice."
           },
+          "internalNote": {
+            "type": "string"
+          },
           "locationRef": {
             "type": "string",
             "format": "uuid"
@@ -12389,9 +12392,6 @@
           "membershipRef": {
             "type": "string",
             "format": "uuid"
-          },
-          "memo": {
-            "type": "string"
           },
           "payments": {
             "type": "array",
@@ -12831,6 +12831,9 @@
             "type": "string",
             "format": "uuid"
           },
+          "internalNote": {
+            "type": "string"
+          },
           "lines": {
             "type": "array",
             "items": {
@@ -12971,9 +12974,6 @@
                   "type": "string",
                   "format": "uuid"
                 },
-                "memo": {
-                  "type": "string"
-                },
                 "networkRef": {
                   "type": "string",
                   "format": "uuid"
@@ -13030,9 +13030,6 @@
           "locationRef": {
             "type": "string",
             "format": "uuid"
-          },
-          "memo": {
-            "type": "string"
           },
           "networkRef": {
             "type": "string",
