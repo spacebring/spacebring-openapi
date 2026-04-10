@@ -10818,6 +10818,9 @@ components:
         locationRef:
           format: uuid
           type: string
+        membershipRefHost:
+          format: uuid
+          type: string
         userHost:
           $ref: '#/components/schemas/user'
         userRefHost:
