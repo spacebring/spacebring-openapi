@@ -2564,6 +2564,18 @@ paths:
               - rooms
               - subscriptionItems
           required: false
+        - in: query
+          name: limit
+          required: false
+          description: 'The number of coupons to retrieve. Default: 25'
+          schema:
+            type: integer
+            default: 25
+        - in: query
+          name: nextPageToken
+          required: false
+          schema:
+            type: string
         - in: header
           name: spacebring-network-id
           schema:
@@ -2588,6 +2600,10 @@ paths:
                     type: array
                     items:
                       $ref: '#/components/schemas/coupon'
+                  nextPageToken:
+                    type: string
+                  searchQueryNext:
+                    type: string
         '400':
           description: Bad Request
           content:
@@ -3073,17 +3089,7 @@ paths:
                     items:
                       $ref: '#/components/schemas/event'
                   searchQueryNext:
-                    type: object
-                    properties:
-                      limit:
-                        type: integer
-                      locationRef:
-                        type: string
-                        format: uuid
-                      nextPageToken:
-                        type: string
-                      order:
-                        type: string
+                    type: string
         '400':
           description: Bad Request
           content:
@@ -8478,8 +8484,6 @@ components:
         amountOff:
           type: number
           nullable: true
-        archiveDate:
-          $ref: '#/components/schemas/dateSchema'
         createDate:
           $ref: '#/components/schemas/dateSchema'
         currencyCode:
