@@ -12311,7 +12311,7 @@
                 "type": "string",
                 "enum": [
                   "company",
-                  "person"
+                  "user"
                 ]
               },
               "user": {
@@ -13600,7 +13600,7 @@
               "type": {
                 "type": "string",
                 "enum": [
-                  "person",
+                  "user",
                   "company"
                 ]
               },
